@@ -258,11 +258,11 @@
                     </div>
                     <div class="flex gap-3 w-full sm:w-auto">
                         <button onclick="downloadSignaturePng()"
-                            class="flex-1 sm:flex-none bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-5 rounded-lg transition shadow-md flex items-center justify-center">
+                            class="flex-1 sm:flex-none bg-indigo-400 hover:bg-indigo-500 text-white font-bold py-3 px-5 rounded-lg transition shadow-md flex items-center justify-center">
                             <i class="fa-solid fa-image mr-2"></i> PNG
                         </button>
                         <button onclick="downloadSignatureSvg()" id="svgBtn"
-                            class="flex-1 sm:flex-none bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 px-5 rounded-lg transition shadow-md flex items-center justify-center">
+                            class="flex-1 sm:flex-none bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-5 rounded-lg transition shadow-md flex items-center justify-center">
                             <i class="fa-solid fa-bezier-curve mr-2"></i> SVG
                         </button>
                     </div>
@@ -636,25 +636,37 @@
         // ── 平滑筆跡核心：用 Catmull-Rom → 貝茲曲線 ─────────
         // 每累積 4 個點就畫一段，避免直線感
         function addPoint(x, y) {
+            // 最小移動距離過濾：避免抖動產生雜訊點
+            if (points.length > 0) {
+                const last = points[points.length - 1];
+                const dx = x - last.x, dy = y - last.y;
+                if (dx * dx + dy * dy < 4) return;  // 小於 2px 忽略
+            }
+            // 加入平均後的座標（前一點與當前點的加權平均，讓曲線更柔滑）
+            if (points.length > 0) {
+                const last = points[points.length - 1];
+                x = last.x * 0.4 + x * 0.6;
+                y = last.y * 0.4 + y * 0.6;
+            }
             points.push({ x, y });
             if (points.length < 3) return;
             drawSmooth();
         }
 
         function drawSmooth() {
-            const p = points;
+            const p   = points;
             const len = p.length;
-            // 取最後 4 個點做 Catmull-Rom 平滑
-            const p0 = p[Math.max(0, len - 4)];
-            const p1 = p[len - 3] || p0;
-            const p2 = p[len - 2];
-            const p3 = p[len - 1];
+            const p0  = p[Math.max(0, len - 4)];
+            const p1  = p[len - 3] || p0;
+            const p2  = p[len - 2];
+            const p3  = p[len - 1];
 
-            // Catmull-Rom 轉 Bezier 控制點
-            const cp1x = p1.x + (p2.x - p0.x) / 6;
-            const cp1y = p1.y + (p2.y - p0.y) / 6;
-            const cp2x = p2.x - (p3.x - p1.x) / 6;
-            const cp2y = p2.y - (p3.y - p1.y) / 6;
+            // Catmull-Rom 張力係數 0.5 → 貝茲控制點
+            const tension = 0.5;
+            const cp1x = p1.x + (p2.x - p0.x) * tension / 3;
+            const cp1y = p1.y + (p2.y - p0.y) * tension / 3;
+            const cp2x = p2.x - (p3.x - p1.x) * tension / 3;
+            const cp2y = p2.y - (p3.y - p1.y) * tension / 3;
 
             ctx.beginPath();
             ctx.moveTo(p1.x, p1.y);
@@ -734,74 +746,86 @@
             btn.disabled = true;
 
             try {
-                // ── 步驟1：把 dataURL 畫到暫時 canvas，反轉黑白 ──
-                // 原圖：白底黑字 → 目標：黑色筆跡保留（實心），白色背景變透明
+                // ── 步驟1：將原始 canvas 畫到暫時 canvas ─────────
                 const img = new Image();
                 img.src = studentData.signatureDataUrl;
                 await new Promise(r => { img.onload = r; });
 
-                const tmp = document.createElement('canvas');
-                tmp.width  = canvas.width;
-                tmp.height = canvas.height;
+                const tmp    = document.createElement('canvas');
+                tmp.width    = canvas.width;
+                tmp.height   = canvas.height;
                 const tmpCtx = tmp.getContext('2d');
                 tmpCtx.drawImage(img, 0, 0);
 
-                // 白色背景像素 → alpha=0（透明），深色筆跡保留
+                // ── 步驟2：像素處理：白色→透明，深色→純黑 ────────
                 const imgData = tmpCtx.getImageData(0, 0, tmp.width, tmp.height);
                 const d = imgData.data;
                 for (let i = 0; i < d.length; i += 4) {
-                    const brightness = (d[i] + d[i+1] + d[i+2]) / 3;
-                    if (brightness > 200) {
-                        // 接近白色 → 透明
-                        d[i+3] = 0;
+                    const brightness = (d[i] * 0.299 + d[i+1] * 0.587 + d[i+2] * 0.114);
+                    if (brightness > 180) {
+                        d[i] = d[i+1] = d[i+2] = 255;
+                        d[i+3] = 0;   // 透明
                     } else {
-                        // 深色筆跡 → 強制純黑，不透明
-                        d[i]   = 0;
-                        d[i+1] = 0;
-                        d[i+2] = 0;
-                        d[i+3] = 255;
+                        d[i] = d[i+1] = d[i+2] = 0;
+                        d[i+3] = 255; // 純黑不透明
                     }
                 }
                 tmpCtx.putImageData(imgData, 0, 0);
 
-                // ── 步驟2：ImageTracer 描邊 ───────────────────────
+                // ── 步驟3：ImageTracer 描邊（單色黑，不追蹤透明）──
                 const options = {
-                    numberofcolors:   2,
-                    colorsampling:    0,
-                    colorquantcycles: 1,
-                    ltres:            0.5,
-                    qtres:            0.5,
-                    pathomit:         12,    // 忽略小雜點
+                    numberofcolors:    2,
+                    colorsampling:     0,
+                    colorquantcycles:  1,
+                    ltres:             0.5,
+                    qtres:             0.5,
+                    pathomit:          16,
                     rightangleenhance: true,
-                    strokewidth:      0,
-                    linefilter:       true,
-                    scale:            1,
-                    roundcoords:      2,
-                    viewbox:          true,
-                    desc:             false,
-                    blurradius:       1,     // 輕微模糊讓邊緣更平滑
+                    strokewidth:       0,
+                    linefilter:        true,
+                    scale:             1,
+                    roundcoords:       2,
+                    viewbox:           true,
+                    desc:              false,
+                    blurradius:        1,
                 };
 
-                const tracedData = tmpCtx.getImageData(0, 0, tmp.width, tmp.height);
-                let svgStr = ImageTracer.imagedataToSVG(tracedData, options);
+                const traced = tmpCtx.getImageData(0, 0, tmp.width, tmp.height);
+                let svgStr   = ImageTracer.imagedataToSVG(traced, options);
 
-                // ── 步驟3：修改 viewBox 為 260x100mm（名牌尺寸）──
-                // imagetracerjs 產出的 viewBox 是像素，改成 mm 單位
-                // 保持長寬比，讓 Tinkercad 匯入後剛好是 260mm × 100mm
-                const svgW = 260;   // mm，長
-                const svgH = 100;   // mm，寬
+                // ── 步驟4：解析 SVG，只保留黑色路徑，移除其餘 ───
+                // imagetracerjs 產出的路徑分組在 <g> 內，每個 fill 一種顏色
+                // 用 DOMParser 處理比正則更可靠
+                const parser = new DOMParser();
+                const svgDoc = parser.parseFromString(svgStr, 'image/svg+xml');
+                const svgEl  = svgDoc.documentElement;
 
-                svgStr = svgStr
-                    // 替換 width/height/viewBox
-                    .replace(/width="[^"]*"/, `width="${svgW}mm"`)
-                    .replace(/height="[^"]*"/, `height="${svgH}mm"`)
-                    .replace(/viewBox="[^"]*"/, `viewBox="0 0 ${tmp.width} ${tmp.height}"`)
-                    // 移除白色背景矩形（imagetracerjs 會加一個 fill=white 的 rect）
-                    .replace(/<path[^>]*fill="#ffffff"[^>]*\/>/g, '')
-                    .replace(/<path[^>]*fill="white"[^>]*\/>/g, '');
+                // 移除所有非黑色的路徑群組
+                svgEl.querySelectorAll('g').forEach(g => {
+                    const paths = g.querySelectorAll('path');
+                    paths.forEach(p => {
+                        const fill = p.getAttribute('fill') || '';
+                        // 解析 fill 顏色，亮度 > 128 → 非黑 → 移除
+                        if (!isColorDark(fill)) p.remove();
+                    });
+                    if (g.querySelectorAll('path').length === 0) g.remove();
+                });
 
-                // ── 步驟4：下載 ──────────────────────────────────
-                const blob = new Blob([svgStr], { type: 'image/svg+xml' });
+                // ── 步驟5：設定正確尺寸 ──────────────────────────
+                // Tinkercad 讀 SVG 的 width/height（mm 單位）決定匯入大小
+                // 名牌尺寸：寬 100mm × 長 260mm
+                // canvas 是橫向，所以 width=260, height=100
+                const svgW = 260;  // mm（對應 canvas 的寬度方向）
+                const svgH = 100;  // mm（對應 canvas 的高度方向）
+                svgEl.setAttribute('width',   `${svgW}mm`);
+                svgEl.setAttribute('height',  `${svgH}mm`);
+                svgEl.setAttribute('viewBox', `0 0 ${tmp.width} ${tmp.height}`);
+
+                // ── 步驟6：序列化並下載 ──────────────────────────
+                const serializer = new XMLSerializer();
+                const finalSvg   = serializer.serializeToString(svgEl);
+
+                const blob = new Blob([finalSvg], { type: 'image/svg+xml' });
                 const url  = URL.createObjectURL(blob);
                 const a    = document.createElement('a');
                 a.download = `${studentData.id}_簽名檔.svg`;
@@ -815,6 +839,33 @@
                 btn.innerHTML = '<i class="fa-solid fa-bezier-curve mr-2"></i> SVG';
                 btn.disabled = false;
             }
+        }
+
+        // fill 顏色是否為深色（用於過濾白色背景路徑）
+        function isColorDark(fill) {
+            if (!fill || fill === 'none') return false;
+            // hex 格式 #rrggbb
+            const m6 = fill.match(/^#([0-9a-f]{6})$/i);
+            if (m6) {
+                const r = parseInt(m6[1].slice(0,2),16);
+                const g = parseInt(m6[1].slice(2,4),16);
+                const b = parseInt(m6[1].slice(4,6),16);
+                return (r * 0.299 + g * 0.587 + b * 0.114) < 128;
+            }
+            // hex 格式 #rgb
+            const m3 = fill.match(/^#([0-9a-f]{3})$/i);
+            if (m3) {
+                const r = parseInt(m3[1][0]+m3[1][0],16);
+                const g = parseInt(m3[1][1]+m3[1][1],16);
+                const b = parseInt(m3[1][2]+m3[1][2],16);
+                return (r * 0.299 + g * 0.587 + b * 0.114) < 128;
+            }
+            // rgb() 格式
+            const mRgb = fill.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/i);
+            if (mRgb) {
+                return (Number(mRgb[1])*0.299 + Number(mRgb[2])*0.587 + Number(mRgb[3])*0.114) < 128;
+            }
+            return false;
         }
 
         // ── 上傳簽名 ──────────────────────────────────────────
