@@ -355,7 +355,7 @@
         const GAS_URL = 'https://script.google.com/macros/s/AKfycbxI_yZpnxUcJxFids4I_R_hx611bjucwctCfPQsfJyWE0RaaRzKaEqg3z4RdQbs_bmL/exec';
         // ══════════════════════════════════════════════════════
 
-        const GAS_READY = GAS_URL && GAS_URL !== 'https://script.google.com/macros/s/AKfycbxI_yZpnxUcJxFids4I_R_hx611bjucwctCfPQsfJyWE0RaaRzKaEqg3z4RdQbs_bmL/exec';
+        const GAS_READY = GAS_URL && !GAS_URL.startsWith('YOUR_') && GAS_URL.startsWith('https://');
 
         let currentStep = 0;
         const totalSteps = 5;
