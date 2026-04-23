@@ -691,7 +691,7 @@
             const p2  = p[len - 2];
             const p3  = p[len - 1];
 
-            // Catmull-Rom 張力 1/6（自然平滑，不過度彎曲）
+            // Catmull-Rom 張力 1/6
             const cp1x = p1.x + (p2.x - p0.x) / 6;
             const cp1y = p1.y + (p2.y - p0.y) / 6;
             const cp2x = p2.x - (p3.x - p1.x) / 6;
@@ -703,14 +703,20 @@
             ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, p2.x, p2.y);
             ctx.stroke();
 
-            // 記錄曲線指令（SVG 匯出用）
-            curStroke.push({ type: 'C', x1: p1.x, y1: p1.y, cp1x, cp1y, cp2x, cp2y, x2: p2.x, y2: p2.y });
+            // 記錄 SVG d 字串片段（連續路徑，不重複 M）
+            if (curStroke.segs.length === 0) {
+                // 第一段：需要 moveTo 起點
+                curStroke.segs.push(`M ${r2(p1.x)} ${r2(p1.y)}`);
+            }
+            curStroke.segs.push(`C ${r2(cp1x)} ${r2(cp1y)} ${r2(cp2x)} ${r2(cp2y)} ${r2(p2.x)} ${r2(p2.y)}`);
         }
 
+        function r2(n) { return Math.round(n * 100) / 100; }
+
         function startDraw(x, y) {
-            isDrawing = true;
-            points    = [{ x, y }];
-            curStroke = [{ type: 'M', x, y }];
+            isDrawing  = true;
+            points     = [{ x, y }];
+            curStroke  = { segs: [], color: ctx.strokeStyle, lineWidth: ctx.lineWidth };
             ctx.beginPath();
             ctx.moveTo(x, y);
         }
@@ -731,17 +737,16 @@
                 ctx.moveTo(a.x, a.y);
                 ctx.lineTo(b.x, b.y);
                 ctx.stroke();
-                curStroke.push({ type: 'L', x: b.x, y: b.y });
+                if (curStroke.segs.length === 0) {
+                    curStroke.segs.push(`M ${r2(a.x)} ${r2(a.y)}`);
+                }
+                curStroke.segs.push(`L ${r2(b.x)} ${r2(b.y)}`);
             }
-            if (curStroke.length > 1) {
-                allStrokes.push({
-                    cmds:      curStroke,
-                    color:     ctx.strokeStyle,
-                    lineWidth: ctx.lineWidth
-                });
+            if (curStroke.segs.length > 1) {
+                allStrokes.push(curStroke);
             }
             points    = [];
-            curStroke = [];
+            curStroke = { segs: [], color: ctx.strokeStyle, lineWidth: ctx.lineWidth };
         }
 
         // Mouse
@@ -823,21 +828,12 @@
 
                 let pathsStr = '';
                 for (const stroke of allStrokes) {
-                    let d = '';
-                    for (const cmd of stroke.cmds) {
-                        if (cmd.type === 'M') {
-                            d += `M ${r(cmd.x)} ${r(cmd.y)} `;
-                        } else if (cmd.type === 'C') {
-                            d += `M ${r(cmd.x1)} ${r(cmd.y1)} `;
-                            d += `C ${r(cmd.cp1x)} ${r(cmd.cp1y)} ${r(cmd.cp2x)} ${r(cmd.cp2y)} ${r(cmd.x2)} ${r(cmd.y2)} `;
-                        } else if (cmd.type === 'L') {
-                            d += `L ${r(cmd.x)} ${r(cmd.y)} `;
-                        }
-                    }
+                    const d = stroke.segs.join(' ');
                     if (!d.trim()) continue;
-                    // stroke-width 按 viewBox 比例換算（canvas px → SVG 單位）
-                    const sw = r(stroke.lineWidth);
-                    pathsStr += `<path d="${d.trim()}" fill="none" stroke="${stroke.color}" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round"/>\n`;
+                    // stroke-width 就是 canvas 的像素值，viewBox 對應 canvas 像素
+                    // Tinkercad 匯入時依 width/viewBox 比例自動縮放
+                    const sw = r2(stroke.lineWidth);
+                    pathsStr += `<path d="${d}" fill="none" stroke="${stroke.color}" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round"/>\n`;
                 }
 
                 const svgStr = [
@@ -897,23 +893,45 @@
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> 上傳中…';
 
             try {
-                const res = await gasCall({
-                    action:      'uploadSignature',
-                    studentId:   studentData.id,
-                    imageBase64: base64
-                });
-                if (res.ok) {
+                // ── 分塊 JSONP 上傳（避免 no-cors POST body 被截斷）──
+                // 每塊 3000 字元，JSONP GET 方式傳送，GAS 端合併後存 Drive
+                const CHUNK = 3000;
+                const total = Math.ceil(base64.length / CHUNK);
+                const uid   = Date.now().toString(36); // 本次上傳的唯一 ID
+
+                for (let i = 0; i < total; i++) {
+                    btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i> 上傳中 ${i+1}/${total}…`;
+                    const chunk = base64.slice(i * CHUNK, (i + 1) * CHUNK);
+                    await jsonpCall({
+                        action:    'uploadChunk',
+                        studentId: studentData.id,
+                        uid,
+                        index:     i,
+                        total,
+                        chunk
+                    }, 15000);
+                }
+
+                // 所有分塊送完後，通知 GAS 合併並存入 Drive
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> 合併儲存中…';
+                const res = await jsonpCall({
+                    action:    'mergeChunks',
+                    studentId: studentData.id,
+                    uid,
+                    total
+                }, 30000);
+
+                if (res && res.ok) {
                     studentData.isSignatureUploaded = true;
-                    // Drive URL 拿不到（no-cors 限制），下載改用本機 dataURL
                     saveProgress();
                     showDownloadSection();
                     Swal.fire({
                         icon:'success', title:'上傳成功！',
-                        text:'簽名已送出至雲端。下載按鈕可將圖片儲存到你的裝置。',
+                        text:'簽名已備份到雲端。',
                         confirmButtonColor:'#16a34a'
                     });
                 } else {
-                    throw new Error(res.message);
+                    throw new Error((res && res.message) || '合併失敗，請重試');
                 }
             } catch(err) {
                 btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up mr-2 text-xl"></i> 重新上傳';
