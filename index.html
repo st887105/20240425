@@ -602,9 +602,10 @@
         const ctx    = canvas.getContext('2d');
         const CANVAS_H = 300;
 
-        // 平滑筆跡所需狀態
-        let isDrawing = false;
-        let points    = [];   // 緩衝點陣列，用於貝茲曲線平滑
+        let isDrawing  = false;
+        let points     = [];      // 當筆緩衝點
+        let allStrokes = [];      // 記錄全部筆畫（用於 SVG 匯出）
+        let curStroke  = [];      // 當筆的貝茲曲線指令 [{type,x,y,cp1x,cp1y,cp2x,cp2y}]
 
         function initCanvas() {
             const w = document.getElementById('canvasWrapper').getBoundingClientRect().width;
@@ -616,6 +617,7 @@
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.lineJoin = 'round';
             ctx.lineCap  = 'round';
+            allStrokes = [];
             updateBrush();
             if (studentData.isSignatureUploaded && studentData.signatureDataUrl) {
                 const img = new Image();
@@ -626,34 +628,36 @@
 
         function updateBrush() {
             ctx.strokeStyle = document.getElementById('brushColor').value;
-            ctx.lineWidth   = document.getElementById('brushSize').value;
+            ctx.lineWidth   = Number(document.getElementById('brushSize').value);
         }
         document.getElementById('brushColor').addEventListener('change', updateBrush);
         document.getElementById('brushSize').addEventListener('input', e => {
-            document.getElementById('brushSizeVal').textContent = e.target.value; updateBrush();
+            document.getElementById('brushSizeVal').textContent = e.target.value;
+            updateBrush();
         });
 
-        // ── 平滑筆跡核心：用 Catmull-Rom → 貝茲曲線 ─────────
-        // 每累積 4 個點就畫一段，避免直線感
+        // ── 取得 canvas 內的實際座標（相容手機/平板高 DPI）──
+        function getCanvasPos(clientX, clientY) {
+            const r     = canvas.getBoundingClientRect();
+            const scaleX = canvas.width  / r.width;
+            const scaleY = canvas.height / r.height;
+            return {
+                x: (clientX - r.left) * scaleX,
+                y: (clientY - r.top)  * scaleY
+            };
+        }
+
+        // ── 平滑筆跡：Catmull-Rom → 貝茲，同步記錄路徑 ─────
         function addPoint(x, y) {
-            // 最小移動距離過濾：避免抖動產生雜訊點
+            // 最小距離過濾（3px²），去除手抖但不過度削減細節
             if (points.length > 0) {
                 const last = points[points.length - 1];
                 const dx = x - last.x, dy = y - last.y;
-                if (dx * dx + dy * dy < 4) return;  // 小於 2px 忽略
-            }
-            // 加入平均後的座標（前一點與當前點的加權平均，讓曲線更柔滑）
-            if (points.length > 0) {
-                const last = points[points.length - 1];
-                x = last.x * 0.4 + x * 0.6;
-                y = last.y * 0.4 + y * 0.6;
+                if (dx * dx + dy * dy < 9) return;
             }
             points.push({ x, y });
             if (points.length < 3) return;
-            drawSmooth();
-        }
 
-        function drawSmooth() {
             const p   = points;
             const len = p.length;
             const p0  = p[Math.max(0, len - 4)];
@@ -661,22 +665,26 @@
             const p2  = p[len - 2];
             const p3  = p[len - 1];
 
-            // Catmull-Rom 張力係數 0.5 → 貝茲控制點
-            const tension = 0.5;
-            const cp1x = p1.x + (p2.x - p0.x) * tension / 3;
-            const cp1y = p1.y + (p2.y - p0.y) * tension / 3;
-            const cp2x = p2.x - (p3.x - p1.x) * tension / 3;
-            const cp2y = p2.y - (p3.y - p1.y) * tension / 3;
+            // Catmull-Rom 張力 1/6（自然平滑，不過度彎曲）
+            const cp1x = p1.x + (p2.x - p0.x) / 6;
+            const cp1y = p1.y + (p2.y - p0.y) / 6;
+            const cp2x = p2.x - (p3.x - p1.x) / 6;
+            const cp2y = p2.y - (p3.y - p1.y) / 6;
 
+            // 畫到 canvas
             ctx.beginPath();
             ctx.moveTo(p1.x, p1.y);
             ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, p2.x, p2.y);
             ctx.stroke();
+
+            // 記錄曲線指令（SVG 匯出用）
+            curStroke.push({ type: 'C', x1: p1.x, y1: p1.y, cp1x, cp1y, cp2x, cp2y, x2: p2.x, y2: p2.y });
         }
 
         function startDraw(x, y) {
             isDrawing = true;
             points    = [{ x, y }];
+            curStroke = [{ type: 'M', x, y }];
             ctx.beginPath();
             ctx.moveTo(x, y);
         }
@@ -689,40 +697,61 @@
         function endDraw() {
             if (!isDrawing) return;
             isDrawing = false;
-            // 畫最後一段確保筆跡收尾完整
+            // 補畫最後一小段
             if (points.length >= 2) {
-                const last = points[points.length - 1];
+                const a = points[points.length - 2];
+                const b = points[points.length - 1];
                 ctx.beginPath();
-                ctx.moveTo(points[points.length - 2].x, points[points.length - 2].y);
-                ctx.lineTo(last.x, last.y);
+                ctx.moveTo(a.x, a.y);
+                ctx.lineTo(b.x, b.y);
                 ctx.stroke();
+                curStroke.push({ type: 'L', x: b.x, y: b.y });
             }
-            points = [];
+            if (curStroke.length > 1) {
+                allStrokes.push({
+                    cmds:      curStroke,
+                    color:     ctx.strokeStyle,
+                    lineWidth: ctx.lineWidth
+                });
+            }
+            points    = [];
+            curStroke = [];
         }
 
         // Mouse
-        canvas.addEventListener('mousedown', e => startDraw(e.offsetX, e.offsetY));
-        canvas.addEventListener('mousemove', e => moveDraw(e.offsetX, e.offsetY));
-        canvas.addEventListener('mouseup',   () => endDraw());
-        canvas.addEventListener('mouseleave',() => endDraw());
+        canvas.addEventListener('mousedown', e => {
+            const p = getCanvasPos(e.clientX, e.clientY);
+            startDraw(p.x, p.y);
+        });
+        canvas.addEventListener('mousemove', e => {
+            const p = getCanvasPos(e.clientX, e.clientY);
+            moveDraw(p.x, p.y);
+        });
+        canvas.addEventListener('mouseup',    () => endDraw());
+        canvas.addEventListener('mouseleave', () => endDraw());
 
-        // Touch
+        // Touch（手機/平板）
         canvas.addEventListener('touchstart', e => {
             e.preventDefault();
-            const t = e.touches[0], r = canvas.getBoundingClientRect();
-            startDraw(t.clientX - r.left, t.clientY - r.top);
+            const t = e.touches[0];
+            const p = getCanvasPos(t.clientX, t.clientY);
+            startDraw(p.x, p.y);
         }, { passive: false });
         canvas.addEventListener('touchmove', e => {
             e.preventDefault();
-            const t = e.touches[0], r = canvas.getBoundingClientRect();
-            moveDraw(t.clientX - r.left, t.clientY - r.top);
+            const t = e.touches[0];
+            const p = getCanvasPos(t.clientX, t.clientY);
+            moveDraw(p.x, p.y);
         }, { passive: false });
-        canvas.addEventListener('touchend',   () => endDraw());
-        canvas.addEventListener('touchcancel',() => endDraw());
+        canvas.addEventListener('touchend',    () => endDraw());
+        canvas.addEventListener('touchcancel', () => endDraw());
 
         function clearCanvas() {
             ctx.fillStyle = '#fff';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
+            allStrokes = [];
+            points     = [];
+            curStroke  = [];
             updateBrush();
         }
 
@@ -741,91 +770,61 @@
 
         async function downloadSignatureSvg() {
             if (!studentData.signatureDataUrl) return;
+
+            // 若 allStrokes 是空的（跨裝置回來或重整），改用 PNG 嵌入方式
+            if (allStrokes.length === 0) {
+                Swal.fire({
+                    icon: 'info',
+                    title: '請重新簽名後再下載 SVG',
+                    text: '本次簽名紀錄已清除（可能因重整頁面），請重新在畫板上簽名，上傳後即可下載 SVG。',
+                    confirmButtonColor: '#16a34a'
+                });
+                return;
+            }
+
             const btn = document.getElementById('svgBtn');
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> 轉換中…';
-            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> 產生中…';
+            btn.disabled  = true;
 
             try {
-                // ── 步驟1：將原始 canvas 畫到暫時 canvas ─────────
-                const img = new Image();
-                img.src = studentData.signatureDataUrl;
-                await new Promise(r => { img.onload = r; });
+                // ── 直接從筆畫路徑資料生成 SVG ────────────────
+                // 名牌尺寸：260mm（寬）× 100mm（高）
+                // viewBox 對應 canvas 像素座標
+                const svgW  = 260;
+                const svgH  = 100;
+                const vbW   = canvas.width;
+                const vbH   = canvas.height;
 
-                const tmp    = document.createElement('canvas');
-                tmp.width    = canvas.width;
-                tmp.height   = canvas.height;
-                const tmpCtx = tmp.getContext('2d');
-                tmpCtx.drawImage(img, 0, 0);
-
-                // ── 步驟2：像素處理：白色→透明，深色→純黑 ────────
-                const imgData = tmpCtx.getImageData(0, 0, tmp.width, tmp.height);
-                const d = imgData.data;
-                for (let i = 0; i < d.length; i += 4) {
-                    const brightness = (d[i] * 0.299 + d[i+1] * 0.587 + d[i+2] * 0.114);
-                    if (brightness > 180) {
-                        d[i] = d[i+1] = d[i+2] = 255;
-                        d[i+3] = 0;   // 透明
-                    } else {
-                        d[i] = d[i+1] = d[i+2] = 0;
-                        d[i+3] = 255; // 純黑不透明
+                let pathsStr = '';
+                for (const stroke of allStrokes) {
+                    let d = '';
+                    for (const cmd of stroke.cmds) {
+                        if (cmd.type === 'M') {
+                            d += `M ${r(cmd.x)} ${r(cmd.y)} `;
+                        } else if (cmd.type === 'C') {
+                            d += `M ${r(cmd.x1)} ${r(cmd.y1)} `;
+                            d += `C ${r(cmd.cp1x)} ${r(cmd.cp1y)} ${r(cmd.cp2x)} ${r(cmd.cp2y)} ${r(cmd.x2)} ${r(cmd.y2)} `;
+                        } else if (cmd.type === 'L') {
+                            d += `L ${r(cmd.x)} ${r(cmd.y)} `;
+                        }
                     }
+                    if (!d.trim()) continue;
+                    // stroke-width 按 viewBox 比例換算（canvas px → SVG 單位）
+                    const sw = r(stroke.lineWidth);
+                    pathsStr += `<path d="${d.trim()}" fill="none" stroke="${stroke.color}" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round"/>\n`;
                 }
-                tmpCtx.putImageData(imgData, 0, 0);
 
-                // ── 步驟3：ImageTracer 描邊（單色黑，不追蹤透明）──
-                const options = {
-                    numberofcolors:    2,
-                    colorsampling:     0,
-                    colorquantcycles:  1,
-                    ltres:             0.5,
-                    qtres:             0.5,
-                    pathomit:          16,
-                    rightangleenhance: true,
-                    strokewidth:       0,
-                    linefilter:        true,
-                    scale:             1,
-                    roundcoords:       2,
-                    viewbox:           true,
-                    desc:              false,
-                    blurradius:        1,
-                };
+                const svgStr = [
+                    `<svg xmlns="http://www.w3.org/2000/svg"`,
+                    ` width="${svgW}mm" height="${svgH}mm"`,
+                    ` viewBox="0 0 ${vbW} ${vbH}"`,
+                    ` version="1.1">`,
+                    // 透明背景（不加白底矩形）
+                    pathsStr,
+                    `</svg>`
+                ].join('\n');
 
-                const traced = tmpCtx.getImageData(0, 0, tmp.width, tmp.height);
-                let svgStr   = ImageTracer.imagedataToSVG(traced, options);
-
-                // ── 步驟4：解析 SVG，只保留黑色路徑，移除其餘 ───
-                // imagetracerjs 產出的路徑分組在 <g> 內，每個 fill 一種顏色
-                // 用 DOMParser 處理比正則更可靠
-                const parser = new DOMParser();
-                const svgDoc = parser.parseFromString(svgStr, 'image/svg+xml');
-                const svgEl  = svgDoc.documentElement;
-
-                // 移除所有非黑色的路徑群組
-                svgEl.querySelectorAll('g').forEach(g => {
-                    const paths = g.querySelectorAll('path');
-                    paths.forEach(p => {
-                        const fill = p.getAttribute('fill') || '';
-                        // 解析 fill 顏色，亮度 > 128 → 非黑 → 移除
-                        if (!isColorDark(fill)) p.remove();
-                    });
-                    if (g.querySelectorAll('path').length === 0) g.remove();
-                });
-
-                // ── 步驟5：設定正確尺寸 ──────────────────────────
-                // Tinkercad 讀 SVG 的 width/height（mm 單位）決定匯入大小
-                // 名牌尺寸：寬 100mm × 長 260mm
-                // canvas 是橫向，所以 width=260, height=100
-                const svgW = 260;  // mm（對應 canvas 的寬度方向）
-                const svgH = 100;  // mm（對應 canvas 的高度方向）
-                svgEl.setAttribute('width',   `${svgW}mm`);
-                svgEl.setAttribute('height',  `${svgH}mm`);
-                svgEl.setAttribute('viewBox', `0 0 ${tmp.width} ${tmp.height}`);
-
-                // ── 步驟6：序列化並下載 ──────────────────────────
-                const serializer = new XMLSerializer();
-                const finalSvg   = serializer.serializeToString(svgEl);
-
-                const blob = new Blob([finalSvg], { type: 'image/svg+xml' });
+                const blob = new Blob([svgStr], { type: 'image/svg+xml' });
                 const url  = URL.createObjectURL(blob);
                 const a    = document.createElement('a');
                 a.download = `${studentData.id}_簽名檔.svg`;
@@ -834,39 +833,18 @@
                 URL.revokeObjectURL(url);
 
             } catch(err) {
-                Swal.fire({ icon:'error', title:'SVG 轉換失敗', text: err.message, confirmButtonColor:'#16a34a' });
+                Swal.fire({ icon:'error', title:'SVG 匯出失敗', text: err.message, confirmButtonColor:'#16a34a' });
             } finally {
                 btn.innerHTML = '<i class="fa-solid fa-bezier-curve mr-2"></i> SVG';
-                btn.disabled = false;
+                btn.disabled  = false;
             }
         }
 
-        // fill 顏色是否為深色（用於過濾白色背景路徑）
-        function isColorDark(fill) {
-            if (!fill || fill === 'none') return false;
-            // hex 格式 #rrggbb
-            const m6 = fill.match(/^#([0-9a-f]{6})$/i);
-            if (m6) {
-                const r = parseInt(m6[1].slice(0,2),16);
-                const g = parseInt(m6[1].slice(2,4),16);
-                const b = parseInt(m6[1].slice(4,6),16);
-                return (r * 0.299 + g * 0.587 + b * 0.114) < 128;
-            }
-            // hex 格式 #rgb
-            const m3 = fill.match(/^#([0-9a-f]{3})$/i);
-            if (m3) {
-                const r = parseInt(m3[1][0]+m3[1][0],16);
-                const g = parseInt(m3[1][1]+m3[1][1],16);
-                const b = parseInt(m3[1][2]+m3[1][2],16);
-                return (r * 0.299 + g * 0.587 + b * 0.114) < 128;
-            }
-            // rgb() 格式
-            const mRgb = fill.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/i);
-            if (mRgb) {
-                return (Number(mRgb[1])*0.299 + Number(mRgb[2])*0.587 + Number(mRgb[3])*0.114) < 128;
-            }
-            return false;
-        }
+        // 數字四捨五入到小數點後 2 位
+        function r(n) { return Math.round(n * 100) / 100; }
+
+        // isColorDark 已不再需要，保留空函式以防萬一
+        function isColorDark() { return true; }
 
         // ── 上傳簽名 ──────────────────────────────────────────
         async function uploadSignature() {
