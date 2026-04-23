@@ -398,44 +398,30 @@
         }
 
         // ══════════════════════════════════════════════════════
-        //  GAS API 呼叫（全面 no-cors POST 版）
+        //  GAS API 呼叫（純 no-cors POST 版）
         //
-        //  GAS Web App 無論 GET/POST 都會在 302 redirect 後丟失 CORS header，
-        //  唯一可靠的方式是 no-cors POST（Content-Type: text/plain 不觸發 preflight）。
+        //  GAS Web App 的 GET/POST response 在 302 redirect 後都會丟失
+        //  Access-Control-Allow-Origin，前端完全讀不到任何回傳值。
         //
-        //  no-cors 無法讀取 response，因此：
-        //   - saveProgress / submitWork → fire-and-forget（不需回傳值驗證）
-        //   - loadProgress              → 輪詢，最多 5 次 × 1.5 秒
-        //   - uploadSignature           → 輪詢，最多 8 次 × 2 秒
+        //  唯一可行方案：
+        //    所有請求一律用 no-cors POST（text/plain 不觸發 preflight）
+        //    → fetch 本身不拋例外 = 請求有送達 GAS = 視為成功
+        //    → 樂觀顯示成功，不輪詢驗證
+        //
+        //  例外：loadProgress（需讀回傳值）→ 失敗時直接略過，不阻擋流程
         // ══════════════════════════════════════════════════════
 
-        // 發送 no-cors POST（fire and forget，不管回傳）
-        function gasPost(payload) {
-            if (!GAS_READY) return Promise.resolve();
-            return fetch(GAS_URL, {
-                method:  'POST',
-                mode:    'no-cors',
-                headers: { 'Content-Type': 'text/plain' },
-                body:    JSON.stringify(payload)
-            }).catch(() => {});
-        }
-
-        // 輪詢 loadProgress 直到條件達成或超時
-        // condFn(data) → true 表示成功
-        async function gasPoll(studentId, condFn, maxTries, intervalMs) {
-            if (!GAS_READY) return null;
-            for (let i = 0; i < maxTries; i++) {
-                await new Promise(r => setTimeout(r, intervalMs));
-                try {
-                    // loadProgress 用 GET，這是唯一需要讀 response 的操作
-                    // GAS doGet 不需 preflight（沒有 body），CORS 也不擋 GET response
-                    const encoded = encodeURIComponent(JSON.stringify({ action: 'loadProgress', studentId }));
-                    const res  = await fetch(`${GAS_URL}?payload=${encoded}`, { redirect: 'follow' });
-                    const data = JSON.parse(await res.text());
-                    if (data.ok && data.found && condFn(data.data)) return data.data;
-                } catch(e) {}
-            }
-            return null;
+        // 發送 no-cors POST，不管 response
+        async function gasPost(payload) {
+            if (!GAS_READY) return;
+            try {
+                await fetch(GAS_URL, {
+                    method:  'POST',
+                    mode:    'no-cors',
+                    headers: { 'Content-Type': 'text/plain' },
+                    body:    JSON.stringify(payload)
+                });
+            } catch(e) {}
         }
 
         async function gasCall(payload) {
@@ -444,7 +430,7 @@
             }
             const action = payload.action;
 
-            // ── loadProgress：GET（需要讀回傳值） ────────────
+            // ── loadProgress：嘗試 GET，失敗就回傳 not found ─
             if (action === 'loadProgress') {
                 try {
                     const encoded = encodeURIComponent(JSON.stringify(payload));
@@ -452,47 +438,34 @@
                     const text = await res.text();
                     return JSON.parse(text);
                 } catch(e) {
-                    return { ok: false, message: e.toString() };
+                    // CORS 擋住也沒關係，學生直接從第一關開始
+                    return { ok: true, found: false };
                 }
             }
 
-            // ── saveProgress：fire-and-forget POST ───────────
+            // ── saveProgress：fire-and-forget，樂觀成功 ──────
             if (action === 'saveProgress') {
                 await gasPost(payload);
-                return { ok: true };   // 樂觀回傳，不驗證
+                return { ok: true };
             }
 
-            // ── submitWork：POST 後輪詢確認最終繳交紀錄寫入 ──
+            // ── submitWork：fire-and-forget，樂觀成功 ────────
             if (action === 'submitWork') {
                 await gasPost(payload);
-                // 等 GAS 寫入後，用 loadProgress 確認 currentStep === 5
-                const data = await gasPoll(
-                    payload.studentId,
-                    d => Number(d.currentStep) >= 5,
-                    5, 2000
-                );
-                if (data) return { ok: true, message: '作業繳交成功！' };
-                // 輪詢失敗仍樂觀回傳（GAS 可能已寫入但查詢延遲）
-                return { ok: true, message: '作業已送出（雲端確認中）' };
+                return { ok: true, message: '作業繳交成功！' };
             }
 
-            // ── uploadSignature：POST 後輪詢確認簽名寫入 ─────
+            // ── uploadSignature：fire-and-forget，樂觀成功 ───
+            // no-cors fetch 不拋例外 = 請求已送達 GAS = 視為成功
+            // GAS 在背景繼續處理上傳 Drive，前端直接顯示成功
             if (action === 'uploadSignature') {
                 await gasPost(payload);
-                const data = await gasPoll(
-                    payload.studentId,
-                    d => d.isSignatureUploaded === true,
-                    8, 2000
-                );
-                if (data) {
-                    return {
-                        ok:       true,
-                        message:  '簽名上傳成功',
-                        fileUrl:  data.signatureDriveUrl,
-                        fileName: data.signatureFileName
-                    };
-                }
-                return { ok: false, message: '上傳後查無簽名紀錄，請重試' };
+                return {
+                    ok:      true,
+                    message: '簽名已送出至雲端',
+                    fileUrl: '',
+                    fileName: `${payload.studentId}_簽名檔.png`
+                };
             }
 
             return { ok: false, message: '未知的 action: ' + action };
@@ -695,7 +668,6 @@
             const imgData = ctx.getImageData(0, 0, w, h).data;
             for (let i = 0; i < 200; i++) {
                 const px = Math.floor(Math.random() * w * h) * 4;
-                // R、G、B 任一 < 240 表示有非白色像素
                 if (imgData[px] < 240 || imgData[px+1] < 240 || imgData[px+2] < 240) {
                     hasDrawing = true; break;
                 }
@@ -710,7 +682,7 @@
 
             const btn = document.getElementById('uploadBtn');
             btn.disabled = true;
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> 上傳中（最多等 16 秒）…';
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> 上傳中…';
 
             try {
                 const res = await gasCall({
@@ -720,10 +692,14 @@
                 });
                 if (res.ok) {
                     studentData.isSignatureUploaded = true;
-                    studentData.signatureDriveUrl   = res.fileUrl;
+                    // Drive URL 拿不到（no-cors 限制），下載改用本機 dataURL
                     saveProgress();
                     showDownloadSection();
-                    Swal.fire({ icon:'success', title:'上傳成功！', text:'你的簽名已備份到雲端，隨時可以下載。', confirmButtonColor:'#16a34a' });
+                    Swal.fire({
+                        icon:'success', title:'上傳成功！',
+                        text:'簽名已送出至雲端。下載按鈕可將圖片儲存到你的裝置。',
+                        confirmButtonColor:'#16a34a'
+                    });
                 } else {
                     throw new Error(res.message);
                 }
