@@ -600,12 +600,13 @@
         // ── 畫布 ──────────────────────────────────────────────
         const canvas = document.getElementById('signaturePad');
         const ctx    = canvas.getContext('2d');
-        let isDrawing = false, lastX = 0, lastY = 0;
         const CANVAS_H = 300;
 
+        // 平滑筆跡所需狀態
+        let isDrawing = false;
+        let points    = [];   // 緩衝點陣列，用於貝茲曲線平滑
+
         function initCanvas() {
-            // 取得父容器實際像素寬度，同步設定 canvas attribute 和 style
-            // ★ 關鍵：兩者必須一致，否則座標系統扭曲筆跡就會破碎
             const w = document.getElementById('canvasWrapper').getBoundingClientRect().width;
             canvas.width  = Math.round(w);
             canvas.height = CANVAS_H;
@@ -632,27 +633,86 @@
             document.getElementById('brushSizeVal').textContent = e.target.value; updateBrush();
         });
 
-        canvas.addEventListener('mousedown', e => { isDrawing=true; [lastX,lastY]=[e.offsetX,e.offsetY]; });
-        canvas.addEventListener('mousemove', e => {
-            if (!isDrawing) return;
-            ctx.beginPath(); ctx.moveTo(lastX,lastY); ctx.lineTo(e.offsetX,e.offsetY); ctx.stroke();
-            [lastX,lastY]=[e.offsetX,e.offsetY];
-        });
-        canvas.addEventListener('mouseup',  () => isDrawing=false);
-        canvas.addEventListener('mouseout', () => isDrawing=false);
-        canvas.addEventListener('touchstart', e => {
-            e.preventDefault(); const t=e.touches[0], r=canvas.getBoundingClientRect();
-            lastX=t.clientX-r.left; lastY=t.clientY-r.top; isDrawing=true;
-        }, {passive:false});
-        canvas.addEventListener('touchmove', e => {
-            if (!isDrawing) return; e.preventDefault();
-            const t=e.touches[0], r=canvas.getBoundingClientRect(), cx=t.clientX-r.left, cy=t.clientY-r.top;
-            ctx.beginPath(); ctx.moveTo(lastX,lastY); ctx.lineTo(cx,cy); ctx.stroke();
-            [lastX,lastY]=[cx,cy];
-        }, {passive:false});
-        canvas.addEventListener('touchend', () => isDrawing=false);
+        // ── 平滑筆跡核心：用 Catmull-Rom → 貝茲曲線 ─────────
+        // 每累積 4 個點就畫一段，避免直線感
+        function addPoint(x, y) {
+            points.push({ x, y });
+            if (points.length < 3) return;
+            drawSmooth();
+        }
 
-        function clearCanvas() { ctx.fillStyle='#fff'; ctx.fillRect(0,0,canvas.width,canvas.height); }
+        function drawSmooth() {
+            const p = points;
+            const len = p.length;
+            // 取最後 4 個點做 Catmull-Rom 平滑
+            const p0 = p[Math.max(0, len - 4)];
+            const p1 = p[len - 3] || p0;
+            const p2 = p[len - 2];
+            const p3 = p[len - 1];
+
+            // Catmull-Rom 轉 Bezier 控制點
+            const cp1x = p1.x + (p2.x - p0.x) / 6;
+            const cp1y = p1.y + (p2.y - p0.y) / 6;
+            const cp2x = p2.x - (p3.x - p1.x) / 6;
+            const cp2y = p2.y - (p3.y - p1.y) / 6;
+
+            ctx.beginPath();
+            ctx.moveTo(p1.x, p1.y);
+            ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, p2.x, p2.y);
+            ctx.stroke();
+        }
+
+        function startDraw(x, y) {
+            isDrawing = true;
+            points    = [{ x, y }];
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+        }
+
+        function moveDraw(x, y) {
+            if (!isDrawing) return;
+            addPoint(x, y);
+        }
+
+        function endDraw() {
+            if (!isDrawing) return;
+            isDrawing = false;
+            // 畫最後一段確保筆跡收尾完整
+            if (points.length >= 2) {
+                const last = points[points.length - 1];
+                ctx.beginPath();
+                ctx.moveTo(points[points.length - 2].x, points[points.length - 2].y);
+                ctx.lineTo(last.x, last.y);
+                ctx.stroke();
+            }
+            points = [];
+        }
+
+        // Mouse
+        canvas.addEventListener('mousedown', e => startDraw(e.offsetX, e.offsetY));
+        canvas.addEventListener('mousemove', e => moveDraw(e.offsetX, e.offsetY));
+        canvas.addEventListener('mouseup',   () => endDraw());
+        canvas.addEventListener('mouseleave',() => endDraw());
+
+        // Touch
+        canvas.addEventListener('touchstart', e => {
+            e.preventDefault();
+            const t = e.touches[0], r = canvas.getBoundingClientRect();
+            startDraw(t.clientX - r.left, t.clientY - r.top);
+        }, { passive: false });
+        canvas.addEventListener('touchmove', e => {
+            e.preventDefault();
+            const t = e.touches[0], r = canvas.getBoundingClientRect();
+            moveDraw(t.clientX - r.left, t.clientY - r.top);
+        }, { passive: false });
+        canvas.addEventListener('touchend',   () => endDraw());
+        canvas.addEventListener('touchcancel',() => endDraw());
+
+        function clearCanvas() {
+            ctx.fillStyle = '#fff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            updateBrush();
+        }
 
         function showDownloadSection() {
             document.getElementById('uploadSection').classList.add('hidden');
@@ -674,41 +734,73 @@
             btn.disabled = true;
 
             try {
-                // 用 ImageTracer 把 PNG 描邊轉成 SVG 向量
-                const options = {
-                    // 黑白簽名最佳化設定
-                    numberofcolors: 2,
-                    colorsampling:  0,
-                    colorquantcycles: 1,
-                    ltres: 1,          // 直線誤差容忍
-                    qtres: 1,          // 曲線誤差容忍
-                    pathomit: 8,       // 忽略小雜點（像素）
-                    rightangleenhance: true,
-                    strokewidth: 0,
-                    linefilter: false,
-                    scale: 1,
-                    roundcoords: 1,
-                    viewbox: true,
-                    desc: false,
-                    blurradius: 0,
-                };
-
-                // 建立暫時 Image 物件傳入 imagetracer
+                // ── 步驟1：把 dataURL 畫到暫時 canvas，反轉黑白 ──
+                // 原圖：白底黑字 → 目標：黑色筆跡保留（實心），白色背景變透明
                 const img = new Image();
                 img.src = studentData.signatureDataUrl;
                 await new Promise(r => { img.onload = r; });
 
-                // 畫到暫時 canvas 取得 ImageData
                 const tmp = document.createElement('canvas');
                 tmp.width  = canvas.width;
                 tmp.height = canvas.height;
                 const tmpCtx = tmp.getContext('2d');
                 tmpCtx.drawImage(img, 0, 0);
+
+                // 白色背景像素 → alpha=0（透明），深色筆跡保留
                 const imgData = tmpCtx.getImageData(0, 0, tmp.width, tmp.height);
+                const d = imgData.data;
+                for (let i = 0; i < d.length; i += 4) {
+                    const brightness = (d[i] + d[i+1] + d[i+2]) / 3;
+                    if (brightness > 200) {
+                        // 接近白色 → 透明
+                        d[i+3] = 0;
+                    } else {
+                        // 深色筆跡 → 強制純黑，不透明
+                        d[i]   = 0;
+                        d[i+1] = 0;
+                        d[i+2] = 0;
+                        d[i+3] = 255;
+                    }
+                }
+                tmpCtx.putImageData(imgData, 0, 0);
 
-                const svgStr = ImageTracer.imagedataToSVG(imgData, options);
+                // ── 步驟2：ImageTracer 描邊 ───────────────────────
+                const options = {
+                    numberofcolors:   2,
+                    colorsampling:    0,
+                    colorquantcycles: 1,
+                    ltres:            0.5,
+                    qtres:            0.5,
+                    pathomit:         12,    // 忽略小雜點
+                    rightangleenhance: true,
+                    strokewidth:      0,
+                    linefilter:       true,
+                    scale:            1,
+                    roundcoords:      2,
+                    viewbox:          true,
+                    desc:             false,
+                    blurradius:       1,     // 輕微模糊讓邊緣更平滑
+                };
 
-                // 下載
+                const tracedData = tmpCtx.getImageData(0, 0, tmp.width, tmp.height);
+                let svgStr = ImageTracer.imagedataToSVG(tracedData, options);
+
+                // ── 步驟3：修改 viewBox 為 260x100mm（名牌尺寸）──
+                // imagetracerjs 產出的 viewBox 是像素，改成 mm 單位
+                // 保持長寬比，讓 Tinkercad 匯入後剛好是 260mm × 100mm
+                const svgW = 260;   // mm，長
+                const svgH = 100;   // mm，寬
+
+                svgStr = svgStr
+                    // 替換 width/height/viewBox
+                    .replace(/width="[^"]*"/, `width="${svgW}mm"`)
+                    .replace(/height="[^"]*"/, `height="${svgH}mm"`)
+                    .replace(/viewBox="[^"]*"/, `viewBox="0 0 ${tmp.width} ${tmp.height}"`)
+                    // 移除白色背景矩形（imagetracerjs 會加一個 fill=white 的 rect）
+                    .replace(/<path[^>]*fill="#ffffff"[^>]*\/>/g, '')
+                    .replace(/<path[^>]*fill="white"[^>]*\/>/g, '');
+
+                // ── 步驟4：下載 ──────────────────────────────────
                 const blob = new Blob([svgStr], { type: 'image/svg+xml' });
                 const url  = URL.createObjectURL(blob);
                 const a    = document.createElement('a');
@@ -716,6 +808,7 @@
                 a.href = url;
                 a.click();
                 URL.revokeObjectURL(url);
+
             } catch(err) {
                 Swal.fire({ icon:'error', title:'SVG 轉換失敗', text: err.message, confirmButtonColor:'#16a34a' });
             } finally {
