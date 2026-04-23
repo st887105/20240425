@@ -919,7 +919,7 @@
                     studentId: studentData.id,
                     uid,
                     total
-                }, 30000);
+                }, 60000);  // 60 秒：Drive 上傳需要較長時間
 
                 if (res && res.ok) {
                     studentData.isSignatureUploaded = true;
