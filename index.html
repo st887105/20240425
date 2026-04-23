@@ -228,8 +228,8 @@
                     </button>
                 </div>
             </div>
-            <div class="border border-gray-300 rounded-b-xl mb-6 overflow-hidden bg-white cursor-crosshair shadow-inner">
-                <canvas id="signaturePad" class="w-full h-[300px] bg-white touch-none"></canvas>
+            <div id="canvasWrapper" class="border border-gray-300 rounded-b-xl mb-6 overflow-hidden bg-white cursor-crosshair shadow-inner">
+                <canvas id="signaturePad" style="display:block;background:#fff;touch-action:none;"></canvas>
             </div>
 
             <!-- 上傳區塊 -->
@@ -418,16 +418,18 @@
                     headers: { 'Content-Type': 'text/plain' },
                     body:    JSON.stringify(payload)
                 });
-                // no-cors 拿不到 response；等 GAS 寫入後再 GET 確認
-                await new Promise(r => setTimeout(r, 1500));
-                const check = await gasCall({ action: 'loadProgress', studentId: payload.studentId });
-                if (check.ok && check.found && check.data.isSignatureUploaded) {
-                    return {
-                        ok:       true,
-                        message:  '簽名上傳成功',
-                        fileUrl:  check.data.signatureDriveUrl,
-                        fileName: check.data.signatureFileName
-                    };
+                // no-cors 拿不到 response；輪詢 GAS 直到簽名寫入（最多 5 次 × 2 秒）
+                for (let i = 0; i < 5; i++) {
+                    await new Promise(r => setTimeout(r, 2000));
+                    const check = await gasCall({ action: 'loadProgress', studentId: payload.studentId });
+                    if (check.ok && check.found && check.data.isSignatureUploaded) {
+                        return {
+                            ok:       true,
+                            message:  '簽名上傳成功',
+                            fileUrl:  check.data.signatureDriveUrl,
+                            fileName: check.data.signatureFileName
+                        };
+                    }
                 }
                 return { ok: false, message: '上傳後查無簽名紀錄，請重試' };
             }
@@ -558,12 +560,20 @@
         const canvas = document.getElementById('signaturePad');
         const ctx    = canvas.getContext('2d');
         let isDrawing = false, lastX = 0, lastY = 0;
+        const CANVAS_H = 300;
 
         function initCanvas() {
-            canvas.width  = canvas.parentElement.getBoundingClientRect().width;
-            canvas.height = 300;
-            ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+            // 取得父容器實際像素寬度，同步設定 canvas attribute 和 style
+            // ★ 關鍵：兩者必須一致，否則座標系統扭曲筆跡就會破碎
+            const w = document.getElementById('canvasWrapper').getBoundingClientRect().width;
+            canvas.width  = Math.round(w);
+            canvas.height = CANVAS_H;
+            canvas.style.width  = Math.round(w) + 'px';
+            canvas.style.height = CANVAS_H + 'px';
+            ctx.fillStyle = '#fff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.lineJoin = 'round';
+            ctx.lineCap  = 'round';
             updateBrush();
             if (studentData.isSignatureUploaded && studentData.signatureDataUrl) {
                 const img = new Image();
@@ -618,13 +628,26 @@
             }
         }
 
-        // ── 上傳簽名（改用 no-cors POST） ────────────────────
+        // ── 上傳簽名（no-cors POST + 輪詢確認） ──────────────
         async function uploadSignature() {
-            // 先確認有沒有畫東西（檢查畫布是否全白）
-            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-            const isBlank   = imageData.data.every((v, i) => (i % 4 === 3) ? v === 0 : true) ||
-                              imageData.data.every((v, i) => (i % 4 !== 3) ? v === 255 : true);
-            if (isBlank) {
+            // 簡單空白偵測：取中央 10×10 像素，全白則不讓上傳
+            const sample = ctx.getImageData(
+                Math.floor(canvas.width / 2) - 5,
+                Math.floor(canvas.height / 2) - 5,
+                10, 10
+            );
+            const allWhite = Array.from(sample.data).every((v, i) => (i % 4 === 3) || v >= 250);
+            // 再取四個角落確認
+            const corners = [
+                ctx.getImageData(10, 10, 5, 5),
+                ctx.getImageData(canvas.width - 15, 10, 5, 5),
+                ctx.getImageData(10, canvas.height - 15, 5, 5),
+                ctx.getImageData(canvas.width - 15, canvas.height - 15, 5, 5)
+            ];
+            const allCornersWhite = corners.every(d =>
+                Array.from(d.data).every((v, i) => (i % 4 === 3) || v >= 250)
+            );
+            if (allWhite && allCornersWhite) {
                 Swal.fire({ icon: 'warning', title: '畫布是空白的', text: '請先在畫布上簽名再上傳！', confirmButtonColor: '#16a34a' });
                 return;
             }
@@ -633,26 +656,43 @@
             const base64 = studentData.signatureDataUrl.replace(/^data:image\/png;base64,/, '');
 
             const btn = document.getElementById('uploadBtn');
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> 上傳中，請稍候…';
-            btn.disabled  = true;
+            btn.disabled = true;
 
             try {
-                const res = await gasCall({
-                    action:      'uploadSignature',
-                    studentId:   studentData.id,
-                    imageBase64: base64
+                await fetch(GAS_URL, {
+                    method:  'POST',
+                    mode:    'no-cors',
+                    headers: { 'Content-Type': 'text/plain' },
+                    body:    JSON.stringify({
+                        action:      'uploadSignature',
+                        studentId:   studentData.id,
+                        imageBase64: base64
+                    })
                 });
-                if (res.ok) {
+
+                // 輪詢最多 5 次，每次等 2 秒
+                let res = null;
+                for (let i = 1; i <= 5; i++) {
+                    btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i> 上傳確認中（${i}/5）…`;
+                    await new Promise(r => setTimeout(r, 2000));
+                    const check = await gasCall({ action: 'loadProgress', studentId: studentData.id });
+                    if (check.ok && check.found && check.data.isSignatureUploaded) {
+                        res = check.data;
+                        break;
+                    }
+                }
+
+                if (res) {
                     studentData.isSignatureUploaded = true;
-                    studentData.signatureDriveUrl   = res.fileUrl;
+                    studentData.signatureDriveUrl   = res.signatureDriveUrl;
                     saveProgress();
                     showDownloadSection();
                     Swal.fire({ icon:'success', title:'上傳成功！', text:'你的簽名已備份到雲端，隨時可以下載。', confirmButtonColor:'#16a34a' });
                 } else {
-                    throw new Error(res.message);
+                    throw new Error('上傳後查無簽名紀錄，請重試');
                 }
             } catch(err) {
-                btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up mr-2"></i> 重新上傳';
+                btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up mr-2 text-xl"></i> 重新上傳';
                 btn.disabled  = false;
                 Swal.fire({ icon:'error', title:'上傳失敗', text: err.message || '請確認網路並重試', confirmButtonColor:'#16a34a' });
             }
@@ -697,9 +737,19 @@
             updateProgressBar();
             window.addEventListener('resize', () => {
                 if (currentStep === 3) {
-                    const t = ctx.getImageData(0,0,canvas.width,canvas.height);
-                    canvas.width = canvas.parentElement.getBoundingClientRect().width;
-                    ctx.putImageData(t,0,0); updateBrush();
+                    // 保存現有筆跡
+                    const tempCanvas = document.createElement('canvas');
+                    tempCanvas.width  = canvas.width;
+                    tempCanvas.height = canvas.height;
+                    tempCanvas.getContext('2d').drawImage(canvas, 0, 0);
+                    // 重設尺寸
+                    const w = document.getElementById('canvasWrapper').getBoundingClientRect().width;
+                    canvas.width  = Math.round(w);
+                    canvas.height = CANVAS_H;
+                    canvas.style.width  = Math.round(w) + 'px';
+                    canvas.style.height = CANVAS_H + 'px';
+                    ctx.drawImage(tempCanvas, 0, 0, canvas.width, canvas.height);
+                    updateBrush();
                 }
             });
         };
