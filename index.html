@@ -76,6 +76,13 @@
 </head>
 <body class="bg-gray-50 min-h-screen flex flex-col font-sans text-gray-800">
 
+    <!-- GAS 未設定警告條（設定好後自動隱藏） -->
+    <div id="gasBanner" class="hidden w-full bg-amber-400 text-amber-900 text-sm font-bold text-center py-2 px-4 flex items-center justify-center gap-2">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        ⚠ GAS_URL 尚未設定！請開啟 index.html，將 <code class="bg-amber-200 px-1 rounded">GAS_URL</code> 換成你的 Apps Script 部署網址，否則進度無法儲存。
+        <button onclick="document.getElementById('gasBanner').classList.add('hidden')" class="ml-4 underline text-amber-800">我知道了</button>
+    </div>
+
     <!-- 儲存狀態指示器 -->
     <div id="saveIndicator" class="hidden">
         <i class="fa-solid fa-cloud-arrow-up"></i>
@@ -357,16 +364,19 @@
     <script>
         // ══════════════════════════════════════════════════════
         //  ★ 請將此 URL 換成你的 GAS Web App 部署網址 ★
+        //  格式：https://script.google.com/macros/s/AKfycbxI_yZpnxUcJxFids4I_R_hx611bjucwctCfPQsfJyWE0RaaRzKaEqg3z4RdQbs_bmL/exec
         // ══════════════════════════════════════════════════════
-        const GAS_URL = 'https://script.google.com/macros/s/AKfycbxI_yZpnxUcJxFids4I_R_hx611bjucwctCfPQsfJyWE0RaaRzKaEqg3z4RdQbs_bmL/exec';
+        const GAS_URL = 'YOUR_GAS_WEB_APP_URL_HERE';
         // ══════════════════════════════════════════════════════
+
+        const GAS_READY = GAS_URL && GAS_URL !== 'YOUR_GAS_WEB_APP_URL_HERE';
 
         let currentStep = 0;
         const totalSteps = 5;
         let studentData = {
             id: '', q1: '', q2: '',
-            signatureDataUrl: '',   // 暫存在記憶體，供下載用
-            signatureDriveUrl: '',  // GAS 回傳的 Drive 連結
+            signatureDataUrl: '',
+            signatureDriveUrl: '',
             isSignatureUploaded: false
         };
 
@@ -398,12 +408,28 @@
         }
 
         // ── GAS API 呼叫 ──────────────────────────────────────
+        // GAS Web App 會將 POST 重導向為 GET，必須加 redirect:'follow'
+        // 同時 Content-Type 不能設 application/json（GAS 不接受 preflight）
+        // 改用 URLSearchParams 以 GET 方式傳送，避免 CORS preflight 問題
         async function gasCall(payload) {
+            if (!GAS_READY) {
+                console.warn('[GAS] URL 尚未設定，跳過 API 呼叫');
+                return { ok: false, offline: true, message: 'GAS_URL 未設定' };
+            }
+            // 將 payload 序列化為 GET 參數（GAS doGet 備援）
+            // 主要以 POST form-data 送，GAS 最相容的方式
+            const form = new FormData();
+            form.append('payload', JSON.stringify(payload));
+
             const res = await fetch(GAS_URL, {
-                method: 'POST',
-                body: JSON.stringify(payload)
+                method:   'POST',
+                body:     form,
+                redirect: 'follow'
             });
-            return res.json();
+            // GAS 回傳 text/plain 包著 JSON 或直接 application/json
+            const text = await res.text();
+            try { return JSON.parse(text); }
+            catch { return { ok: false, message: `伺服器回應非 JSON：${text.slice(0,100)}` }; }
         }
 
         // 儲存進度到 GAS（非阻塞）
@@ -430,6 +456,13 @@
                 return;
             }
             studentData.id = id;
+
+            // GAS 未設定 → 直接進入第一關，不查詢雲端
+            if (!GAS_READY) {
+                currentStep = 1;
+                showStep(currentStep);
+                return;
+            }
 
             // 嘗試從 GAS 載入既有進度
             showIndicator('saving', '查詢雲端進度…');
@@ -464,7 +497,6 @@
                     currentStep = saved.currentStep;
                 } else {
                     currentStep = 1;
-                    // 重置選題
                     document.querySelectorAll('input[type=radio]').forEach(r => r.checked = false);
                     document.getElementById('tinkercadLink').value = '';
                     studentData = { id, q1:'', q2:'', signatureDataUrl:'', signatureDriveUrl:'', isSignatureUploaded: false };
@@ -647,6 +679,10 @@
 
         // ── 初始化 ────────────────────────────────────────────
         window.onload = () => {
+            // 若 GAS_URL 尚未設定，顯示警告條
+            if (!GAS_READY) {
+                document.getElementById('gasBanner').classList.remove('hidden');
+            }
             updateProgressBar();
             window.addEventListener('resize', () => {
                 if (currentStep === 3) {
