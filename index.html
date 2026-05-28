@@ -84,7 +84,7 @@
                 </div>
                 <h1 class="text-xl font-bold text-gray-800">車城國小｜3D列印名牌闖關任務</h1>
             </div>
-            <div class="text-sm text-gray-500 font-medium">自主學習系統 v1.1</div>
+            <div class="text-sm text-gray-500 font-medium">自主學習系統 v1.2</div>
         </div>
         <div class="w-full bg-gray-200 h-2">
             <div id="progressBar" class="bg-brand h-2 transition-all duration-300 w-0"></div>
@@ -240,7 +240,7 @@
             <div id="uploadSection" class="bg-purple-50 p-5 rounded-xl border border-purple-100 mb-4 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div>
                     <h4 class="font-bold text-gray-800 text-lg mb-1">上傳簽名檔至系統</h4>
-                    <p class="text-sm text-gray-600">系統將自動以你的帳號命名，備份到雲端資料夾。</p>
+                    <p class="text-sm text-gray-600">系統將自動轉為 SVG 向量檔，以你的帳號命名後備份到雲端資料夾。</p>
                 </div>
                 <button onclick="uploadSignature()" id="uploadBtn"
                     class="bg-brand hover:bg-brand-dark text-white font-bold py-3 px-6 rounded-lg transition shadow-md w-full sm:w-auto flex items-center justify-center">
@@ -253,7 +253,7 @@
                 <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                     <div>
                         <h4 class="font-bold text-green-800 text-lg mb-1"><i class="fa-solid fa-circle-check mr-2"></i>簽名已備份到雲端！</h4>
-                        <p class="text-sm text-gray-600">下載 PNG 可直接使用；下載 SVG（3D列印用）可直接匯入 Tinkercad，系統已自動轉換為封閉輪廓。</p>
+                        <p class="text-sm text-gray-600">下載 PNG 可直接使用；下載 SVG（3D列印用）可直接匯入 Tinkercad，已自動轉換為封閉輪廓。</p>
                     </div>
                     <div class="flex gap-3 w-full sm:w-auto">
                         <button onclick="downloadSignaturePng()"
@@ -356,7 +356,7 @@
 
     <footer class="bg-gray-800 text-white py-6 text-center mt-auto">
         <p class="text-sm opacity-80">車城國小資訊老師 @ Google Gemini 協作設計</p>
-        <p class="text-xs opacity-50 mt-1">3D Printing Independent Learning Platform v1.1 (GAS Edition)</p>
+        <p class="text-xs opacity-50 mt-1">3D Printing Independent Learning Platform v1.2 (SVG Upload Edition)</p>
     </footer>
 
     <script>
@@ -373,7 +373,8 @@
         const totalSteps = 5;
         let studentData = {
             id: '', q1: '', q2: '',
-            signatureDataUrl: '',
+            signatureDataUrl: '',    // PNG（本地用）
+            signatureSvgString: '',  // SVG 字串（雲端上傳 + 本地下載共用）
             signatureDriveUrl: '',
             isSignatureUploaded: false
         };
@@ -407,15 +408,12 @@
 
         // ══════════════════════════════════════════════════════
         //  GAS 通訊：車城標準智慧路由
-        //
         //  讀取（loadProgress）→ JSONP（doGet）
         //  寫入（saveProgress / upload / submit）→ Raw POST（doPost）
-        //  ※ 兩種方式都不觸發 CORS Preflight
         // ══════════════════════════════════════════════════════
 
         let _jsonpCount = 0;
 
-        // ── JSONP：讀取操作 ───────────────────────────────────
         function gasGet(params, timeoutMs = 10000) {
             return new Promise((resolve, reject) => {
                 if (!GAS_READY) { resolve({ ok: false, message: 'GAS_URL 未設定' }); return; }
@@ -454,7 +452,6 @@
             });
         }
 
-        // ── Raw POST：寫入操作 ────────────────────────────────
         async function gasPost(payload) {
             if (!GAS_READY) return { ok: false, message: 'GAS_URL 未設定' };
             const res = await fetch(GAS_URL, {
@@ -467,27 +464,23 @@
             return await res.json();
         }
 
-        // ── 統一 API 呼叫入口 ─────────────────────────────────
         async function gasCall(payload) {
             if (!GAS_READY) return { ok: true, found: false };
             const action = payload.action;
 
-            // loadProgress → JSONP（需要讀取回傳值）
             if (action === 'loadProgress') {
                 return await gasGet({ action: 'loadProgress', studentId: payload.studentId });
             }
 
-            // 其他寫入操作 → Raw POST
             try {
                 return await gasPost(payload);
             } catch (e) {
                 console.warn('[GAS POST]', action, e.message);
-                // 非 loadProgress 的失敗：樂觀回傳成功（避免阻斷學生流程）
                 return { ok: true };
             }
         }
 
-        // ── 儲存進度（fire-and-forget，不阻斷 UI） ────────────
+        // ── 儲存進度（fire-and-forget） ───────────────────────
         function saveProgress() {
             if (!studentData.id) return;
             showIndicator('saving', '儲存中…');
@@ -527,7 +520,6 @@
                 const res = await gasCall({ action: 'loadProgress', studentId: id });
                 if (res && res.ok && res.found) saved = res.data;
             } catch (e) {
-                // 查詢失敗不影響繼續使用
                 console.warn('loadProgress 失敗:', e.message);
             }
 
@@ -554,7 +546,7 @@
                     currentStep = 1;
                     document.querySelectorAll('input[type=radio]').forEach(r => r.checked = false);
                     document.getElementById('tinkercadLink').value = '';
-                    studentData = { id, q1:'', q2:'', signatureDataUrl:'', signatureDriveUrl:'', isSignatureUploaded: false };
+                    studentData = { id, q1:'', q2:'', signatureDataUrl:'', signatureSvgString:'', signatureDriveUrl:'', isSignatureUploaded: false };
                     document.getElementById('uploadSection').classList.remove('hidden');
                     document.getElementById('downloadSection').classList.add('hidden');
                 }
@@ -713,6 +705,81 @@
             document.getElementById('downloadSection').classList.remove('hidden');
         }
 
+        // ══════════════════════════════════════════════════════
+        //  ★ 核心：canvas → SVG 轉換（ImageTracer）
+        //  回傳過濾後的 SVG 字串，失敗則 throw
+        // ══════════════════════════════════════════════════════
+        async function canvasToSvgString() {
+            // 確保 PNG dataUrl 已存在
+            if (!studentData.signatureDataUrl) {
+                studentData.signatureDataUrl = canvas.toDataURL('image/png');
+            }
+
+            const img = await new Promise((res, rej) => {
+                const i = new Image();
+                i.onload  = () => res(i);
+                i.onerror = () => rej(new Error('圖片載入失敗'));
+                i.src = studentData.signatureDataUrl;
+            });
+
+            // 繪製到離屏 canvas（白底）
+            const offCanvas = document.createElement('canvas');
+            offCanvas.width  = img.width  || canvas.width;
+            offCanvas.height = img.height || canvas.height;
+            const offCtx = offCanvas.getContext('2d');
+            offCtx.fillStyle = '#ffffff';
+            offCtx.fillRect(0, 0, offCanvas.width, offCanvas.height);
+            offCtx.drawImage(img, 0, 0);
+
+            // ImageTracer：黑白 2 色、填色輪廓（Tinkercad extrude 用）
+            const options = {
+                ltres: 1, qtres: 1, pathomit: 8,
+                colorsampling: 2, numberofcolors: 2,
+                mincolorratio: 0.02, colorquantcycles: 1,
+                blurradius: 0, blurdelta: 20,
+                strokewidth: 0, linefilter: false,
+                scale: 1, roundcoords: 2,
+                viewbox: true, desc: false, lcpr: 0, qcpr: 0
+            };
+
+            const svgRaw = ImageTracer.imagedataToSVG(
+                offCtx.getImageData(0, 0, offCanvas.width, offCanvas.height),
+                options
+            );
+
+            // 解析 → 過濾白色路徑 → 強制黑色填充
+            const parser = new DOMParser();
+            const svgDoc = parser.parseFromString(svgRaw, 'image/svg+xml');
+            const svgEl  = svgDoc.querySelector('svg');
+            const paths  = svgEl.querySelectorAll('path');
+
+            let keptCount = 0;
+            paths.forEach(path => {
+                const fill = path.getAttribute('fill') || '';
+                const isWhite = /rgba?\(\s*2[0-9]{2}\s*,\s*2[0-9]{2}\s*,\s*2[0-9]{2}/i.test(fill)
+                             || /^#f[e-f][e-f]/i.test(fill)
+                             || fill === '#ffffff' || fill === 'white';
+                if (isWhite) {
+                    path.parentNode.removeChild(path);
+                } else {
+                    path.setAttribute('fill', '#000000');
+                    path.setAttribute('stroke', 'none');
+                    keptCount++;
+                }
+            });
+
+            if (keptCount === 0) {
+                throw new Error('找不到文字輪廓，請確認簽名是深色（黑色/深藍等）再試一次。');
+            }
+
+            // 設定尺寸（Tinkercad 依此決定匯入大小）
+            svgEl.setAttribute('width',  '60mm');
+            svgEl.setAttribute('height', '20mm');
+
+            return new XMLSerializer().serializeToString(svgDoc);
+        }
+
+        // ── PNG 下載（來自本地 canvas）───────────────────────
         function downloadSignaturePng() {
             if (!studentData.signatureDataUrl) return;
             const a = document.createElement('a');
@@ -721,121 +788,58 @@
             a.click();
         }
 
-        // ── SVG 下載：ImageTracer 描邊後過濾白色，只保留黑色文字輪廓 ──
-        // Tinkercad 匯入需要封閉填色路徑（非 stroke，無白色背景層）
+        // ── SVG 下載（來自已轉換的快取 svgString）────────────
         async function downloadSignatureSvg() {
-            if (!studentData.signatureDataUrl) {
-                Swal.fire({ icon: 'warning', title: '還沒有簽名喔', text: '請先在畫板上簽名並上傳，才能下載 SVG。', confirmButtonColor: '#16a34a' });
-                return;
-            }
-
             const btn = document.getElementById('svgBtn');
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> 轉換中…';
-            btn.disabled = true;
 
-            try {
-                // ① 載入簽名圖 → 畫到離屏 canvas（白底）
-                const img = await new Promise((res, rej) => {
-                    const i = new Image();
-                    i.onload  = () => res(i);
-                    i.onerror = () => rej(new Error('圖片載入失敗'));
-                    i.src = studentData.signatureDataUrl;
-                });
+            // 若已有快取直接用，否則重新轉換
+            let svgString = studentData.signatureSvgString;
 
-                const offCanvas = document.createElement('canvas');
-                offCanvas.width  = img.width  || canvas.width;
-                offCanvas.height = img.height || canvas.height;
-                const offCtx = offCanvas.getContext('2d');
-                offCtx.fillStyle = '#ffffff';
-                offCtx.fillRect(0, 0, offCanvas.width, offCanvas.height);
-                offCtx.drawImage(img, 0, 0);
-
-                // ② ImageTracer：黑白 2 色、填色輪廓
-                const options = {
-                    ltres: 1, qtres: 1,
-                    pathomit: 8,
-                    colorsampling: 2,
-                    numberofcolors: 2,
-                    mincolorratio: 0.02,
-                    colorquantcycles: 1,
-                    blurradius: 0, blurdelta: 20,
-                    strokewidth: 0,   // 0 = filled shape，Tinkercad 可 extrude
-                    linefilter: false,
-                    scale: 1, roundcoords: 2,
-                    viewbox: true, desc: false,
-                    lcpr: 0, qcpr: 0
-                };
-
-                const svgRaw = ImageTracer.imagedataToSVG(
-                    offCtx.getImageData(0, 0, offCanvas.width, offCanvas.height),
-                    options
-                );
-
-                // ③ 解析 SVG，過濾掉白色/淺色路徑，強制所有深色路徑填黑
-                //    ImageTracer 產生的白色背景 fill 形如 fill="rgba(255,255,255,..."
-                //    或 fill="#ffffff" / fill="#fefefe" 等，必須排除
-                const parser  = new DOMParser();
-                const svgDoc  = parser.parseFromString(svgRaw, 'image/svg+xml');
-                const svgEl   = svgDoc.querySelector('svg');
-                const paths   = svgEl.querySelectorAll('path');
-
-                let keptCount = 0;
-                paths.forEach(path => {
-                    const fill = path.getAttribute('fill') || '';
-                    // 判斷是否為白/淺色：rgb 255附近 或 hex #f~ 開頭
-                    const isWhite = /rgba?\(\s*2[0-9]{2}\s*,\s*2[0-9]{2}\s*,\s*2[0-9]{2}/i.test(fill)
-                                 || /^#f[e-f][e-f]/i.test(fill)
-                                 || fill === '#ffffff' || fill === 'white';
-                    if (isWhite) {
-                        path.parentNode.removeChild(path);
-                    } else {
-                        // 強制填黑、移除 stroke（確保 Tinkercad 正確 extrude）
-                        path.setAttribute('fill', '#000000');
-                        path.setAttribute('stroke', 'none');
-                        keptCount++;
-                    }
-                });
-
-                if (keptCount === 0) {
-                    throw new Error('找不到文字輪廓，請確認簽名是深色（黑色/深藍等）再試一次。');
+            if (!svgString) {
+                if (!studentData.signatureDataUrl) {
+                    Swal.fire({ icon: 'warning', title: '還沒有簽名喔', text: '請先在畫板上簽名並上傳，才能下載 SVG。', confirmButtonColor: '#16a34a' });
+                    return;
                 }
-
-                // ④ 加入尺寸（Tinkercad 依此決定匯入大小）
-                svgEl.setAttribute('width',  '60mm');
-                svgEl.setAttribute('height', '20mm');
-
-                // ⑤ 序列化並下載
-                const serializer = new XMLSerializer();
-                const svgOut = serializer.serializeToString(svgDoc);
-
-                const blob = new Blob([svgOut], { type: 'image/svg+xml' });
-                const url  = URL.createObjectURL(blob);
-                const a    = document.createElement('a');
-                a.download = `${studentData.id}_簽名_3D列印用.svg`;
-                a.href = url;
-                a.click();
-                URL.revokeObjectURL(url);
-
-                Swal.fire({
-                    icon: 'success',
-                    title: 'SVG 下載完成！',
-                    html: '已過濾白色背景，只保留文字輪廓。<br><br>' +
-                          '① Tinkercad 點「匯入」→ 選擇此 SVG<br>' +
-                          '② 厚度設 <b>2mm</b> → 按「匯入」<br>' +
-                          '③ 放到名牌底板上即完成！',
-                    confirmButtonColor: '#16a34a',
-                    confirmButtonText: '了解，去 Tinkercad！'
-                });
-
-            } catch (err) {
-                Swal.fire({ icon: 'error', title: 'SVG 匯出失敗', text: err.message, confirmButtonColor: '#16a34a' });
-            } finally {
-                btn.innerHTML = '<i class="fa-solid fa-bezier-curve mr-2"></i> SVG（3D列印用）';
-                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> 轉換中…';
+                btn.disabled = true;
+                try {
+                    svgString = await canvasToSvgString();
+                    studentData.signatureSvgString = svgString; // 快取
+                } catch (err) {
+                    Swal.fire({ icon: 'error', title: 'SVG 轉換失敗', text: err.message, confirmButtonColor: '#16a34a' });
+                    btn.innerHTML = '<i class="fa-solid fa-bezier-curve mr-2"></i> SVG（3D列印用）';
+                    btn.disabled = false;
+                    return;
+                }
             }
+
+            const blob = new Blob([svgString], { type: 'image/svg+xml' });
+            const url  = URL.createObjectURL(blob);
+            const a    = document.createElement('a');
+            a.download = `${studentData.id}_簽名_3D列印用.svg`;
+            a.href = url;
+            a.click();
+            URL.revokeObjectURL(url);
+
+            btn.innerHTML = '<i class="fa-solid fa-bezier-curve mr-2"></i> SVG（3D列印用）';
+            btn.disabled = false;
+
+            Swal.fire({
+                icon: 'success',
+                title: 'SVG 下載完成！',
+                html: '已過濾白色背景，只保留文字輪廓。<br><br>' +
+                      '① Tinkercad 點「匯入」→ 選擇此 SVG<br>' +
+                      '② 厚度設 <b>2mm</b> → 按「匯入」<br>' +
+                      '③ 放到名牌底板上即完成！',
+                confirmButtonColor: '#16a34a',
+                confirmButtonText: '了解，去 Tinkercad！'
+            });
         }
 
-        // ── 上傳簽名（Raw POST 分塊，不使用 JSONP）──────────────
+        // ══════════════════════════════════════════════════════
+        //  ★ 上傳簽名：轉 SVG → 分塊 Raw POST → GAS 合併存 Drive
+        //  v1.2 改動：雲端存 SVG（不再存 PNG）
+        // ══════════════════════════════════════════════════════
         async function uploadSignature() {
             // 空白偵測
             const w = canvas.width, h = canvas.height;
@@ -845,48 +849,82 @@
                 const px = Math.floor(Math.random() * w * h) * 4;
                 if (imgData[px] < 240 || imgData[px+1] < 240 || imgData[px+2] < 240) { hasDrawing = true; break; }
             }
-            if (!hasDrawing) { Swal.fire({ icon: 'warning', title: '畫布是空白的', text: '請先在畫布上簽名再上傳！', confirmButtonColor: '#16a34a' }); return; }
+            if (!hasDrawing) {
+                Swal.fire({ icon: 'warning', title: '畫布是空白的', text: '請先在畫布上簽名再上傳！', confirmButtonColor: '#16a34a' });
+                return;
+            }
 
+            // 存 PNG dataUrl（本地下載備用）
             studentData.signatureDataUrl = canvas.toDataURL('image/png');
-            const base64 = studentData.signatureDataUrl.replace(/^data:image\/png;base64,/, '');
 
             const btn = document.getElementById('uploadBtn');
             btn.disabled = true;
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> 上傳中…';
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> 轉換 SVG 中…';
 
+            // ── Step 1：canvas → SVG 字串 ──
+            let svgString = '';
+            try {
+                svgString = await canvasToSvgString();
+                studentData.signatureSvgString = svgString; // 快取，下載按鈕直接用
+            } catch (err) {
+                btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up mr-2 text-xl"></i> 重新上傳';
+                btn.disabled = false;
+                Swal.fire({ icon: 'error', title: 'SVG 轉換失敗', text: err.message, confirmButtonColor: '#16a34a' });
+                return;
+            }
+
+            // ── Step 2：GAS 未設定 → 本地模式 ──
             if (!GAS_READY) {
-                // GAS 未設定：僅本地儲存，直接顯示下載
                 studentData.isSignatureUploaded = true;
                 showDownloadSection();
-                Swal.fire({ icon: 'info', title: '本地模式', text: 'GAS_URL 未設定，簽名僅儲存在本機。', confirmButtonColor: '#16a34a' });
+                Swal.fire({ icon: 'info', title: '本地模式', text: 'GAS_URL 未設定，簽名 SVG 僅儲存在本機，可直接下載使用。', confirmButtonColor: '#16a34a' });
                 btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up mr-2 text-xl"></i> 上傳簽名至雲端';
                 btn.disabled = false;
                 return;
             }
 
+            // ── Step 3：分塊 Raw POST 上傳 SVG（base64 編碼）──
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> 上傳中…';
+
             try {
-                // 分塊 Raw POST（每塊 20000 字元，減少 chunk 數）
+                // SVG 為 UTF-8 文字，用 btoa(unescape(encodeURIComponent())) 安全編碼
+                const svgBase64 = btoa(unescape(encodeURIComponent(svgString)));
                 const CHUNK_SIZE = 20000;
-                const total = Math.ceil(base64.length / CHUNK_SIZE);
+                const total = Math.ceil(svgBase64.length / CHUNK_SIZE);
                 const uid   = Date.now().toString(36);
 
                 for (let i = 0; i < total; i++) {
                     btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i> 上傳中 ${i+1}/${total}…`;
-                    const chunk = base64.slice(i * CHUNK_SIZE, (i + 1) * CHUNK_SIZE);
-                    const res = await gasPost({ action: 'uploadChunk', studentId: studentData.id, uid, index: i, total, chunk });
+                    const chunk = svgBase64.slice(i * CHUNK_SIZE, (i + 1) * CHUNK_SIZE);
+                    const res = await gasPost({
+                        action:    'uploadChunk',
+                        studentId: studentData.id,
+                        uid, index: i, total, chunk,
+                        fileExt:   'svg'   // ← 告訴 GAS 這是 SVG
+                    });
                     if (res && res.ok === false) throw new Error(res.message || '分塊上傳失敗');
                 }
 
-                // 合併
+                // ── Step 4：通知 GAS 合併 ──
                 btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> 合併儲存中…';
-                const res = await gasPost({ action: 'mergeChunks', studentId: studentData.id, uid, total });
+                const res = await gasPost({
+                    action:    'mergeChunks',
+                    studentId: studentData.id,
+                    uid, total,
+                    fileExt:   'svg',           // ← Drive 副檔名
+                    mimeType:  'image/svg+xml'  // ← Drive MIME type
+                });
 
                 if (res && res.ok) {
                     studentData.isSignatureUploaded = true;
                     studentData.signatureDriveUrl   = res.fileUrl || '';
                     saveProgress();
                     showDownloadSection();
-                    Swal.fire({ icon: 'success', title: '上傳成功！', text: '簽名已備份到雲端。', confirmButtonColor: '#16a34a' });
+                    Swal.fire({
+                        icon: 'success', title: '上傳成功！',
+                        text: '簽名 SVG 已備份到雲端，可直接下載匯入 Tinkercad。',
+                        confirmButtonColor: '#16a34a'
+                    });
                 } else {
                     throw new Error((res && res.message) || '合併失敗，請重試');
                 }
