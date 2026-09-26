@@ -9,6 +9,19 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/imagetracerjs@1.2.6/imagetracer_v1.2.6.js"></script>
     <style>
+        /* ── v1.4 補齊：HTML 有用到但上方編譯 CSS 缺少的 class ──
+           （舊版 PNG 按鈕沒有底色就是因為缺 .bg-indigo-400） */
+        .flex-1{flex:1 1 0%}
+        .items-start{align-items:flex-start}
+        .bg-indigo-400{background-color:rgb(129 140 248)}
+        .hover\:bg-indigo-500:hover{background-color:rgb(99 102 241)}
+        @media (min-width:640px){
+            .sm\:flex-none{flex:none}
+            .sm\:items-center{align-items:center}
+        }
+        /* .hidden 必須在所有 display utility 之後 */
+        .hidden{display:none}
+
         .step-container { display: none; animation: fadeIn 0.5s; }
         .step-container.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -84,7 +97,7 @@
                 </div>
                 <h1 class="text-xl font-bold text-gray-800">車城國小｜3D列印名牌闖關任務</h1>
             </div>
-            <div class="text-sm text-gray-500 font-medium">自主學習系統 v1.3</div>
+            <div class="text-sm text-gray-500 font-medium">自主學習系統 v1.4</div>
         </div>
         <div class="w-full bg-gray-200 h-2">
             <div id="progressBar" class="bg-brand h-2 transition-all duration-300 w-0"></div>
@@ -210,7 +223,7 @@
             </div>
             <p class="mb-4 text-gray-700 text-lg">利用下方的線上畫圖板，親手簽下你的名字！<br>
                <span class="text-base text-red-500 font-bold mt-2 inline-block bg-red-50 p-2 rounded border border-red-100">
-                 ※ 建議使用黑色。畫完後點「上傳簽名至雲端」，上傳成功後才會出現下載按鈕。
+                 ※ 建議使用黑色。畫完後點「上傳簽名至雲端」，上傳成功後才會出現下載按鈕。想重簽可隨時直接在畫板上畫，或按「重新簽名上傳」。
                </span>
             </p>
 
@@ -239,13 +252,19 @@
             <!-- 上傳區塊 -->
             <div id="uploadSection" class="bg-purple-50 p-5 rounded-xl border border-purple-100 mb-4 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div>
-                    <h4 class="font-bold text-gray-800 text-lg mb-1">上傳簽名檔至系統</h4>
-                    <p class="text-sm text-gray-600">系統將自動轉為 SVG 向量檔，以你的帳號命名後備份到雲端資料夾。</p>
+                    <h4 id="uploadTitle" class="font-bold text-gray-800 text-lg mb-1">上傳簽名檔至系統</h4>
+                    <p id="uploadHint" class="text-sm text-gray-600">系統將自動轉為 SVG 向量檔，以你的帳號命名後備份到雲端資料夾。</p>
                 </div>
-                <button onclick="uploadSignature()" id="uploadBtn"
-                    class="bg-brand hover:bg-brand-dark text-white font-bold py-3 px-6 rounded-lg transition shadow-md w-full sm:w-auto flex items-center justify-center">
-                    <i class="fa-solid fa-cloud-arrow-up mr-2 text-xl"></i> 上傳簽名至雲端
-                </button>
+                <div class="flex gap-3 w-full sm:w-auto">
+                    <button onclick="cancelReupload()" id="cancelReuploadBtn"
+                        class="hidden flex-1 sm:flex-none bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-bold py-3 px-5 rounded-lg transition items-center justify-center">
+                        取消
+                    </button>
+                    <button onclick="uploadSignature()" id="uploadBtn"
+                        class="flex-1 sm:flex-none bg-brand hover:bg-brand-dark text-white font-bold py-3 px-6 rounded-lg transition shadow-md flex items-center justify-center">
+                        <i class="fa-solid fa-cloud-arrow-up mr-2 text-xl"></i> 上傳簽名至雲端
+                    </button>
+                </div>
             </div>
 
             <!-- 下載區塊（上傳成功後才顯示） -->
@@ -255,7 +274,11 @@
                         <h4 class="font-bold text-green-800 text-lg mb-1"><i class="fa-solid fa-circle-check mr-2"></i>簽名已備份到雲端！</h4>
                         <p class="text-sm text-gray-600">下載 PNG 可直接使用；下載 SVG（3D列印用）可直接匯入 Tinkercad，已自動轉換為封閉輪廓。</p>
                     </div>
-                    <div class="flex gap-3 w-full sm:w-auto">
+                    <div class="flex flex-wrap gap-3 w-full sm:w-auto">
+                        <button onclick="resetForReupload()"
+                            class="flex-1 sm:flex-none bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-bold py-3 px-5 rounded-lg transition shadow-md flex items-center justify-center">
+                            <i class="fa-solid fa-rotate-right mr-2"></i> 重新簽名上傳
+                        </button>
                         <button onclick="downloadSignaturePng()"
                             class="flex-1 sm:flex-none bg-indigo-400 hover:bg-indigo-500 text-white font-bold py-3 px-5 rounded-lg transition shadow-md flex items-center justify-center">
                             <i class="fa-solid fa-image mr-2"></i> PNG
@@ -356,7 +379,7 @@
 
     <footer class="bg-gray-800 text-white py-6 text-center mt-auto">
         <p class="text-sm opacity-80">車城國小資訊老師 @ Google Gemini 協作設計</p>
-        <p class="text-xs opacity-50 mt-1">3D Printing Independent Learning Platform v1.3 (Stable SVG Edition)</p>
+        <p class="text-xs opacity-50 mt-1">3D Printing Independent Learning Platform v1.4 (Re-upload Edition)</p>
     </footer>
 
     <script>
@@ -407,7 +430,7 @@
         }
 
         // ══════════════════════════════════════════════════════
-        //  GAS 通訊：車城標準智慧路由
+        //  GAS 通訊：車城標準智慧路由（⚠ 不可修改）
         //  讀取（loadProgress）→ JSONP（doGet）
         //  寫入（saveProgress / upload / submit）→ Raw POST（doPost）
         // ══════════════════════════════════════════════════════
@@ -547,8 +570,7 @@
                     document.querySelectorAll('input[type=radio]').forEach(r => r.checked = false);
                     document.getElementById('tinkercadLink').value = '';
                     studentData = { id, q1:'', q2:'', signatureDataUrl:'', signatureSvgString:'', signatureDriveUrl:'', isSignatureUploaded: false };
-                    document.getElementById('uploadSection').classList.remove('hidden');
-                    document.getElementById('downloadSection').classList.add('hidden');
+                    showUploadSection();
                 }
             } else {
                 showIndicator('saved', '✓ 建立新紀錄');
@@ -592,7 +614,10 @@
         }
 
         function prevStep(step) {
-            if (currentStep > 0) { currentStep = step - 1; showStep(currentStep); saveProgress(); }
+            if (currentStep > 0) {
+                currentStep = step - 1; showStep(currentStep); saveProgress();
+                if (currentStep === 3) setTimeout(initCanvas, 100);
+            }
         }
 
         // ── 畫布 ──────────────────────────────────────────────
@@ -667,6 +692,12 @@
         }
 
         function startDraw(x, y) {
+            // v1.4：只要畫板內容變動，舊的 PNG/SVG 快取就作廢；
+            //       若目前顯示「已備份」區塊，自動切回上傳區塊讓學生重新上傳
+            invalidateSignatureCache();
+            if (!document.getElementById('downloadSection').classList.contains('hidden')) {
+                showUploadSection();
+            }
             isDrawing = true; points = [{ x, y }];
             curStroke = { segs: [], color: ctx.strokeStyle, lineWidth: ctx.lineWidth };
             ctx.beginPath(); ctx.moveTo(x, y);
@@ -700,19 +731,82 @@
             updateBrush();
         }
 
+        // ══════════════════════════════════════════════════════
+        //  v1.4 新增：簽名狀態管理（上傳區 ⇄ 下載區切換）
+        // ══════════════════════════════════════════════════════
+        const UPLOAD_BTN_HTML = '<i class="fa-solid fa-cloud-arrow-up mr-2 text-xl"></i> 上傳簽名至雲端';
+        const SVG_BTN_HTML    = '<i class="fa-solid fa-bezier-curve mr-2"></i> SVG（3D列印用）';
+        let isUploading = false;
+
+        // 畫板是否有筆跡：全畫面每 2px 掃一次（取代舊版隨機抽 200 點，細簽名常被誤判空白）
+        function hasInk() {
+            const w = canvas.width, h = canvas.height;
+            if (!w || !h) return false;
+            const d = ctx.getImageData(0, 0, w, h).data;
+            let dark = 0;
+            for (let y = 0; y < h; y += 2) {
+                for (let x = 0; x < w; x += 2) {
+                    const p = (y * w + x) * 4;
+                    if (d[p] < 200 || d[p + 1] < 200 || d[p + 2] < 200) {
+                        if (++dark >= 5) return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        function invalidateSignatureCache() {
+            studentData.signatureDataUrl   = '';
+            studentData.signatureSvgString = '';
+        }
+
+        function resetUploadBtn(html) {
+            const btn = document.getElementById('uploadBtn');
+            btn.innerHTML = html || UPLOAD_BTN_HTML;
+            btn.disabled  = false;
+        }
+
+        function showUploadSection() {
+            const reupload = studentData.isSignatureUploaded;
+            document.getElementById('uploadSection').classList.remove('hidden');
+            document.getElementById('downloadSection').classList.add('hidden');
+            document.getElementById('uploadTitle').textContent = reupload ? '重新上傳簽名檔' : '上傳簽名檔至系統';
+            document.getElementById('uploadHint').textContent  = reupload
+                ? '簽完新的簽名後按「上傳簽名至雲端」，雲端紀錄會更新為新的簽名（舊檔仍保留在老師的資料夾）。'
+                : '系統將自動轉為 SVG 向量檔，以你的帳號命名後備份到雲端資料夾。';
+            document.getElementById('cancelReuploadBtn').classList.toggle('hidden', !reupload);
+            if (!isUploading) resetUploadBtn();
+        }
+
         function showDownloadSection() {
             document.getElementById('uploadSection').classList.add('hidden');
             document.getElementById('downloadSection').classList.remove('hidden');
+            document.getElementById('cancelReuploadBtn').classList.add('hidden');
+            resetUploadBtn();
+        }
+
+        // 「重新簽名上傳」按鈕
+        async function resetForReupload() {
+            const r = await Swal.fire({
+                icon: 'question', title: '要重新簽名嗎？',
+                html: '畫板會清空，請重新簽名後再按「上傳簽名至雲端」。<br>（已上傳的舊檔不會被刪除）',
+                showCancelButton: true, confirmButtonColor: '#16a34a',
+                confirmButtonText: '重新簽名', cancelButtonText: '先不要'
+            });
+            if (!r.isConfirmed) return;
+            clearCanvas();
+            invalidateSignatureCache();
+            showUploadSection();
+        }
+
+        // 「取消」：回到已備份狀態（雲端檔案仍在）
+        function cancelReupload() {
+            if (isUploading) return;
+            showDownloadSection();
         }
 
         // ══════════════════════════════════════════════════════
-        //  ★ 核心：canvas → SVG 轉換（穩定版 v1.3）
-        //  做法：二值化(純黑白) → 固定黑白調色盤交給 ImageTracer
-        //        → 只保留黑色封閉輪廓 → 裁切邊界框 → 設定 mm 尺寸
-        //
-        //  修正「找不到文字輪廓」：舊版讓 ImageTracer 自動量化顏色，
-        //  細簽名黑色佔比 <2% 會被 mincolorratio 當雜訊丟掉。改成強制
-        //  黑白＋指定調色盤後，只要畫面有深色筆跡就一定保留。
+        //  ★ 核心：canvas → SVG 轉換（穩定版 v1.3，未變動）
         // ══════════════════════════════════════════════════════
         async function canvasToSvgString() {
             // 確保 PNG dataUrl 已存在
@@ -738,8 +832,7 @@
             octx.fillRect(0, 0, srcW, srcH);
             octx.drawImage(img, 0, 0, srcW, srcH);
 
-            // 2) 二值化：亮度 < 200 視為筆跡 → 純黑；其餘 → 純白
-            //    同時記錄筆跡邊界框（minX..maxY），供之後裁切
+            // 2) 二值化
             const TH = 200;
             const id = octx.getImageData(0, 0, srcW, srcH);
             const d  = id.data;
@@ -765,7 +858,7 @@
                 throw new Error('找不到筆跡，請先在畫板上簽名（建議黑色），再試一次。');
             }
 
-            // 3) 裁切到邊界框（加少許留白），讓匯入後的圖形不會縮在一大片空白裡
+            // 3) 裁切到邊界框
             octx.putImageData(id, 0, 0);
             const pad = 10;
             const cx  = Math.max(0, minX - pad);
@@ -780,11 +873,11 @@
             cctx.drawImage(off, cx, cy, cw, ch, 0, 0, cw, ch);
             const cropData = cctx.getImageData(0, 0, cw, ch);
 
-            // 4) ImageTracer：固定黑白調色盤（pal），不自動量化 → 必保留黑色
+            // 4) ImageTracer：固定黑白調色盤
             const options = {
                 ltres: 1, qtres: 1, pathomit: 1,
-                pal: [ { r: 255, g: 255, b: 255, a: 255 },   // 白
-                       { r: 0,   g: 0,   b: 0,   a: 255 } ], // 黑
+                pal: [ { r: 255, g: 255, b: 255, a: 255 },
+                       { r: 0,   g: 0,   b: 0,   a: 255 } ],
                 colorsampling: 0, numberofcolors: 2,
                 mincolorratio: 0, colorquantcycles: 1,
                 blurradius: 0, blurdelta: 20,
@@ -794,7 +887,7 @@
             };
             const svgRaw = ImageTracer.imagedataToSVG(cropData, options);
 
-            // 5) 解析 → 只保留深色（黑）封閉輪廓，移除白色背景路徑
+            // 5) 只保留深色封閉輪廓
             const svgDoc = new DOMParser().parseFromString(svgRaw, 'image/svg+xml');
             const svgEl  = svgDoc.querySelector('svg');
             if (!svgEl) throw new Error('SVG 解析失敗，請重試。');
@@ -828,8 +921,7 @@
                 throw new Error('找不到文字輪廓，請確認簽名是深色（黑色/深藍等）再試一次。');
             }
 
-            // 6) 設定實體尺寸（mm）給 Tinkercad，並維持簽名長寬比
-            //    以寬 80mm 為基準（名牌常見尺寸），高度等比例換算
+            // 6) 設定實體尺寸（mm）
             const targetW = 80;
             const targetH = Math.max(8, Math.round((ch / cw) * targetW));
             svgEl.setAttribute('width',  targetW + 'mm');
@@ -843,35 +935,51 @@
                  + new XMLSerializer().serializeToString(svgEl);
         }
 
-        // ── PNG 下載（來自本地 canvas）───────────────────────
+        // 沒有本機簽名（例如換電腦、重新整理後）→ 開啟雲端備份檔
+        function openDriveBackup() {
+            if (studentData.signatureDriveUrl) {
+                Swal.fire({
+                    icon: 'info', title: '這台電腦沒有你的簽名',
+                    html: '你的簽名已備份在雲端，可以：<br>① 按「開啟雲端檔」下載上次的 SVG<br>② 或按「重新簽名上傳」重簽一次',
+                    showCancelButton: true, confirmButtonColor: '#16a34a',
+                    confirmButtonText: '開啟雲端檔', cancelButtonText: '關閉'
+                }).then(r => { if (r.isConfirmed) window.open(studentData.signatureDriveUrl, '_blank'); });
+            } else {
+                Swal.fire({ icon: 'warning', title: '還沒有簽名喔', text: '請按「重新簽名上傳」，在畫板上簽名並上傳後再下載。', confirmButtonColor: '#16a34a' });
+            }
+        }
+
+        // ── PNG 下載 ─────────────────────────────────────────
         function downloadSignaturePng() {
-            if (!studentData.signatureDataUrl) return;
+            if (!studentData.signatureDataUrl && hasInk()) {
+                studentData.signatureDataUrl = canvas.toDataURL('image/png');
+            }
+            if (!studentData.signatureDataUrl) { openDriveBackup(); return; }
             const a = document.createElement('a');
             a.download = `${studentData.id}_簽名檔.png`;
             a.href = studentData.signatureDataUrl;
             a.click();
         }
 
-        // ── SVG 下載（來自已轉換的快取 svgString）────────────
+        // ── SVG 下載 ─────────────────────────────────────────
         async function downloadSignatureSvg() {
             const btn = document.getElementById('svgBtn');
-
-            // 若已有快取直接用，否則重新轉換
             let svgString = studentData.signatureSvgString;
 
             if (!svgString) {
-                if (!studentData.signatureDataUrl) {
-                    Swal.fire({ icon: 'warning', title: '還沒有簽名喔', text: '請先在畫板上簽名並上傳，才能下載 SVG。', confirmButtonColor: '#16a34a' });
-                    return;
+                if (!studentData.signatureDataUrl && hasInk()) {
+                    studentData.signatureDataUrl = canvas.toDataURL('image/png');
                 }
+                if (!studentData.signatureDataUrl) { openDriveBackup(); return; }
+
                 btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> 轉換中…';
                 btn.disabled = true;
                 try {
                     svgString = await canvasToSvgString();
-                    studentData.signatureSvgString = svgString; // 快取
+                    studentData.signatureSvgString = svgString;
                 } catch (err) {
                     Swal.fire({ icon: 'error', title: 'SVG 轉換失敗', text: err.message, confirmButtonColor: '#16a34a' });
-                    btn.innerHTML = '<i class="fa-solid fa-bezier-curve mr-2"></i> SVG（3D列印用）';
+                    btn.innerHTML = SVG_BTN_HTML;
                     btn.disabled = false;
                     return;
                 }
@@ -883,9 +991,9 @@
             a.download = `${studentData.id}_簽名_3D列印用.svg`;
             a.href = url;
             a.click();
-            URL.revokeObjectURL(url);
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
 
-            btn.innerHTML = '<i class="fa-solid fa-bezier-curve mr-2"></i> SVG（3D列印用）';
+            btn.innerHTML = SVG_BTN_HTML;
             btn.disabled = false;
 
             Swal.fire({
@@ -901,101 +1009,114 @@
         }
 
         // ══════════════════════════════════════════════════════
+        //  v1.4：上傳用的自動重試包裝（不動 gasPost 本體）
+        //  只有「網路/HTTP 例外」才重試；GAS 回 ok:false 直接報錯
+        // ══════════════════════════════════════════════════════
+        const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+        async function postWithRetry(payload, btn, label, tries = 3) {
+            let lastErr;
+            for (let a = 1; a <= tries; a++) {
+                let res;
+                try {
+                    res = await gasPost(payload);
+                } catch (e) {
+                    lastErr = e;
+                    if (a < tries) {
+                        btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i> ${label}（網路不穩，第 ${a + 1} 次嘗試）`;
+                        await sleep(1200 * a);
+                        continue;
+                    }
+                    throw new Error('網路連線不穩定，已重試 ' + tries + ' 次仍失敗，請稍後再按一次上傳。');
+                }
+                if (res && res.ok === false) throw new Error(res.message || '伺服器回應失敗');
+                return res;
+            }
+            throw lastErr;
+        }
+
+        // ══════════════════════════════════════════════════════
         //  ★ 上傳簽名：轉 SVG → 分塊 Raw POST → GAS 合併存 Drive
-        //  v1.2 改動：雲端存 SVG（不再存 PNG）
         // ══════════════════════════════════════════════════════
         async function uploadSignature() {
-            // 空白偵測
-            const w = canvas.width, h = canvas.height;
-            let hasDrawing = false;
-            const imgData = ctx.getImageData(0, 0, w, h).data;
-            for (let i = 0; i < 200; i++) {
-                const px = Math.floor(Math.random() * w * h) * 4;
-                if (imgData[px] < 240 || imgData[px+1] < 240 || imgData[px+2] < 240) { hasDrawing = true; break; }
-            }
-            if (!hasDrawing) {
+            if (isUploading) return;
+
+            if (!hasInk()) {
                 Swal.fire({ icon: 'warning', title: '畫布是空白的', text: '請先在畫布上簽名再上傳！', confirmButtonColor: '#16a34a' });
                 return;
             }
 
-            // 存 PNG dataUrl（本地下載備用）
-            studentData.signatureDataUrl = canvas.toDataURL('image/png');
-
+            isUploading = true;
             const btn = document.getElementById('uploadBtn');
             btn.disabled = true;
+            document.getElementById('cancelReuploadBtn').classList.add('hidden');
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> 轉換 SVG 中…';
 
-            // ── Step 1：canvas → SVG 字串 ──
-            let svgString = '';
-            try {
-                svgString = await canvasToSvgString();
-                studentData.signatureSvgString = svgString; // 快取，下載按鈕直接用
-            } catch (err) {
-                btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up mr-2 text-xl"></i> 重新上傳';
-                btn.disabled = false;
-                Swal.fire({ icon: 'error', title: 'SVG 轉換失敗', text: err.message, confirmButtonColor: '#16a34a' });
-                return;
-            }
-
-            // ── Step 2：GAS 未設定 → 本地模式 ──
-            if (!GAS_READY) {
-                studentData.isSignatureUploaded = true;
-                showDownloadSection();
-                Swal.fire({ icon: 'info', title: '本地模式', text: 'GAS_URL 未設定，簽名 SVG 僅儲存在本機，可直接下載使用。', confirmButtonColor: '#16a34a' });
-                btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up mr-2 text-xl"></i> 上傳簽名至雲端';
-                btn.disabled = false;
-                return;
-            }
-
-            // ── Step 3：分塊 Raw POST 上傳 SVG（base64 編碼）──
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> 上傳中…';
+            // 每次上傳都以「畫板目前的內容」為準，不沿用舊快取
+            invalidateSignatureCache();
+            studentData.signatureDataUrl = canvas.toDataURL('image/png');
 
             try {
-                // SVG 為 UTF-8 文字，用 btoa(unescape(encodeURIComponent())) 安全編碼
+                // ── Step 1：canvas → SVG 字串 ──
+                let svgString;
+                try {
+                    svgString = await canvasToSvgString();
+                    studentData.signatureSvgString = svgString;
+                } catch (err) {
+                    throw new Error('SVG 轉換失敗：' + err.message);
+                }
+
+                // ── Step 2：GAS 未設定 → 本地模式 ──
+                if (!GAS_READY) {
+                    studentData.isSignatureUploaded = true;
+                    showDownloadSection();
+                    Swal.fire({ icon: 'info', title: '本地模式', text: 'GAS_URL 未設定，簽名 SVG 僅儲存在本機，可直接下載使用。', confirmButtonColor: '#16a34a' });
+                    return;
+                }
+
+                // ── Step 3：分塊上傳（每塊失敗自動重試）──
                 const svgBase64 = btoa(unescape(encodeURIComponent(svgString)));
                 const CHUNK_SIZE = 20000;
                 const total = Math.ceil(svgBase64.length / CHUNK_SIZE);
-                const uid   = Date.now().toString(36);
+                const uid   = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
 
                 for (let i = 0; i < total; i++) {
-                    btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i> 上傳中 ${i+1}/${total}…`;
-                    const chunk = svgBase64.slice(i * CHUNK_SIZE, (i + 1) * CHUNK_SIZE);
-                    const res = await gasPost({
-                        action:    'uploadChunk',
-                        studentId: studentData.id,
-                        uid, index: i, total, chunk,
-                        fileExt:   'svg'   // ← 告訴 GAS 這是 SVG
-                    });
-                    if (res && res.ok === false) throw new Error(res.message || '分塊上傳失敗');
+                    const label = `上傳中 ${i + 1}/${total}`;
+                    btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i> ${label}…`;
+                    await postWithRetry({
+                        action: 'uploadChunk', studentId: studentData.id,
+                        uid, index: i, total,
+                        chunk: svgBase64.slice(i * CHUNK_SIZE, (i + 1) * CHUNK_SIZE),
+                        fileExt: 'svg'
+                    }, btn, label);
                 }
 
                 // ── Step 4：通知 GAS 合併 ──
                 btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> 合併儲存中…';
-                const res = await gasPost({
-                    action:    'mergeChunks',
-                    studentId: studentData.id,
-                    uid, total,
-                    fileExt:   'svg',           // ← Drive 副檔名
-                    mimeType:  'image/svg+xml'  // ← Drive MIME type
-                });
+                const res = await postWithRetry({
+                    action: 'mergeChunks', studentId: studentData.id,
+                    uid, total, fileExt: 'svg', mimeType: 'image/svg+xml'
+                }, btn, '合併儲存中', 2);
 
-                if (res && res.ok) {
-                    studentData.isSignatureUploaded = true;
-                    studentData.signatureDriveUrl   = res.fileUrl || '';
-                    saveProgress();
-                    showDownloadSection();
-                    Swal.fire({
-                        icon: 'success', title: '上傳成功！',
-                        text: '簽名 SVG 已備份到雲端，可直接下載匯入 Tinkercad。',
-                        confirmButtonColor: '#16a34a'
-                    });
-                } else {
-                    throw new Error((res && res.message) || '合併失敗，請重試');
-                }
+                if (!res || !res.ok) throw new Error((res && res.message) || '合併失敗，請重試');
+
+                studentData.isSignatureUploaded = true;
+                studentData.signatureDriveUrl   = res.fileUrl || '';
+                saveProgress();
+                showDownloadSection();
+                Swal.fire({
+                    icon: 'success', title: '上傳成功！',
+                    text: '簽名 SVG 已備份到雲端，可直接下載匯入 Tinkercad。',
+                    confirmButtonColor: '#16a34a'
+                });
             } catch (err) {
-                btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up mr-2 text-xl"></i> 重新上傳';
-                btn.disabled  = false;
+                resetUploadBtn('<i class="fa-solid fa-rotate-right mr-2 text-xl"></i> 重新上傳');
+                if (studentData.isSignatureUploaded) {
+                    document.getElementById('cancelReuploadBtn').classList.remove('hidden');
+                }
                 Swal.fire({ icon: 'error', title: '上傳失敗', text: err.message || '請確認網路並重試', confirmButtonColor: '#16a34a' });
+            } finally {
+                isUploading = false;
             }
         }
 
@@ -1043,6 +1164,7 @@
                     canvas.width = Math.round(w); canvas.height = CANVAS_H;
                     canvas.style.width = Math.round(w) + 'px'; canvas.style.height = CANVAS_H + 'px';
                     ctx.drawImage(tempCanvas, 0, 0, canvas.width, canvas.height);
+                    ctx.lineJoin = 'round'; ctx.lineCap = 'round';
                     updateBrush();
                 }
             });
