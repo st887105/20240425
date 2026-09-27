@@ -1,1449 +1,1174 @@
 <!DOCTYPE html>
-<html lang="zh-Hant-TW">
+<html lang="zh-TW">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>車城國小｜AI 音樂創作家：我的車城專屬校歌</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
-<style>
-/* =====================================================================
-   車城闖關系統｜自建輕量 CSS（取代 cdn.tailwindcss.com）
-   ⚠️ 維護提醒：日後新增任何 utility class，必須回到本區塊補規則，
-      否則樣式會「靜默失效」（不報錯，只是少了 padding 或顏色）。
-   ===================================================================== */
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>車城國小｜3D列印名牌闖關任務</title>
+    <style>*,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/*! tailwindcss v3.4.19 | MIT License | https://tailwindcss.com*/*,:after,:before{box-sizing:border-box;border:0 solid #e5e7eb}:after,:before{--tw-content:""}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;-o-tab-size:4;tab-size:4;font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0}fieldset,legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::-moz-placeholder,textarea::-moz-placeholder{opacity:1;color:#9ca3af}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.top-0{top:0}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.mb-1{margin-bottom:.25rem}.mb-2{margin-bottom:.5rem}.mb-3{margin-bottom:.75rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.ml-2{margin-left:.5rem}.ml-4{margin-left:1rem}.mr-1{margin-right:.25rem}.mr-2{margin-right:.5rem}.mt-1{margin-top:.25rem}.mt-2{margin-top:.5rem}.mt-3{margin-top:.75rem}.mt-6{margin-top:1.5rem}.mt-8{margin-top:2rem}.mt-auto{margin-top:auto}.block{display:block}.inline-block{display:inline-block}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.hidden{display:none}.h-10{height:2.5rem}.h-2{height:.5rem}.h-24{height:6rem}.h-5{height:1.25rem}.h-8{height:2rem}.h-\[300px\]{height:300px}.h-full{height:100%}.min-h-screen{min-height:100vh}.w-0{width:0}.w-10{width:2.5rem}.w-24{width:6rem}.w-4{width:1rem}.w-5{width:1.25rem}.w-8{width:2rem}.w-full{width:100%}.max-w-2xl{max-width:42rem}.max-w-3xl{max-width:48rem}.max-w-4xl{max-width:56rem}.max-w-5xl{max-width:64rem}.max-w-md{max-width:28rem}.flex-grow{flex-grow:1}.transform{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.cursor-crosshair{cursor:crosshair}.cursor-pointer{cursor:pointer}.touch-none{touch-action:none}.resize{resize:both}.list-inside{list-style-position:inside}.list-disc{list-style-type:disc}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-2{gap:.5rem}.gap-3{gap:.75rem}.gap-4{gap:1rem}.gap-8{gap:2rem}.space-y-3>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.75rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.75rem*var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.rounded{border-radius:.25rem}.rounded-2xl{border-radius:1rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:.5rem}.rounded-xl{border-radius:.75rem}.rounded-b-xl{border-bottom-right-radius:.75rem;border-bottom-left-radius:.75rem}.rounded-t-xl{border-top-left-radius:.75rem;border-top-right-radius:.75rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-b-0{border-bottom-width:0}.border-blue-100{--tw-border-opacity:1;border-color:rgb(219 234 254/var(--tw-border-opacity,1))}.border-gray-100{--tw-border-opacity:1;border-color:rgb(243 244 246/var(--tw-border-opacity,1))}.border-gray-200{--tw-border-opacity:1;border-color:rgb(229 231 235/var(--tw-border-opacity,1))}.border-gray-300{--tw-border-opacity:1;border-color:rgb(209 213 219/var(--tw-border-opacity,1))}.border-green-200{--tw-border-opacity:1;border-color:rgb(187 247 208/var(--tw-border-opacity,1))}.border-indigo-100{--tw-border-opacity:1;border-color:rgb(224 231 255/var(--tw-border-opacity,1))}.border-orange-200{--tw-border-opacity:1;border-color:rgb(254 215 170/var(--tw-border-opacity,1))}.border-purple-100{--tw-border-opacity:1;border-color:rgb(243 232 255/var(--tw-border-opacity,1))}.border-red-100{--tw-border-opacity:1;border-color:rgb(254 226 226/var(--tw-border-opacity,1))}.bg-amber-200{--tw-bg-opacity:1;background-color:rgb(253 230 138/var(--tw-bg-opacity,1))}.bg-amber-400{--tw-bg-opacity:1;background-color:rgb(251 191 36/var(--tw-bg-opacity,1))}.bg-blue-100{--tw-bg-opacity:1;background-color:rgb(219 234 254/var(--tw-bg-opacity,1))}.bg-blue-50{--tw-bg-opacity:1;background-color:rgb(239 246 255/var(--tw-bg-opacity,1))}.bg-blue-500{--tw-bg-opacity:1;background-color:rgb(59 130 246/var(--tw-bg-opacity,1))}.bg-blue-600{--tw-bg-opacity:1;background-color:rgb(37 99 235/var(--tw-bg-opacity,1))}.bg-brand{--tw-bg-opacity:1;background-color:rgb(22 163 74/var(--tw-bg-opacity,1))}.bg-gray-100{--tw-bg-opacity:1;background-color:rgb(243 244 246/var(--tw-bg-opacity,1))}.bg-gray-200{--tw-bg-opacity:1;background-color:rgb(229 231 235/var(--tw-bg-opacity,1))}.bg-gray-50{--tw-bg-opacity:1;background-color:rgb(249 250 251/var(--tw-bg-opacity,1))}.bg-gray-800{--tw-bg-opacity:1;background-color:rgb(31 41 55/var(--tw-bg-opacity,1))}.bg-green-100{--tw-bg-opacity:1;background-color:rgb(220 252 231/var(--tw-bg-opacity,1))}.bg-green-50{--tw-bg-opacity:1;background-color:rgb(240 253 244/var(--tw-bg-opacity,1))}.bg-indigo-100{--tw-bg-opacity:1;background-color:rgb(224 231 255/var(--tw-bg-opacity,1))}.bg-indigo-50{--tw-bg-opacity:1;background-color:rgb(238 242 255/var(--tw-bg-opacity,1))}.bg-orange-100{--tw-bg-opacity:1;background-color:rgb(255 237 213/var(--tw-bg-opacity,1))}.bg-orange-50{--tw-bg-opacity:1;background-color:rgb(255 247 237/var(--tw-bg-opacity,1))}.bg-purple-100{--tw-bg-opacity:1;background-color:rgb(243 232 255/var(--tw-bg-opacity,1))}.bg-purple-50{--tw-bg-opacity:1;background-color:rgb(250 245 255/var(--tw-bg-opacity,1))}.bg-red-50{--tw-bg-opacity:1;background-color:rgb(254 242 242/var(--tw-bg-opacity,1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}.p-2{padding:.5rem}.p-3{padding:.75rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.p-8{padding:2rem}.px-1{padding-left:.25rem;padding-right:.25rem}.px-3{padding-left:.75rem;padding-right:.75rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.px-8{padding-left:2rem;padding-right:2rem}.py-1{padding-top:.25rem;padding-bottom:.25rem}.py-2{padding-top:.5rem;padding-bottom:.5rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}.py-8{padding-top:2rem;padding-bottom:2rem}.pb-4{padding-bottom:1rem}.text-center{text-align:center}.font-mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace}.font-sans{font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji}.text-2xl{font-size:1.5rem;line-height:2rem}.text-5xl{font-size:3rem;line-height:1}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:.75rem;line-height:1rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.text-amber-800{--tw-text-opacity:1;color:rgb(146 64 14/var(--tw-text-opacity,1))}.text-amber-900{--tw-text-opacity:1;color:rgb(120 53 15/var(--tw-text-opacity,1))}.text-blue-500{--tw-text-opacity:1;color:rgb(59 130 246/var(--tw-text-opacity,1))}.text-blue-600{--tw-text-opacity:1;color:rgb(37 99 235/var(--tw-text-opacity,1))}.text-blue-700{--tw-text-opacity:1;color:rgb(29 78 216/var(--tw-text-opacity,1))}.text-brand{--tw-text-opacity:1;color:rgb(22 163 74/var(--tw-text-opacity,1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128/var(--tw-text-opacity,1))}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99/var(--tw-text-opacity,1))}.text-gray-700{--tw-text-opacity:1;color:rgb(55 65 81/var(--tw-text-opacity,1))}.text-gray-800{--tw-text-opacity:1;color:rgb(31 41 55/var(--tw-text-opacity,1))}.text-green-700{--tw-text-opacity:1;color:rgb(21 128 61/var(--tw-text-opacity,1))}.text-green-800{--tw-text-opacity:1;color:rgb(22 101 52/var(--tw-text-opacity,1))}.text-indigo-500{--tw-text-opacity:1;color:rgb(99 102 241/var(--tw-text-opacity,1))}.text-indigo-700{--tw-text-opacity:1;color:rgb(67 56 202/var(--tw-text-opacity,1))}.text-orange-700{--tw-text-opacity:1;color:rgb(194 65 12/var(--tw-text-opacity,1))}.text-orange-800{--tw-text-opacity:1;color:rgb(154 52 18/var(--tw-text-opacity,1))}.text-purple-700{--tw-text-opacity:1;color:rgb(126 34 206/var(--tw-text-opacity,1))}.text-red-500{--tw-text-opacity:1;color:rgb(239 68 68/var(--tw-text-opacity,1))}.text-red-600{--tw-text-opacity:1;color:rgb(220 38 38/var(--tw-text-opacity,1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.underline{text-decoration-line:underline}.accent-brand{accent-color:#16a34a}.opacity-50{opacity:.5}.opacity-80{opacity:.8}.shadow-inner{--tw-shadow:inset 0 2px 4px 0 rgba(0,0,0,.05);--tw-shadow-colored:inset 0 2px 4px 0 var(--tw-shadow-color)}.shadow-inner,.shadow-lg{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color),0 4px 6px -4px var(--tw-shadow-color)}.shadow-md{--tw-shadow:0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -2px rgba(0,0,0,.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color),0 2px 4px -2px var(--tw-shadow-color)}.shadow-md,.shadow-sm{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgba(0,0,0,.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color)}.transition{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,-webkit-backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter,-webkit-backdrop-filter;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.duration-200{transition-duration:.2s}.duration-300{transition-duration:.3s}.hover\:bg-blue-50:hover{--tw-bg-opacity:1;background-color:rgb(239 246 255/var(--tw-bg-opacity,1))}.hover\:bg-blue-600:hover{--tw-bg-opacity:1;background-color:rgb(37 99 235/var(--tw-bg-opacity,1))}.hover\:bg-blue-700:hover{--tw-bg-opacity:1;background-color:rgb(29 78 216/var(--tw-bg-opacity,1))}.hover\:bg-brand-dark:hover{--tw-bg-opacity:1;background-color:rgb(21 128 61/var(--tw-bg-opacity,1))}.hover\:bg-gray-300:hover{--tw-bg-opacity:1;background-color:rgb(209 213 219/var(--tw-bg-opacity,1))}.hover\:bg-gray-50:hover{--tw-bg-opacity:1;background-color:rgb(249 250 251/var(--tw-bg-opacity,1))}.hover\:bg-indigo-50:hover{--tw-bg-opacity:1;background-color:rgb(238 242 255/var(--tw-bg-opacity,1))}.hover\:text-gray-800:hover{--tw-text-opacity:1;color:rgb(31 41 55/var(--tw-text-opacity,1))}.hover\:shadow-lg:hover{--tw-shadow:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color),0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.focus\:border-transparent:focus{border-color:transparent}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.focus\:ring-2:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow,0 0 #0000)}.focus\:ring-brand:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(22 163 74/var(--tw-ring-opacity,1))}@media (min-width:640px){.sm\:w-auto{width:auto}.sm\:flex-row{flex-direction:row}}@media (min-width:768px){.md\:col-span-2{grid-column:span 2/span 2}.md\:col-span-3{grid-column:span 3/span 3}.md\:grid-cols-5{grid-template-columns:repeat(5,minmax(0,1fr))}.md\:p-10{padding:2.5rem}}</style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/imagetracerjs@1.2.6/imagetracer_v1.2.6.js"></script>
+    <style>
+        /* ── v1.4 補齊：HTML 有用到但上方編譯 CSS 缺少的 class ──
+           （舊版 PNG 按鈕沒有底色就是因為缺 .bg-indigo-400） */
+        .flex-1{flex:1 1 0%}
+        .items-start{align-items:flex-start}
+        .bg-indigo-400{background-color:rgb(129 140 248)}
+        .hover\:bg-indigo-500:hover{background-color:rgb(99 102 241)}
+        @media (min-width:640px){
+            .sm\:flex-none{flex:none}
+            .sm\:items-center{align-items:center}
+        }
+        /* .hidden 必須在所有 display utility 之後 */
+        .hidden{display:none}
 
-/* ---------- 色票 ---------- */
-:root{
-  --night:#0f1f3d; --night-2:#16305a; --sea:#0e7c86; --sea-2:#13a3a8; --sea-50:#e6f6f6;
-  --rice:#e4b43c; --rice-50:#fdf6e3; --seal:#d0282e; --seal-50:#fdecec;
-  --ink:#1c2433; --slate-600:#4a5568; --slate-500:#64748b; --slate-400:#94a3b8;
-  --slate-200:#e2e8f0; --slate-100:#f1f5f9; --slate-50:#f8fafc; --paper:#fbfaf6;
-  --green-600:#16a34a; --green-50:#ecfdf3; --amber-600:#b45309; --amber-50:#fffbeb;
-  --radius:14px;
-}
+        .step-container { display: none; animation: fadeIn 0.5s; }
+        .step-container.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        canvas { touch-action: none; }
+        input[type="radio"]:checked + span { font-weight: bold; color: #15803d; }
 
-/* ---------- Reset ---------- */
-*,::before,::after{box-sizing:border-box;border:0 solid var(--slate-200);margin:0;padding:0}
-:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-body{font-family:'Noto Sans TC',system-ui,-apple-system,'PingFang TC','Microsoft JhengHei',sans-serif;
-  background:var(--paper);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased}
-img,video,audio{max-width:100%;display:block}
-button,input,select,textarea{font:inherit;color:inherit}
-button{cursor:pointer;background:none}
-a{color:var(--sea);text-decoration:underline;text-underline-offset:3px}
+        /* ── YouTube 縮圖播放器 ── */
+        .yt-thumb-wrapper {
+            position: relative; width: 100%; padding-bottom: 56.25%;
+            background: #000; border-radius: 0.75rem; overflow: hidden;
+            cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+        }
+        .yt-thumb-wrapper img {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%; object-fit: cover; transition: opacity 0.2s;
+        }
+        .yt-thumb-wrapper:hover img { opacity: 0.82; }
+        .yt-play-btn {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 72px; height: 72px;
+            background: rgba(220,38,38,0.92); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            transition: transform 0.18s, background 0.18s;
+            pointer-events: none; box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+        }
+        .yt-thumb-wrapper:hover .yt-play-btn {
+            transform: translate(-50%, -50%) scale(1.12); background: rgba(220,38,38,1);
+        }
+        .yt-play-btn svg { width: 32px; height: 32px; fill: white; margin-left: 5px; }
+        .yt-label {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.72));
+            color: white; padding: 28px 14px 10px;
+            font-size: 0.88rem; font-weight: 600; pointer-events: none;
+        }
 
-/* ---------- 容器 ---------- */
-.container{width:100%;max-width:960px;margin:0 auto;padding:0 16px}
-.max-w-md{max-width:28rem}
-.mx-auto{margin-left:auto;margin-right:auto}
-
-/* ---------- display / position ---------- */
-.block{display:block}.inline-block{display:inline-block}
-.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}
-.relative{position:relative}.fixed{position:fixed}.sticky{position:sticky}
-.inset-0{top:0;right:0;bottom:0;left:0}.top-0{top:0}
-.z-40{z-index:40}.z-50{z-index:50}
-.overflow-x-auto{overflow-x:auto}.overflow-y-auto{overflow-y:auto}
-
-/* ---------- flex / grid ---------- */
-.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.flex-1{flex:1 1 0%}
-.items-center{align-items:center}.items-start{align-items:flex-start}.items-end{align-items:flex-end}
-.justify-between{justify-content:space-between}.justify-center{justify-content:center}.justify-end{justify-content:flex-end}
-.gap-1{gap:.25rem}.gap-2{gap:.5rem}.gap-3{gap:.75rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}
-.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
-.grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
-
-/* ---------- 尺寸 ---------- */
-.w-full{width:100%}.h-full{height:100%}.min-w-0{min-width:0}
-
-/* ---------- 間距 ---------- */
-.p-2{padding:.5rem}.p-3{padding:.75rem}.p-4{padding:1rem}.p-6{padding:1.5rem}
-.px-2{padding-left:.5rem;padding-right:.5rem}.px-3{padding-left:.75rem;padding-right:.75rem}.px-4{padding-left:1rem;padding-right:1rem}
-.py-1{padding-top:.25rem;padding-bottom:.25rem}.py-2{padding-top:.5rem;padding-bottom:.5rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}.py-8{padding-top:2rem;padding-bottom:2rem}
-.mt-1{margin-top:.25rem}.mt-2{margin-top:.5rem}.mt-3{margin-top:.75rem}.mt-4{margin-top:1rem}.mt-6{margin-top:1.5rem}.mt-8{margin-top:2rem}
-.mb-1{margin-bottom:.25rem}.mb-2{margin-bottom:.5rem}.mb-3{margin-bottom:.75rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}
-.ml-auto{margin-left:auto}
-
-/* ---------- 文字 ---------- */
-.text-xs{font-size:.75rem;line-height:1.5}.text-sm{font-size:.875rem;line-height:1.6}.text-base{font-size:1rem}
-.text-lg{font-size:1.125rem}.text-xl{font-size:1.25rem}.text-2xl{font-size:1.5rem;line-height:1.35}.text-3xl{font-size:1.875rem;line-height:1.3}
-.font-medium{font-weight:500}.font-bold{font-weight:700}.font-black{font-weight:900}
-.text-center{text-align:center}.text-left{text-align:left}.text-right{text-align:right}
-.whitespace-pre-wrap{white-space:pre-wrap}.break-all{word-break:break-all}.leading-loose{line-height:2}
-.font-mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
-.font-serif{font-family:'Noto Serif TC','Noto Sans TC',serif}
-.truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-
-/* ---------- 文字色 ---------- */
-.text-white{color:#fff}.text-ink{color:var(--ink)}
-.text-slate-400{color:var(--slate-400)}.text-slate-500{color:var(--slate-500)}.text-slate-600{color:var(--slate-600)}
-.text-sea{color:var(--sea)}.text-seal{color:var(--seal)}.text-rice{color:#9a7412}
-.text-green-600{color:var(--green-600)}.text-amber-600{color:var(--amber-600)}
-
-/* ---------- 背景色 ---------- */
-.bg-white{background:#fff}.bg-paper{background:var(--paper)}.bg-slate-50{background:var(--slate-50)}.bg-slate-100{background:var(--slate-100)}
-.bg-sea-50{background:var(--sea-50)}.bg-rice-50{background:var(--rice-50)}.bg-seal-50{background:var(--seal-50)}
-.bg-green-50{background:var(--green-50)}.bg-amber-50{background:var(--amber-50)}
-
-/* ---------- 邊框 ---------- */
-.border{border-width:1px}.border-2{border-width:2px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-l-4{border-left-width:4px}
-.border-sea{border-color:var(--sea)}.border-rice{border-color:var(--rice)}.border-seal{border-color:var(--seal)}.border-slate-200{border-color:var(--slate-200)}
-.rounded{border-radius:8px}.rounded-lg{border-radius:var(--radius)}.rounded-full{border-radius:9999px}
-
-/* ---------- 陰影 ---------- */
-.shadow{box-shadow:0 1px 3px rgba(15,31,61,.08),0 1px 2px rgba(15,31,61,.05)}
-.shadow-lg{box-shadow:0 12px 32px rgba(15,31,61,.14)}
-
-/* ---------- 響應式 ---------- */
-@media (min-width:640px){
-  .sm\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .sm\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
-  .sm\:flex-row{flex-direction:row}
-}
-@media (min-width:900px){
-  .lg\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
-  .lg\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
-}
-
-/* =====================================================================
-   專案自訂元件
-   ===================================================================== */
-/* 頁首：夜空 + 五線譜 */
-.site-header{background:linear-gradient(160deg,var(--night) 0%,var(--night-2) 55%,var(--sea) 130%);color:#fff;position:relative;overflow:hidden}
-.site-header::before{content:"";position:absolute;inset:auto 0 6px 0;height:40px;opacity:.14;
-  background:repeating-linear-gradient(to bottom,#fff 0 1px,transparent 1px 12px)}
-.site-header::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.55;
-  background:radial-gradient(1.5px 1.5px at 12% 22%,#fff 50%,transparent 51%),radial-gradient(1px 1px at 28% 60%,#fff 50%,transparent 51%),
-  radial-gradient(2px 2px at 71% 18%,var(--rice) 50%,transparent 51%),radial-gradient(1px 1px at 86% 48%,#fff 50%,transparent 51%),
-  radial-gradient(1.5px 1.5px at 55% 35%,#fff 50%,transparent 51%),radial-gradient(1px 1px at 40% 12%,#fff 50%,transparent 51%)}
-.header-inner{position:relative;z-index:1;padding-top:22px;padding-bottom:58px}
-.brand-mark{width:44px;height:44px;border-radius:10px;background:var(--seal);display:grid;place-items:center;
-  font-family:'Noto Serif TC',serif;font-weight:900;font-size:1.05rem;letter-spacing:-.05em;box-shadow:0 0 0 3px rgba(228,180,60,.55)}
-.hero-title{font-family:'Noto Serif TC',serif;font-weight:900;font-size:clamp(1.55rem,4.6vw,2.4rem);line-height:1.25;letter-spacing:.02em}
-.hero-sub{color:rgba(255,255,255,.8);font-size:.95rem}
-.version-badge{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.35);color:#fff;font-size:.75rem;padding:2px 10px;border-radius:9999px}
-.version-badge:hover{background:rgba(255,255,255,.3)}
-.header-btn{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:9999px;padding:6px 14px;font-size:.85rem;min-height:36px}
-.header-btn:hover{background:rgba(255,255,255,.25)}
-
-/* 橫幅 */
-.env-banner{font-size:.8rem;padding:6px 12px;text-align:center}
-.env-ok{background:var(--green-50);color:var(--green-600)}
-.env-warn{background:var(--amber-50);color:var(--amber-600)}
-.err-banner{position:sticky;top:0;z-index:45;background:var(--seal);color:#fff;text-align:center;padding:10px 14px;font-weight:700}
-
-/* 卡片與按鈕 */
-.card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius);padding:20px;box-shadow:0 1px 3px rgba(15,31,61,.06)}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;min-height:44px;padding:0 18px;border-radius:10px;font-weight:700;transition:transform .08s,background .15s,opacity .15s}
-.btn:active{transform:translateY(1px)}
-.btn:disabled{opacity:.45;cursor:not-allowed}
-.btn-primary{background:var(--sea);color:#fff}.btn-primary:hover{background:#0a6870}
-.btn-seal{background:var(--seal);color:#fff}.btn-seal:hover{background:#b21f25}
-.btn-ghost{background:#fff;border:1px solid var(--slate-200);color:var(--ink)}.btn-ghost:hover{background:var(--slate-50)}
-.btn-rice{background:var(--rice);color:var(--night)}.btn-rice:hover{background:#d4a42c}
-.btn-sm{min-height:36px;padding:0 12px;font-size:.85rem}
-.field{width:100%;border:1px solid var(--slate-200);border-radius:10px;padding:10px 12px;background:#fff;min-height:44px}
-.field:focus{outline:3px solid rgba(14,124,134,.25);border-color:var(--sea)}
-textarea.field{resize:vertical;line-height:1.7}
-.label{display:block;font-weight:700;margin-bottom:6px}
-.hint{font-size:.8rem;color:var(--slate-500)}
-.counter{font-size:.75rem;color:var(--slate-400);text-align:right;margin-top:2px}
-.counter.bad{color:var(--seal)}
-
-/* 關卡進度（五線譜音符） */
-.stage-track{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;position:relative}
-.stage-chip{border:2px solid var(--slate-200);background:#fff;border-radius:12px;padding:8px 6px;text-align:center;font-size:.78rem;line-height:1.35;color:var(--slate-500)}
-.stage-chip .num{display:block;font-family:'Noto Serif TC',serif;font-weight:900;font-size:1.15rem}
-.stage-chip.done{border-color:var(--sea);color:var(--sea);background:var(--sea-50)}
-.stage-chip.active{border-color:var(--rice);color:var(--night);background:var(--rice-50);box-shadow:0 0 0 3px rgba(228,180,60,.25)}
-.stage-chip.locked{opacity:.55}
-.stage-chip:disabled{cursor:not-allowed}
-.xp-pill{background:var(--night);color:var(--rice);border-radius:9999px;padding:4px 12px;font-weight:700;font-size:.85rem}
-
-/* 關卡標題 */
-.stage-kicker{color:var(--sea);font-weight:700;font-size:.85rem}
-.stage-title{font-family:'Noto Serif TC',serif;font-weight:900;font-size:1.6rem;line-height:1.3}
-
-/* 校歌歌詞：直式寫法不適合手機，改用分句大字 */
-.lyric-sheet{background:var(--paper);border:1px dashed var(--rice);border-radius:12px;padding:16px;
-  background-image:repeating-linear-gradient(to bottom,transparent 0 33px,rgba(228,180,60,.18) 33px 34px)}
-.lyric-line{font-family:'Noto Serif TC',serif;font-weight:700;font-size:1.15rem;letter-spacing:.12em;line-height:34px}
-.lyric-key{background:linear-gradient(transparent 58%,rgba(19,163,168,.28) 58%);padding:0 2px}
-
-/* 題目 */
-.quiz-opt{display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left;border:2px solid var(--slate-200);border-radius:12px;padding:10px 12px;background:#fff;min-height:44px}
-.quiz-opt:hover{border-color:var(--sea-2)}
-.quiz-opt.picked{border-color:var(--sea);background:var(--sea-50)}
-.quiz-opt.right{border-color:var(--green-600);background:var(--green-50)}
-.quiz-opt.wrong{border-color:var(--seal);background:var(--seal-50)}
-.quiz-letter{flex:none;width:26px;height:26px;border-radius:9999px;background:var(--slate-100);display:grid;place-items:center;font-weight:700;font-size:.85rem}
-.feedback{border-radius:10px;padding:10px 12px;font-size:.9rem}
-.feedback.ok{background:var(--green-50);color:#14532d}
-.feedback.no{background:var(--seal-50);color:#7f1d1d}
-
-/* 配對 */
-.match-row{display:grid;grid-template-columns:minmax(0,7rem) minmax(0,1fr);gap:10px;align-items:center}
-.match-word{font-family:'Noto Serif TC',serif;font-weight:900;font-size:1.1rem;letter-spacing:.1em}
-
-/* 三校區歌詞卡 */
-.campus-card{border-radius:14px;padding:16px;border:2px solid}
-.campus-astro{border-color:#3b4f8a;background:linear-gradient(180deg,#eef1fb,#fff)}
-.campus-agri{border-color:#9a7412;background:linear-gradient(180deg,var(--rice-50),#fff)}
-.campus-ocean{border-color:var(--sea);background:linear-gradient(180deg,var(--sea-50),#fff)}
-.campus-tag{display:inline-block;font-size:.75rem;font-weight:700;border-radius:9999px;padding:2px 10px;background:#fff;border:1px solid currentColor}
-.word-chip{display:inline-block;font-size:.8rem;padding:2px 10px;border-radius:9999px;background:#fff;border:1px dashed var(--slate-400);margin:2px 4px 2px 0;min-height:30px}
-.word-chip:hover{border-style:solid;border-color:var(--sea);color:var(--sea)}
-
-/* 曲風選擇 */
-.style-chip{border:2px solid var(--slate-200);border-radius:12px;padding:8px 12px;background:#fff;font-weight:500;min-height:44px}
-.style-chip:hover{border-color:var(--sea-2)}
-.style-chip.on{border-color:var(--sea);background:var(--sea);color:#fff}
-.prompt-box{background:var(--night);color:#e6f0ff;border-radius:12px;padding:14px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.85rem;white-space:pre-wrap;word-break:break-all;max-height:320px;overflow-y:auto}
-
-/* 完賽徽章 */
-.badge-medal{width:168px;height:168px;border-radius:9999px;margin:0 auto;display:grid;place-items:center;text-align:center;
-  background:radial-gradient(circle at 35% 30%,#fff5d6 0%,var(--rice) 45%,#a87a14 100%);color:var(--night);
-  box-shadow:0 0 0 8px var(--night),0 0 0 11px var(--rice),0 18px 40px rgba(15,31,61,.35)}
-.badge-medal .t1{font-family:'Noto Serif TC',serif;font-weight:900;font-size:1.05rem;line-height:1.25}
-.badge-medal .t2{font-size:.75rem;font-weight:700}
-
-/* 教師主控台 */
-.stat-box{border-radius:12px;padding:12px;border-width:1px;border-style:solid}
-.view-btn{border:1px solid var(--slate-200);background:#fff;padding:6px 12px;font-size:.85rem;min-height:36px}
-.view-btn:first-child{border-radius:9999px 0 0 9999px}.view-btn:last-child{border-radius:0 9999px 9999px 0}
-.view-btn.on{background:var(--night);color:#fff;border-color:var(--night)}
-.data-table{width:100%;border-collapse:collapse;font-size:.85rem}
-.data-table th{background:var(--slate-100);text-align:left;padding:8px;white-space:nowrap;position:sticky;top:0}
-.data-table td{padding:8px;border-top:1px solid var(--slate-200);vertical-align:top;max-width:220px}
-.data-table tr:hover td{background:var(--slate-50)}
-.progress{height:8px;border-radius:9999px;background:var(--slate-100);overflow:hidden}
-.progress > span{display:block;height:100%;background:linear-gradient(90deg,var(--sea),var(--rice))}
-.clamp-4{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
-.show-card{background:#fff;border:1px solid var(--slate-200);border-radius:14px;padding:16px;cursor:pointer;transition:box-shadow .15s}
-.show-card:hover{box-shadow:0 10px 26px rgba(15,31,61,.12)}
-.field-block{border-left:3px solid var(--sea-2);padding-left:10px}
-
-/* Modal / Toast */
-.modal-backdrop{background:rgba(15,31,61,.55);padding:16px}
-.modal-panel{background:#fff;border-radius:16px;width:100%;max-width:640px;max-height:88vh;overflow-y:auto;padding:22px}
-.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:60;
-  background:var(--night);color:#fff;border-radius:9999px;padding:10px 18px;font-weight:700;box-shadow:0 10px 26px rgba(0,0,0,.25);max-width:92vw}
-.toast.error{background:var(--seal)}
-.spinner{width:18px;height:18px;border-radius:9999px;border:3px solid rgba(255,255,255,.4);border-top-color:#fff;animation:spin .8s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.site-footer{color:var(--slate-500);font-size:.8rem;text-align:center;padding:28px 0 36px}
-.upload-drop{border:2px dashed var(--sea-2);border-radius:12px;background:#fff;padding:14px}
-.upload-drop input[type=file]{width:100%;font-size:.85rem}
-.player-box{position:relative;width:100%;padding-top:56.25%;border-radius:12px;overflow:hidden;background:var(--night)}
-.player-box iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-.progress-lg{height:12px}
-.consent{display:flex;gap:10px;align-items:flex-start;border:2px solid var(--rice);background:var(--rice-50);border-radius:12px;padding:12px}
-.consent input{width:22px;height:22px;flex:none;margin-top:2px;accent-color:var(--sea)}
-
-/* ⚠️ .hidden 必須放在所有 display utility 之後，
-   否則 "hidden flex" / "hidden grid" 這類組合會蓋不掉 display。 */
-.hidden{display:none}
-</style>
+        /* 儲存狀態指示器 */
+        #saveIndicator {
+            position: fixed; bottom: 20px; right: 20px; z-index: 999;
+            padding: 8px 16px; border-radius: 999px;
+            font-size: 0.8rem; font-weight: 600;
+            display: flex; align-items: center; gap: 6px;
+            transition: all 0.3s; pointer-events: none;
+        }
+        #saveIndicator.saving  { background:#fef9c3; color:#854d0e; border:1px solid #fde047; }
+        #saveIndicator.saved   { background:#dcfce7; color:#166534; border:1px solid #86efac; }
+        #saveIndicator.error   { background:#fee2e2; color:#991b1b; border:1px solid #fca5a5; }
+        #saveIndicator.hidden  { opacity:0; }
+    </style>
 </head>
-<body>
+<body class="bg-gray-50 min-h-screen flex flex-col font-sans text-gray-800">
 
-<div id="errorBanner" class="err-banner hidden">⚠️ 系統暫時無法連線，請確認網路後重新整理頁面。</div>
-
-<header class="site-header">
-  <div class="container header-inner">
-    <div class="flex items-center justify-between gap-3 flex-wrap">
-      <div class="flex items-center gap-3">
-        <div class="brand-mark">車城</div>
-        <button id="versionBadge" class="version-badge" onclick="openChangelog()">v1.3</button>
-      </div>
-      <div class="flex items-center gap-2">
-        <button id="logoutBtn" class="header-btn hidden" onclick="logout()">登出</button>
-        <a class="header-btn" href="showcase.html" style="text-decoration:none">🎧 成果展示</a>
-        <button class="header-btn" onclick="openTeacherLogin()">👩‍🏫 教師主控台</button>
-      </div>
-    </div>
-    <h1 class="hero-title mt-4">AI 音樂創作家<br>我的車城專屬校歌</h1>
-    <p class="hero-sub mt-2">從「山川壯麗、海濤奔湧」出發，把天文、食農與海洋寫進新校歌，交給 AI 譜出旋律。</p>
-  </div>
-</header>
-<div id="envBanner" class="env-banner env-ok"></div>
-
-<main class="container mt-6">
-
-  <!-- ==================== 登入 ==================== -->
-  <section id="loginView" class="card max-w-md mx-auto">
-    <h2 class="text-xl font-bold mb-1">🎫 闖關登入</h2>
-    <p class="hint mb-4">用屏東縣教育帳號（ptc 開頭）登入，系統會記住你的進度，下次可以接著做。</p>
-    <label class="label" for="loginPtc">屏東縣帳號</label>
-    <input id="loginPtc" class="field" placeholder="例如 ptc1234567" autocomplete="username" inputmode="latin">
-    <label class="label mt-3" for="loginName">姓名</label>
-    <input id="loginName" class="field" placeholder="你的名字" maxlength="20">
-    <label class="label mt-3" for="loginClass">班級（選填）</label>
-    <input id="loginClass" class="field" placeholder="例如 六年甲班、溫泉分校五年級" maxlength="20">
-    <button id="loginBtn" class="btn btn-primary w-full mt-4" onclick="doLogin()">開始闖關 🎵</button>
-  </section>
-
-  <!-- ==================== 闖關主畫面 ==================== -->
-  <section id="questView" class="hidden">
-    <div class="flex items-center justify-between gap-3 flex-wrap mb-3">
-      <div class="text-sm text-slate-600">👋 <span id="whoName" class="font-bold text-ink"></span>
-        <span id="whoId" class="text-slate-400 font-mono"></span></div>
-      <div class="xp-pill">⭐ <span id="xpText">0</span> XP</div>
-    </div>
-    <nav class="stage-track mb-6" id="stageTrack"></nav>
-
-    <!-- ===== 第一關 ===== -->
-    <article id="step1" class="quest-step card hidden">
-      <p class="stage-kicker">第一關 · 傳統校歌解密任務</p>
-      <h2 class="stage-title mb-3">聽見老校歌裡的家鄉風景</h2>
-
-      <div class="grid lg:grid-cols-2 gap-4">
-        <div>
-          <video id="songVideo" controls playsinline preload="metadata" class="w-full rounded-lg bg-slate-100" src="assets/school-song.mp4"></video>
-          <button class="btn btn-ghost btn-sm mt-2" onclick="openScore()">🎼 看原版樂譜</button>
-        </div>
-        <div class="lyric-sheet">
-          <p class="text-xs text-rice font-bold mb-1">車城國民小學校歌　李永剛 曲／趙堯炳 詞</p>
-          <div class="lyric-line"><span class="lyric-key">山川壯麗</span>　<span class="lyric-key">海濤奔湧</span></div>
-          <div class="lyric-line"><span class="lyric-key">溫泉洗濁</span>　<span class="lyric-key">漁港豐隆</span></div>
-          <div class="lyric-line">美哉吾校　醉臥其中</div>
-          <div class="lyric-line">良師益友　學正教忠</div>
-          <div class="lyric-line">切磋琢磨　其樂融融</div>
-          <div class="lyric-line">乘風破浪　起舞從戎</div>
-          <div class="lyric-line">為國為民　光祖耀宗</div>
-          <div class="lyric-line">人才輩出　邦國梁棟</div>
-          <div class="lyric-line">繼往開來　發奮為雄</div>
-        </div>
-      </div>
-
-      <h3 class="text-lg font-bold mt-6 mb-2">🔍 任務 A：這四個詞藏著哪裡的風景？</h3>
-      <p class="hint mb-3">幫每一句選出最適合的家鄉特色。</p>
-      <div id="matchArea" class="flex flex-col gap-3"></div>
-      <button class="btn btn-ghost btn-sm mt-3" onclick="checkMatch()">檢查配對</button>
-      <div id="matchFeedback" class="feedback mt-3 hidden"></div>
-
-      <h3 class="text-lg font-bold mt-6 mb-2">📺 任務 B：影片測驗</h3>
-      <div id="quiz1"></div>
-
-      <h3 class="text-lg font-bold mt-6 mb-2">🗣️ 任務 C：小組討論紀錄</h3>
-      <label class="label text-sm" for="sceneryNotes">這些詞讓你們想到家鄉的哪些地方？有沒有發現「原本校歌沒唱到」的特色？</label>
-      <textarea id="sceneryNotes" class="field" rows="4" maxlength="600" placeholder="例如：溫泉洗濁讓我想到四重溪泡湯……原本校歌沒有唱到星空，可是我們有天文課！"></textarea>
-      <div class="counter" data-for="sceneryNotes" data-min="15"></div>
-
-      <div class="flex justify-end gap-2 mt-6">
-        <button class="btn btn-primary" onclick="finishStep1(this)">完成第一關 →</button>
-      </div>
-    </article>
-
-    <!-- ===== 第二關 ===== -->
-    <article id="step2" class="quest-step card hidden">
-      <p class="stage-kicker">第二關 · 特色歌詞改編大師</p>
-      <h2 class="stage-title mb-3">把文言文變成我們會唱的白話歌詞</h2>
-
-      <div class="bg-rice-50 rounded-lg p-4 mb-4 text-sm">
-        <p class="font-bold mb-1">✏️ 改寫示範</p>
-        <p>「溫泉洗濁」→「暖暖的泉水，洗去一身的疲憊」</p>
-        <p>「海濤奔湧」→「浪花一波一波，拍打射寮的沙灘」</p>
-        <p class="hint mt-1">不用押韻，重點是讓人一聽就知道是哪裡的特色。每區寫 2 至 4 句，把畫面描述得具體一點。</p>
-      </div>
-
-      <div id="quiz3" class="mb-6"></div>
-
-      <div class="grid lg:grid-cols-3 gap-4">
-        <div class="campus-card campus-astro">
-          <span class="campus-tag" style="color:#3b4f8a">🔭 車城本校 · 天文</span>
-          <div class="mt-2 mb-2" data-words="lyricAstronomy">
-            <button class="word-chip">望遠鏡</button><button class="word-chip">銀河</button><button class="word-chip">落山風</button><button class="word-chip">星座</button><button class="word-chip">月亮</button>
-          </div>
-          <textarea id="lyricAstronomy" class="field" rows="4" maxlength="150" placeholder="例如：落山風吹過操場，我們架起望遠鏡，數一數車城夜空的星星，銀河就在頭頂閃亮"></textarea>
-          <div class="counter" data-for="lyricAstronomy" data-min="40" data-lyric="1"></div>
-        </div>
-        <div class="campus-card campus-agri">
-          <span class="campus-tag" style="color:#9a7412">🌾 溫泉分校 · 食農</span>
-          <div class="mt-2 mb-2" data-words="lyricFoodAgri">
-            <button class="word-chip">洋蔥</button><button class="word-chip">稻穗</button><button class="word-chip">溫泉</button><button class="word-chip">小菜園</button><button class="word-chip">汗水</button>
-          </div>
-          <textarea id="lyricFoodAgri" class="field" rows="4" maxlength="150" placeholder="例如：溫泉邊的小菜園，我們彎腰種下洋蔥，汗水換來圓又甜的收成"></textarea>
-          <div class="counter" data-for="lyricFoodAgri" data-min="40" data-lyric="1"></div>
-        </div>
-        <div class="campus-card campus-ocean">
-          <span class="campus-tag" style="color:var(--sea)">🌊 射寮分校 · 海洋</span>
-          <div class="mt-2 mb-2" data-words="lyricOcean">
-            <button class="word-chip">漁船</button><button class="word-chip">珊瑚</button><button class="word-chip">海浪</button><button class="word-chip">漁港</button><button class="word-chip">夕陽</button>
-          </div>
-          <textarea id="lyricOcean" class="field" rows="4" maxlength="150" placeholder="例如：射寮的漁船清晨出海，浪花拍著沙灘，夕陽下帶回滿滿的希望"></textarea>
-          <div class="counter" data-for="lyricOcean" data-min="40" data-lyric="1"></div>
-        </div>
-      </div>
-      <p class="hint mt-2">點上面的小詞卡可以直接加進歌詞。每區至少 40 字、最多 150 字（標點與空白不算字數）。</p>
-
-      <div class="flex items-center justify-between gap-2 flex-wrap mt-6 mb-2">
-        <h3 class="text-lg font-bold">🎼 組合成完整歌詞</h3>
-        <button class="btn btn-rice btn-sm" onclick="assembleLyrics(true)">✨ 一鍵組合</button>
-      </div>
-      <p class="hint mb-2">[Verse] 是主歌、[Chorus] 是副歌，AI 看得懂這些標籤。組合後可以再自己修改。<br>⏱️ 第三關會在 Gemini 選「簡短」長度（約 1 分鐘），完整歌詞至少要 150 字，歌才唱得滿。</p>
-      <textarea id="fullLyrics" class="field font-mono text-sm" rows="12" maxlength="1500" placeholder="按「一鍵組合」自動產生，也可以自己寫"></textarea>
-      <div class="counter" data-for="fullLyrics" data-min="150" data-lyric="1"></div>
-
-      <div class="flex justify-between gap-2 mt-6">
-        <button class="btn btn-ghost" onclick="goStep(1)">← 上一關</button>
-        <button class="btn btn-primary" onclick="finishStep2(this)">完成第二關 →</button>
-      </div>
-    </article>
-
-    <!-- ===== 第三關 ===== -->
-    <article id="step3" class="quest-step card hidden">
-      <p class="stage-kicker">第三關 · AI 曲風魔法師</p>
-      <h2 class="stage-title mb-3">選好曲風，讓 AI 幫你譜出旋律</h2>
-
-      <div class="bg-sea-50 rounded-lg p-4 mb-6">
-        <h3 class="font-bold text-lg mb-2">🎹 認識 Gemini 音樂創作</h3>
-        <p class="text-sm">Gemini 內建 AI 音樂生成功能：你給它歌詞和風格描述，它會自動作曲、編曲，由 AI 歌手唱出來，還會幫歌曲配上一張封面圖。</p>
-        <div class="grid lg:grid-cols-3 gap-3 mt-3 text-sm">
-          <div class="bg-white rounded p-3 border"><p class="font-bold">🕒 長度</p><p>請選「<span class="font-bold text-seal">簡短</span>」，約 1 分鐘，所以歌詞要 150 字以上。</p></div>
-          <div class="bg-white rounded p-3 border"><p class="font-bold">🎤 人聲</p><p>配合你在下面「誰來唱」的選擇，例如兒童合唱、女生獨唱。</p></div>
-          <div class="bg-white rounded p-3 border"><p class="font-bold">🎵 類型</p><p>配合你選的曲風，例如流行、搖滾、民謠。</p></div>
-        </div>
-        <p class="hint mt-3">小規則：每次生成的結果都不一樣，可以多試幾次挑最好的；指令裡不要寫真實歌手的名字；AI 生成的歌會帶有看不見的數位浮水印，分享時要說明是 AI 作品。</p>
-      </div>
-
-      <div id="quiz2" class="mb-6"></div>
-
-      <h3 class="font-bold mb-2">① 曲風（選一個）</h3>
-      <div id="genreChips" class="flex flex-wrap gap-2 mb-4"></div>
-      <h3 class="font-bold mb-2">② 心情（選一個）</h3>
-      <div id="moodChips" class="flex flex-wrap gap-2 mb-4"></div>
-      <h3 class="font-bold mb-2">③ 誰來唱（選一個）</h3>
-      <div id="vocalChips" class="flex flex-wrap gap-2 mb-4"></div>
-      <h3 class="font-bold mb-2">④ 樂器（可複選）</h3>
-      <div id="instChips" class="flex flex-wrap gap-2 mb-4"></div>
-
-      <input type="hidden" id="aiTool" value="Gemini">
-      <div class="bg-rice-50 rounded-lg p-4 mb-4 text-sm">
-        <p class="font-bold mb-1">🎹 在 Gemini 生成音樂的步驟</p>
-        <p>① 按下方「複製指令」→ ② 開啟 Gemini，用學校帳號登入 → ③ 在輸入框的「工具」選「音樂」→ ④ 輸入框下方「長度」選「簡短」，「人聲」「類型」配合你的選擇 → ⑤ 貼上指令送出 → ⑥ 聽聽看，不滿意就再生成一次 → ⑦ 按「分享」複製連結貼回本頁。</p>
-      </div>
-
-      <div class="flex items-center justify-between gap-2 flex-wrap mb-2">
-        <h3 class="font-bold">🪄 魔法指令（自動產生）</h3>
-        <div class="flex gap-2 flex-wrap">
-          <button class="btn btn-ghost btn-sm" onclick="copyText('musicPrompt')">📋 複製指令</button>
-          <button class="btn btn-ghost btn-sm" onclick="copyText('fullLyrics')">📋 只複製歌詞</button>
-        </div>
-      </div>
-      <div id="musicPromptView" class="prompt-box"></div>
-      <textarea id="musicPrompt" class="hidden"></textarea>
-
-      <div class="flex flex-wrap gap-2 mt-3">
-        <a class="btn btn-primary btn-sm" href="https://gemini.google.com/app" target="_blank" rel="noopener" style="text-decoration:none">開啟 Gemini ↗</a>
-        <a id="pblLink" class="btn btn-ghost btn-sm" target="_blank" rel="noopener" style="text-decoration:none">PBL 專題課程網站 ↗</a>
-      </div>
-
-      <div class="bg-sea-50 rounded-lg p-4 mt-6">
-        <h3 class="font-bold mb-2">🎧 繳交你的 AI 校歌</h3>
-        <label class="label text-sm" for="songTitle">歌名</label>
-        <input id="songTitle" class="field" maxlength="40" placeholder="例如：落山風吹過的星空">
-        <label class="label text-sm mt-3" for="songUrl">作品分享連結（選填）</label>
-        <input id="songUrl" class="field" inputmode="url" placeholder="https://...（Gemini 的分享連結）">
-        <p class="hint mt-1">連結和下方的上傳檔案擇一即可，兩個都做更保險。</p>
-
-        <h3 class="font-bold mt-4 mb-2">💾 上傳作品檔（放上成果展示網站）</h3>
-        <div class="upload-drop">
-          <input id="songFile" type="file" accept="audio/*,video/*,.mp3,.m4a,.wav,.mp4,.webm,.mov">
-          <p class="hint mt-2">在 Gemini 按「下載」存下歌曲後選擇檔案上傳。支援 mp3、m4a、wav、mp4、webm、mov，最大 20MB；重新上傳會取代舊檔。</p>
-          <div class="progress progress-lg mt-2 hidden" id="uploadBarWrap"><span id="uploadBar" style="width:0%"></span></div>
-          <p id="uploadStatus" class="text-sm mt-2"></p>
-          <button id="uploadBtn" class="btn btn-primary btn-sm mt-2" onclick="uploadSongFile(this)">⬆️ 上傳作品</button>
-        </div>
-      </div>
-
-      <div class="flex justify-between gap-2 mt-6">
-        <button class="btn btn-ghost" onclick="goStep(2)">← 上一關</button>
-        <button class="btn btn-primary" onclick="finishStep3(this)">完成第三關 →</button>
-      </div>
-    </article>
-
-    <!-- ===== 第四關 ===== -->
-    <article id="step4" class="quest-step card hidden">
-      <p class="stage-kicker">第四關 · 專屬校歌發表會</p>
-      <h2 class="stage-title mb-3">上台前，先寫好你的創作說明</h2>
-
-      <div id="songPreview" class="bg-slate-50 rounded-lg p-4 mb-4 text-sm"></div>
-
-      <label class="label" for="creationIdea">💡 創作理念：你想讓聽的人感受到什麼？為什麼選這個曲風？</label>
-      <textarea id="creationIdea" class="field" rows="4" maxlength="600"></textarea>
-      <div class="counter" data-for="creationIdea" data-min="15"></div>
-
-      <label class="label mt-4" for="easterEgg">🥚 歌詞彩蛋：你在歌詞裡藏了哪些學校特色？</label>
-      <textarea id="easterEgg" class="field" rows="3" maxlength="400" placeholder="例如：「落山風」代表車城的冬天，也是我們資訊課的名字"></textarea>
-      <div class="counter" data-for="easterEgg" data-min="6"></div>
-
-      <label class="label mt-4" for="reflection">💭 發表後的心得：聽了同學的作品，你學到什麼？下次想怎麼改？</label>
-      <textarea id="reflection" class="field" rows="4" maxlength="600"></textarea>
-      <div class="counter" data-for="reflection" data-min="10"></div>
-
-      <label class="consent mt-4" for="showcaseConsent">
-        <input type="checkbox" id="showcaseConsent">
-        <span class="text-sm"><span class="font-bold">我同意把作品放上成果展示網站</span><br>
-        展示網站只會顯示姓名遮一個字（例如 王○明）、班級、歌名、歌詞和作品，老師隨時可以下架。</span>
-      </label>
-
-      <div class="flex justify-between gap-2 mt-6">
-        <button class="btn btn-ghost" onclick="goStep(3)">← 上一關</button>
-        <button class="btn btn-seal" onclick="finishStep4(this)">🏆 完成闖關</button>
-      </div>
-    </article>
-
-    <!-- ===== 完賽 ===== -->
-    <article id="step5" class="quest-step card hidden text-center py-8">
-      <div class="badge-medal"><div><div class="t1">落山風<br>AI 音樂製作人</div><div class="t2 mt-1">★ 800 XP ★</div></div></div>
-      <h2 class="stage-title mt-8">恭喜通關！</h2>
-      <p class="text-slate-600 mt-2">你把老校歌唱成了屬於這個世代的車城之歌。</p>
-      <div id="finishSummary" class="text-left bg-slate-50 rounded-lg p-4 mt-6"></div>
-      <div class="flex justify-center gap-2 mt-6 flex-wrap">
-        <button class="btn btn-ghost" onclick="goStep(4)">回去修改內容</button>
-        <a class="btn btn-rice" href="showcase.html" style="text-decoration:none">🎧 看全班成果展示</a>
-        <button class="btn btn-primary" onclick="logout()">登出</button>
-      </div>
-    </article>
-  </section>
-
-  <!-- ==================== 教師主控台 ==================== -->
-  <section id="teacherView" class="hidden">
-    <div class="flex items-center justify-between gap-3 flex-wrap mb-4">
-      <h2 class="text-2xl font-black font-serif">👩‍🏫 教師主控台</h2>
-      <div class="flex gap-2 flex-wrap">
-        <button class="btn btn-ghost btn-sm" onclick="loadStudents()">🔄 重新整理</button>
-        <button class="btn btn-ghost btn-sm" onclick="exportCsv()">⬇️ 匯出 CSV</button>
-        <button class="btn btn-ghost btn-sm" onclick="closeTeacher()">離開主控台</button>
-      </div>
+    <!-- GAS 未設定警告條 -->
+    <div id="gasBanner" class="hidden w-full bg-amber-400 text-amber-900 text-sm font-bold text-center py-2 px-4 flex items-center justify-center gap-2">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        ⚠ GAS_URL 尚未設定！請將 <code class="bg-amber-200 px-1 rounded">GAS_URL</code> 換成你的 Apps Script 部署網址，否則進度無法儲存。
+        <button onclick="document.getElementById('gasBanner').classList.add('hidden')" class="ml-4 underline text-amber-800">我知道了</button>
     </div>
 
-    <div id="statsArea" class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4"></div>
-
-    <div class="card p-3 mb-4 flex flex-wrap items-center gap-3">
-      <div class="inline-flex">
-        <button class="view-btn on" data-view="table" onclick="setView('table')">📋 表格</button>
-        <button class="view-btn" data-view="list" onclick="setView('list')">📝 清單</button>
-        <button class="view-btn" data-view="cards" onclick="setView('cards')">🖼️ 圖卡</button>
-      </div>
-      <label class="text-sm flex items-center gap-2">日期
-        <select id="dateFilter" class="field py-1" style="min-height:36px;width:auto" onchange="renderStudents()"></select>
-      </label>
-      <label id="focusWrap" class="text-sm flex items-center gap-2 hidden">聚焦欄位
-        <select id="focusField" class="field py-1" style="min-height:36px;width:auto" onchange="renderStudents()"></select>
-      </label>
-      <input id="searchBox" class="field py-1 flex-1" style="min-height:36px;min-width:140px" placeholder="搜尋姓名 / 帳號 / 班級" oninput="renderStudents()">
+    <!-- 儲存狀態指示器 -->
+    <div id="saveIndicator" class="hidden">
+        <i class="fa-solid fa-cloud-arrow-up"></i>
+        <span id="saveIndicatorText">儲存中…</span>
     </div>
 
-    <div id="teacherTable" class="card p-2 overflow-x-auto"></div>
-    <div id="teacherList" class="hidden flex flex-col gap-3"></div>
-    <div id="teacherCards" class="hidden grid sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
-  </section>
-</main>
-
-<footer class="site-footer">
-  <p>車城國小資訊老師 @ Google Gemini 協作設計</p>
-  <p id="footerVersion" class="mt-1"></p>
-</footer>
-
-<!-- ==================== Modals ==================== -->
-<div id="teacherLoginModal" class="hidden fixed inset-0 z-50 modal-backdrop flex items-center justify-center" onclick="if(event.target===this)closeModal('teacherLoginModal')">
-  <div class="modal-panel max-w-md">
-    <h3 class="text-xl font-bold mb-3">🔐 教師登入</h3>
-    <input id="teacherPwd" type="password" class="field" placeholder="教師密碼" onkeydown="if(event.key==='Enter')teacherLogin()">
-    <div class="flex justify-end gap-2 mt-4">
-      <button class="btn btn-ghost" onclick="closeModal('teacherLoginModal')">取消</button>
-      <button id="teacherLoginBtn" class="btn btn-primary" onclick="teacherLogin()">進入</button>
-    </div>
-  </div>
-</div>
-
-<div id="detailModal" class="hidden fixed inset-0 z-50 modal-backdrop flex items-center justify-center" onclick="if(event.target===this)closeModal('detailModal')">
-  <div class="modal-panel">
-    <div class="flex items-start justify-between gap-3 mb-3">
-      <h3 id="detailTitle" class="text-xl font-bold"></h3>
-      <button class="btn btn-ghost btn-sm" onclick="closeModal('detailModal')">✕</button>
-    </div>
-    <div id="detailBody" class="flex flex-col gap-4"></div>
-  </div>
-</div>
-
-<div id="changelogModal" class="hidden fixed inset-0 z-50 modal-backdrop flex items-center justify-center" onclick="if(event.target===this)closeModal('changelogModal')">
-  <div class="modal-panel">
-    <div class="flex items-start justify-between gap-3 mb-3">
-      <h3 class="text-xl font-bold">📜 版本紀錄</h3>
-      <button class="btn btn-ghost btn-sm" onclick="closeModal('changelogModal')">✕</button>
-    </div>
-    <div id="changelogBody" class="flex flex-col gap-3"></div>
-  </div>
-</div>
-
-<div id="scoreModal" class="hidden fixed inset-0 z-50 modal-backdrop flex items-center justify-center" onclick="if(event.target===this)closeModal('scoreModal')">
-  <div class="modal-panel">
-    <div class="flex justify-end mb-2"><button class="btn btn-ghost btn-sm" onclick="closeModal('scoreModal')">✕</button></div>
-    <img src="assets/school-song-score.jpg" alt="車城國民小學校歌樂譜與校徽說明" class="w-full rounded">
-  </div>
-</div>
-
-<div id="toast" class="toast hidden"></div>
-
-<script>
-/* =====================================================================
- * 設定區
- * ===================================================================== */
-const DEFAULT_GAS_URL = 'https://script.google.com/a/macros/cces.ptc.edu.tw/s/AKfycbyCiOrB0C5ejdXJmNDrlO5NYBVUp6peT3kvJBaZwUjPTVUsE5jZPx4Cpw0qOGJ7K1vUZA/exec';
-const PBL_SITE_URL = 'https://sites.google.com/cces.ptc.edu.tw/cces10801/%E9%A6%96%E9%A0%81/%E8%BB%8A%E5%9F%8E%E5%9C%8B%E5%B0%8Fpbl%E5%B0%88%E9%A1%8C%E8%AA%B2%E7%A8%8B/%E8%BB%8A%E5%9F%8E%E5%9C%8B%E5%B0%8Fpbl%E5%B0%88%E9%A1%8C%E8%AA%B2%E7%A8%8B-%E7%94%A8suno-ai-%E6%94%B9%E7%B7%A8%E8%BB%8A%E5%9F%8E%E5%9C%8B%E5%B0%8F%E6%A0%A1%E6%AD%8C?authuser=0';
-
-const APP_VERSION = 'v1.3';
-const CHANGELOG = [
-  { version: 'v1.3', date: '2026-09-26', desc: '新增作品上傳與成果展示網站：第三關可上傳 Gemini 下載的歌曲檔（分塊上傳至 Drive，最大 20MB）；第四關加入「同意放上成果展示」勾選；新增 showcase.html 公開展示頁（姓名遮一字、發表會輪播模式）；教師主控台新增「上傳作品」欄位。需搭配後端 v1.1。' },
-  { version: 'v1.2', date: '2026-09-26', desc: '配合 Gemini 音樂「長度：簡短」約 1 分鐘：三區歌詞每區至少 40 字、完整歌詞至少 150 字（不計段落標籤與標點），副歌加長為四句；第三關新增「認識 Gemini 音樂創作」介紹（長度／人聲／類型設定與使用小規則），生成步驟與指令加入長度設定。' },
-  { version: 'v1.1', date: '2026-09-26', desc: '改為全程使用 Gemini 生成音樂：移除 Suno 按鈕與工具選單，第三關新增 Gemini 音樂生成步驟說明；配合 Gemini 約 30 秒的長度，副歌縮為兩句並顯示歌詞字數；移除 MP3 備援，網站只需上傳影片與樂譜圖。' },
-  { version: 'v1.0', date: '2026-09-26', desc: '初版：四關闖關（傳統校歌解密→特色歌詞改編→AI 曲風魔法師→專屬校歌發表會）、ptc 帳號登入與進度保存、三題影片測驗內嵌於各關、曲風指令產生器（Gemini／Suno）、教師主控台表格／清單／圖卡三檢視與 CSV 匯出、自建輕量 CSS。' }
-];
-
-const TOTAL_STEPS = 4;
-const MAX_UPLOAD_MB = 20;
-const CHUNK_SIZE = 2 * 1024 * 1024;   // 每塊 base64 約 2MB
-const XP_PER_STEP = 200;   // 4 關 × 200 = 800 XP
-const STEP_NAMES = ['傳統校歌解密', '特色歌詞改編', 'AI 曲風魔法師', '專屬校歌發表會'];
-
-// ⭐ 教師主控台欄位統一定義（三種檢視共用）
-const ANSWER_FIELDS = [
-  { key: 'sceneryNotes',   label: '家鄉風景討論', icon: '🏞️', mono: false },
-  { key: 'lyricAstronomy', label: '天文歌詞',     icon: '🔭', mono: false },
-  { key: 'lyricFoodAgri',  label: '食農歌詞',     icon: '🌾', mono: false },
-  { key: 'lyricOcean',     label: '海洋歌詞',     icon: '🌊', mono: false },
-  { key: 'fullLyrics',     label: '完整歌詞',     icon: '📝', mono: true  },
-  { key: 'musicPrompt',    label: '曲風指令',     icon: '🪄', mono: true  },
-  { key: 'songTitle',      label: '歌名',         icon: '🎵', mono: false },
-  { key: 'songUrl',        label: '作品連結',     icon: '🔗', mono: false, url: true },
-  { key: 'songFileUrl',    label: '上傳作品',     icon: '💾', mono: false, url: true },
-  { key: 'creationIdea',   label: '創作理念',     icon: '💡', mono: false },
-  { key: 'easterEgg',      label: '歌詞彩蛋',     icon: '🥚', mono: false },
-  { key: 'reflection',     label: '心得',         icon: '💭', mono: false }
-];
-
-/* ---------- 影片測驗題（分散到各關） ---------- */
-const QUIZZES = {
-  quiz1: {
-    q: '原本的校歌提到「溫泉洗濁」與「漁港豐隆」，最能對應到哪些分校或地方特色？',
-    opts: ['只有本校的天文特色', '溫泉分校的食農與射寮分校的海洋特色', '滿州鄉的飛魚特色', '以上皆非'],
-    ans: 1,
-    why: '「溫泉」對應溫泉分校周邊的特色，而「漁港與海濤」則和射寮分校的海洋教育息息相關！'
-  },
-  quiz3: {
-    q: '這次 PBL 專題課程，主要希望結合哪些學校本位課程來改編歌詞？',
-    opts: ['天文課程、食農教育、海洋教育', '籃球課程、游泳課程、直排輪課程', '國語、數學、英文', '只有天文課程'],
-    ans: 0,
-    why: '任務核心是把車城本校的天文、溫泉分校的食農、射寮分校的海洋，融合進新校歌裡。'
-  },
-  quiz2: {
-    q: '用 AI 創作專屬校歌時，哪一種指令最能幫 AI 做出好聽又符合主題的歌？',
-    opts: ['只輸入「幫我寫歌」四個字', '提供寫好的白話文歌詞，並清楚說明想要的音樂風格', '貼上一張車城國小的風景照片', '對著電腦大聲唱歌給它聽'],
-    ans: 1,
-    why: 'AI 需要明確的「歌詞」與「曲風」指令，才能精準創作出符合你想像的音樂。'
-  }
-};
-
-/* ---------- 第一關配對 ---------- */
-const MATCH_ITEMS = [
-  { word: '山川壯麗', ans: 'land' },
-  { word: '海濤奔湧', ans: 'ocean' },
-  { word: '溫泉洗濁', ans: 'spring' },
-  { word: '漁港豐隆', ans: 'ocean' }
-];
-const MATCH_OPTIONS = [
-  { v: '', t: '— 請選擇 —' },
-  { v: 'land', t: '家鄉的群山與河川（恆春半島的山景）' },
-  { v: 'spring', t: '四重溪溫泉（溫泉分校）' },
-  { v: 'ocean', t: '海岸與漁村（射寮分校）' },
-  { v: 'astro', t: '夜空星星（車城本校天文）' }
-];
-
-/* ---------- 第三關曲風選項（組成 Gemini 指令） ---------- */
-const STYLE_GROUPS = {
-  genre: { el: 'genreChips', multi: false, items: [
-    { zh: '輕快的流行樂' }, { zh: '熱血的搖滾樂' },
-    { zh: '溫暖的木吉他民謠' }, { zh: '節奏感強的饒舌' },
-    { zh: '雄壯的進行曲' }, { zh: '抒情的鋼琴曲' }
-  ]},
-  mood: { el: 'moodChips', multi: false, items: [
-    { zh: '開心活潑' }, { zh: '熱血勇敢' },
-    { zh: '溫柔感動' }, { zh: '驕傲自信' }
-  ]},
-  vocal: { el: 'vocalChips', multi: false, items: [
-    { zh: '兒童合唱' }, { zh: '女生獨唱' },
-    { zh: '男生獨唱' }, { zh: '男女對唱' }
-  ]},
-  inst: { el: 'instChips', multi: true, items: [
-    { zh: '木吉他' }, { zh: '鋼琴' }, { zh: '電吉他' },
-    { zh: '爵士鼓' }, { zh: '烏克麗麗' }, { zh: '海浪聲' }
-  ]}
-};
-const styleState = { genre: [0], mood: [0], vocal: [0], inst: [0] };
-
-/* =====================================================================
- * 狀態
- * ===================================================================== */
-let currentStudent = null;
-let currentStep = 1;
-let maxStepReached = 1;
-let quizPassed = { quiz1: false, quiz2: false, quiz3: false };
-let matchPassed = false;
-let teacherPassword = '';
-let allStudents = [];
-let teacherViewMode = 'table';
-
-/* =====================================================================
- * 智慧路由：JSONP (GET) + Raw POST (text/plain)
- * ===================================================================== */
-function gasReady() { return /^https:\/\/script\.google\.com\//.test(DEFAULT_GAS_URL); }
-
-function callGAS_JSONP(params, callback) {
-  if (!gasReady()) { callback(new Error('尚未設定 GAS 網址')); return; }
-  const cbName = 'cb_' + Date.now() + '_' + Math.floor(Math.random() * 1e6);
-  const script = document.createElement('script');
-  let done = false;
-  const timer = setTimeout(() => finish(new Error('連線逾時')), 20000);
-  function finish(err, data) {
-    if (done) return; done = true;
-    clearTimeout(timer);
-    delete window[cbName];
-    if (script.parentNode) script.parentNode.removeChild(script);
-    callback(err, data);
-  }
-  window[cbName] = data => finish(null, data);
-  const qs = Object.entries({ ...params, callback: cbName })
-    .map(([k, v]) => `${k}=${encodeURIComponent(v)}`).join('&');
-  script.onerror = () => finish(new Error('JSONP 連線失敗，請確認網路或稍後再試'));
-  script.src = DEFAULT_GAS_URL + '?' + qs;
-  document.head.appendChild(script);
-}
-
-async function callGAS_POST(data) {
-  if (!gasReady()) throw new Error('尚未設定 GAS 網址');
-  try {
-    const res = await fetch(DEFAULT_GAS_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain' },   // ⚠️ 不能用 application/json
-      body: JSON.stringify(data),
-      redirect: 'follow'
-    });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return await res.json();
-  } catch (err) {
-    throw new Error('POST 連線失敗，請確認網路或稍後再試');
-  }
-}
-
-function showConnectionError() { document.getElementById('errorBanner').classList.remove('hidden'); }
-function hideConnectionError() { document.getElementById('errorBanner').classList.add('hidden'); }
-
-/* =====================================================================
- * 共用工具
- * ===================================================================== */
-function $(id) { return document.getElementById(id); }
-function escapeHtml(v) {
-  return (v === null || v === undefined ? '' : String(v))
-    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-}
-function safeUrl(u) {
-  const s = (u || '').toString().trim();
-  return /^https?:\/\//i.test(s) ? s : '';
-}
-let toastTimer = null;
-function showToast(msg, type) {
-  const t = $('toast');
-  t.textContent = msg;
-  t.className = 'toast' + (type === 'error' ? ' error' : '');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.add('hidden'), 2800);
-}
-function openModal(id) { $(id).classList.remove('hidden'); }
-function closeModal(id) { $(id).classList.add('hidden'); }
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') ['detailModal', 'changelogModal', 'scoreModal', 'teacherLoginModal'].forEach(closeModal);
-});
-function setBusy(btn, busy, label) {
-  if (!btn) return;
-  if (busy) { btn.dataset.label = btn.innerHTML; btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>' + (label || '處理中…'); }
-  else { btn.disabled = false; if (btn.dataset.label) btn.innerHTML = btn.dataset.label; }
-}
-function textLen(id) { return ($(id).value || '').trim().length; }
-function store(key, val) { try { localStorage.setItem(key, val); } catch (e) {} }
-function recall(key) { try { return localStorage.getItem(key) || ''; } catch (e) { return ''; } }
-function forget(key) { try { localStorage.removeItem(key); } catch (e) {} }
-
-/* =====================================================================
- * 版本標示（四個位置同步）
- * ===================================================================== */
-function renderVersion() {
-  $('versionBadge').textContent = APP_VERSION;
-  $('footerVersion').textContent = `版本 ${APP_VERSION}`;
-  const env = $('envBanner');
-  if (!gasReady()) {
-    env.className = 'env-banner env-warn';
-    env.textContent = `⚠️ 尚未設定 GAS 網址（${APP_VERSION}）：請在 index.html 的 DEFAULT_GAS_URL 貼上 Web App 網址`;
-  } else if (location.hostname.endsWith('github.io')) {
-    env.className = 'env-banner env-ok';
-    env.textContent = `✅ 目前運行於 GitHub Pages 正式環境（${APP_VERSION}）`;
-  } else {
-    env.className = 'env-banner env-warn';
-    env.textContent = `🧪 目前為本機／測試環境（${APP_VERSION}）`;
-  }
-}
-function openChangelog() {
-  $('changelogBody').innerHTML = CHANGELOG.map((c, i) => `
-    <div class="border rounded-lg p-3">
-      <div class="flex items-center gap-2 mb-1">
-        <span class="font-bold">${escapeHtml(c.version)}</span>
-        <span class="text-xs text-slate-500">${escapeHtml(c.date)}</span>
-        ${i === 0 ? '<span class="text-xs rounded-full px-2 bg-green-50 text-green-600 font-bold">最新</span>' : ''}
-      </div>
-      <p class="text-sm text-slate-600">${escapeHtml(c.desc)}</p>
-    </div>`).join('');
-  openModal('changelogModal');
-}
-function openScore() { openModal('scoreModal'); }
-
-/* =====================================================================
- * 登入 / 登出
- * ===================================================================== */
-function doLogin() {
-  const ptcId = $('loginPtc').value.trim().toLowerCase();
-  const name = $('loginName').value.trim();
-  const className = $('loginClass').value.trim();
-  if (!/^ptc\d{3,}$/.test(ptcId)) { showToast('帳號必須是 ptc 開頭加數字，例如 ptc1234567', 'error'); return; }
-  if (!name) { showToast('請輸入姓名', 'error'); return; }
-  const btn = $('loginBtn');
-  setBusy(btn, true, '登入中…');
-  callGAS_JSONP({ action: 'login', ptcId, name, className }, (err, res) => {
-    setBusy(btn, false);
-    if (err) { showConnectionError(); showToast(err.message, 'error'); return; }
-    if (!res.success) { showToast(res.message || '登入失敗', 'error'); return; }
-    hideConnectionError();
-    store('songQuest_ptc', ptcId); store('songQuest_name', name); store('songQuest_class', className);
-    enterQuest(res.data);
-  });
-}
-
-function enterQuest(data) {
-  currentStudent = data;
-  // 將後端資料灌回所有欄位（login 回傳完整欄位）
-  ['sceneryNotes', 'lyricAstronomy', 'lyricFoodAgri', 'lyricOcean', 'fullLyrics',
-   'songTitle', 'songUrl', 'creationIdea', 'easterEgg', 'reflection'].forEach(k => { $(k).value = data[k] || ''; });
-  $('showcaseConsent').checked = String(data.showcaseConsent).toLowerCase() === 'true';
-  renderUploadStatus();
-  $('aiTool').value = 'Gemini';
-  $('musicPrompt').value = data.musicPrompt || '';
-
-  const step = Math.min(Math.max(Number(data.currentStep) || 1, 1), TOTAL_STEPS + 1);
-  maxStepReached = step;
-  // 已過的關卡，題目視為已通過
-  if (step > 1) { quizPassed.quiz1 = true; matchPassed = true; }
-  if (step > 2) quizPassed.quiz3 = true;
-  if (step > 3) quizPassed.quiz2 = true;
-
-  $('whoName').textContent = data.name;
-  $('whoId').textContent = data.ptcId;
-  $('loginView').classList.add('hidden');
-  $('teacherView').classList.add('hidden');
-  $('questView').classList.remove('hidden');
-  $('logoutBtn').classList.remove('hidden');
-  renderAllQuizzes();
-  renderMatch();
-  refreshCounters();
-  if (data.musicPrompt) renderPromptView(); else buildPrompt();
-  showStep(step);
-}
-
-function logout() {
-  forget('songQuest_ptc');
-  currentStudent = null;
-  quizPassed = { quiz1: false, quiz2: false, quiz3: false };
-  matchPassed = false;
-  $('questView').classList.add('hidden');
-  $('logoutBtn').classList.add('hidden');
-  $('loginView').classList.remove('hidden');
-  $('loginPtc').value = '';
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-/* =====================================================================
- * 關卡切換與儲存
- * ===================================================================== */
-function xpForStep(step) { return Math.min(step - 1, TOTAL_STEPS) * XP_PER_STEP; }
-
-function renderStageTrack() {
-  $('stageTrack').innerHTML = STEP_NAMES.map((n, i) => {
-    const s = i + 1;
-    const cls = s === currentStep ? 'active' : (s < maxStepReached ? 'done' : (s > maxStepReached ? 'locked' : ''));
-    const icon = s < maxStepReached ? '✔' : s;
-    return `<button class="stage-chip ${cls}" ${s > maxStepReached ? 'disabled' : ''} onclick="goStep(${s})">
-      <span class="num">${icon}</span>${n}</button>`;
-  }).join('');
-}
-
-function showStep(step) {
-  currentStep = step;
-  document.querySelectorAll('.quest-step').forEach(el => el.classList.add('hidden'));
-  $('step' + step).classList.remove('hidden');
-  $('xpText').textContent = currentStudent ? (currentStudent.xp || 0) : 0;
-  if (step === 3 && !$('musicPrompt').value.includes($('fullLyrics').value.trim())) buildPrompt();
-  if (step === 4) renderSongPreview();
-  if (step === 5) renderFinishSummary();
-  renderStageTrack();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function goStep(step) {
-  if (step > maxStepReached) return;
-  if (step !== 5 && currentStep !== step) saveProgress(false);  // 切換前先存當下內容
-  showStep(step);
-}
-
-function collectCurrentFields() {
-  return {
-    className: currentStudent ? (currentStudent.className || '') : '',
-    quizScore: Object.values(quizPassed).filter(Boolean).length + '/3',
-    sceneryNotes: $('sceneryNotes').value,
-    lyricAstronomy: $('lyricAstronomy').value,
-    lyricFoodAgri: $('lyricFoodAgri').value,
-    lyricOcean: $('lyricOcean').value,
-    fullLyrics: $('fullLyrics').value,
-    aiTool: $('aiTool').value,
-    musicPrompt: $('musicPrompt').value,
-    songTitle: $('songTitle').value,
-    songUrl: $('songUrl').value,
-    creationIdea: $('creationIdea').value,
-    easterEgg: $('easterEgg').value,
-    reflection: $('reflection').value,
-    showcaseConsent: $('showcaseConsent').checked ? 'true' : ''
-  };
-}
-
-async function saveProgress(advanceTo, btn) {
-  if (!currentStudent) return false;
-  let step = maxStepReached;
-  if (advanceTo && advanceTo > maxStepReached) step = advanceTo;
-  const xp = Math.max(currentStudent.xp || 0, xpForStep(step));
-  const isCompleted = step > TOTAL_STEPS;
-  setBusy(btn, true, '儲存中…');
-  try {
-    const res = await callGAS_POST({
-      action: 'saveProgress', ptcId: currentStudent.ptcId,
-      currentStep: step, xp, isCompleted, fields: collectCurrentFields()
-    });
-    if (!res.success) throw new Error(res.message || '儲存失敗');
-    hideConnectionError();
-    currentStudent.xp = xp;
-    currentStudent.isCompleted = isCompleted;
-    maxStepReached = step;
-    return true;
-  } catch (err) {
-    showConnectionError();
-    showToast(err.message, 'error');
-    return false;
-  } finally {
-    setBusy(btn, false);
-  }
-}
-
-async function advance(nextStep, btn, msg) {
-  const ok = await saveProgress(nextStep, btn);
-  if (!ok) return;
-  showToast(msg || `🎉 +${XP_PER_STEP} XP，前往下一關！`);
-  showStep(nextStep);
-}
-
-/* ---------- 各關過關條件 ---------- */
-function finishStep1(btn) {
-  if (!matchPassed) { showToast('任務 A 的配對還沒全部答對喔', 'error'); return; }
-  if (!quizPassed.quiz1) { showToast('任務 B 的測驗還沒答對喔', 'error'); return; }
-  if (textLen('sceneryNotes') < 15) { showToast('任務 C 的討論紀錄至少寫 15 個字', 'error'); return; }
-  advance(2, btn);
-}
-function finishStep2(btn) {
-  if (!quizPassed.quiz3) { showToast('先答對上面的小測驗喔', 'error'); return; }
-  const short = [['lyricAstronomy', '天文'], ['lyricFoodAgri', '食農'], ['lyricOcean', '海洋']]
-    .filter(([id]) => lyricLen($(id).value) < 40).map(([, n]) => n);
-  if (short.length) { showToast(`「${short.join('、')}」歌詞至少要寫 40 個字`, 'error'); return; }
-  if (textLen('fullLyrics') < 20) assembleLyrics(false);
-  const total = lyricLen($('fullLyrics').value);
-  if (total < 150) { refreshCounters(); showToast(`完整歌詞目前 ${total} 字，至少要 150 字才夠唱 1 分鐘`, 'error'); return; }
-  buildPrompt();
-  advance(3, btn);
-}
-function finishStep3(btn) {
-  if (!quizPassed.quiz2) { showToast('先答對上面的小測驗喔', 'error'); return; }
-  if (textLen('songTitle') < 1) { showToast('請幫你的 AI 校歌取個歌名', 'error'); return; }
-  const url = $('songUrl').value.trim();
-  if (url && !safeUrl(url)) { showToast('作品連結要以 https:// 開頭', 'error'); return; }
-  if (!url && !(currentStudent && currentStudent.songFileUrl) &&
-      !confirm('還沒有貼連結，也還沒上傳作品檔。\n作品先存在老師平板上，確定要繼續嗎？')) return;
-  advance(4, btn);
-}
-function finishStep4(btn) {
-  if (textLen('creationIdea') < 15) { showToast('創作理念至少寫 15 個字', 'error'); return; }
-  if (textLen('easterEgg') < 6) { showToast('歌詞彩蛋至少寫 6 個字', 'error'); return; }
-  if (textLen('reflection') < 10) { showToast('心得至少寫 10 個字', 'error'); return; }
-  advance(5, btn, '🏆 恭喜獲得「落山風 AI 音樂製作人」徽章！');
-}
-
-/* =====================================================================
- * 題目與配對
- * ===================================================================== */
-function renderAllQuizzes() { Object.keys(QUIZZES).forEach(renderQuiz); }
-
-function renderQuiz(id) {
-  const qz = QUIZZES[id];
-  const passed = quizPassed[id];
-  $(id).innerHTML = `
-    <div class="bg-slate-50 rounded-lg p-4">
-      <p class="font-bold mb-3">❓ ${escapeHtml(qz.q)}</p>
-      <div class="flex flex-col gap-2">
-        ${qz.opts.map((o, i) => `
-          <button class="quiz-opt ${passed && i === qz.ans ? 'right' : ''}" onclick="answerQuiz('${id}',${i},this)">
-            <span class="quiz-letter">${'ABCD'[i]}</span><span>${escapeHtml(o)}</span>
-          </button>`).join('')}
-      </div>
-      <div class="feedback mt-3 ${passed ? 'ok' : 'hidden'}" data-fb="${id}">${passed ? '✅ ' + escapeHtml(qz.why) : ''}</div>
-    </div>`;
-}
-
-function answerQuiz(id, i, btn) {
-  const qz = QUIZZES[id];
-  const wrap = $(id);
-  wrap.querySelectorAll('.quiz-opt').forEach(b => b.classList.remove('right', 'wrong'));
-  const fb = wrap.querySelector('[data-fb]');
-  fb.classList.remove('hidden', 'ok', 'no');
-  if (i === qz.ans) {
-    btn.classList.add('right');
-    fb.classList.add('ok');
-    fb.textContent = '✅ 答對了！' + qz.why;
-    quizPassed[id] = true;
-  } else {
-    btn.classList.add('wrong');
-    fb.classList.add('no');
-    fb.textContent = '❌ 再想想看，回頭看看影片或歌詞提示。';
-  }
-}
-
-function renderMatch() {
-  $('matchArea').innerHTML = MATCH_ITEMS.map((m, i) => `
-    <div class="match-row">
-      <span class="match-word">${m.word}</span>
-      <select class="field" id="match${i}">
-        ${MATCH_OPTIONS.map(o => `<option value="${o.v}" ${matchPassed && o.v === m.ans ? 'selected' : ''}>${o.t}</option>`).join('')}
-      </select>
-    </div>`).join('');
-  const fb = $('matchFeedback');
-  if (matchPassed) { fb.className = 'feedback ok mt-3'; fb.textContent = '✅ 配對全對！'; }
-}
-
-function checkMatch() {
-  let right = 0;
-  MATCH_ITEMS.forEach((m, i) => { if ($('match' + i).value === m.ans) right++; });
-  const fb = $('matchFeedback');
-  fb.classList.remove('hidden', 'ok', 'no');
-  if (right === MATCH_ITEMS.length) {
-    matchPassed = true;
-    fb.classList.add('ok');
-    fb.textContent = '✅ 全對！發現了嗎？老校歌唱了山、海、溫泉、漁港，卻沒有唱到「星空」——這就是我們要幫校歌補上的新特色。';
-  } else {
-    fb.classList.add('no');
-    fb.textContent = `答對 ${right} / ${MATCH_ITEMS.length} 題，和組員討論一下再試試！`;
-  }
-}
-
-/* =====================================================================
- * 第二關：詞卡插入、字數、組合歌詞
- * ===================================================================== */
-document.querySelectorAll('[data-words]').forEach(box => {
-  box.addEventListener('click', e => {
-    if (!e.target.classList.contains('word-chip')) return;
-    const ta = $(box.dataset.words);
-    if (ta.value.length + e.target.textContent.length > Number(ta.maxLength)) return;
-    ta.value += e.target.textContent;
-    ta.focus();
-    refreshCounters();
-  });
-});
-
-function lyricLen(text) {
-  return String(text || '').replace(/\[[^\]]*\]/g, '').replace(/[\s，。、！？；：「」『』（）,.!?;:()~～…—-]/g, '').length;
-}
-function refreshCounters() {
-  document.querySelectorAll('.counter').forEach(c => {
-    const ta = $(c.dataset.for);
-    const n = c.dataset.lyric ? lyricLen(ta.value) : (ta.value || '').trim().length;
-    const min = Number(c.dataset.min || 0);
-    c.textContent = `${n} 字${min ? `（至少 ${min} 字）` : ''}`;
-    c.classList.toggle('bad', n < min);
-  });
-}
-document.addEventListener('input', e => { if (e.target.matches('textarea')) refreshCounters(); });
-
-function assembleLyrics(manual) {
-  const a = $('lyricAstronomy').value.trim();
-  const f = $('lyricFoodAgri').value.trim();
-  const o = $('lyricOcean').value.trim();
-  if (manual && $('fullLyrics').value.trim() && !confirm('要用三區的歌詞重新組合嗎？目前的完整歌詞會被取代。')) return;
-  $('fullLyrics').value =
-`[Verse 1｜車城本校・天文]
-${a}
-
-[Verse 2｜溫泉分校・食農]
-${f}
-
-[Verse 3｜射寮分校・海洋]
-${o}
-
-[Chorus]
-山川壯麗 海濤奔湧
-星空 稻田 還有漁港
-車城 車城 我們的家
-美哉吾校 醉臥其中`;
-  if (manual) showToast('✨ 已組合！可以再自己修改副歌');
-}
-
-/* =====================================================================
- * 第三關：曲風選擇與指令產生
- * ===================================================================== */
-function renderStyleChips() {
-  Object.entries(STYLE_GROUPS).forEach(([g, cfg]) => {
-    $(cfg.el).innerHTML = cfg.items.map((it, i) =>
-      `<button class="style-chip ${styleState[g].includes(i) ? 'on' : ''}" onclick="pickStyle('${g}',${i})">${it.zh}</button>`).join('');
-  });
-}
-function pickStyle(g, i) {
-  const cfg = STYLE_GROUPS[g];
-  if (cfg.multi) {
-    const arr = styleState[g];
-    const at = arr.indexOf(i);
-    if (at >= 0) { if (arr.length > 1) arr.splice(at, 1); } else arr.push(i);
-  } else {
-    styleState[g] = [i];
-  }
-  renderStyleChips();
-  buildPrompt();
-}
-function pickedText(g, lang) { return styleState[g].map(i => STYLE_GROUPS[g].items[i][lang]); }
-
-function buildPrompt() {
-  const lyrics = $('fullLyrics').value.trim() || '（請先完成第二關的歌詞）';
-  const zh = `${pickedText('genre', 'zh')[0]}，心情${pickedText('mood', 'zh')[0]}，由${pickedText('vocal', 'zh')[0]}演唱，樂器用${pickedText('inst', 'zh').join('、')}`;
-  $('musicPrompt').value = `請幫我創作一首屏東縣車城國小的新校歌。\n曲風：${zh}。\n長度：約 1 分鐘。\n請用中文演唱下面的歌詞，不要改動歌詞內容，[ ] 裡是段落標記不用唱出來：\n\n${lyrics}`;
-  renderPromptView();
-}
-function renderPromptView() { $('musicPromptView').textContent = $('musicPrompt').value; }
-
-async function copyText(id) {
-  const text = $(id).value;
-  try {
-    await navigator.clipboard.writeText(text);
-  } catch (e) {
-    const ta = document.createElement('textarea');
-    ta.value = text; document.body.appendChild(ta); ta.select();
-    try { document.execCommand('copy'); } catch (e2) {}
-    document.body.removeChild(ta);
-  }
-  showToast('📋 已複製，貼到 AI 工具裡吧！');
-}
-
-/* =====================================================================
- * 第四關 / 完賽
- * ===================================================================== */
-function renderSongPreview() {
-  const url = safeUrl($('songUrl').value);
-  const fileUrl = currentStudent ? safeUrl(currentStudent.songFileUrl) : '';
-  $('songPreview').innerHTML = `
-    <p class="font-bold">🎵 ${escapeHtml($('songTitle').value || '（未命名）')}</p>
-    <p class="text-slate-500 text-xs mt-1">${escapeHtml($('aiTool').value)} ・ ${escapeHtml(pickedText('genre', 'zh')[0])}</p>
-    ${fileUrl ? `<div class="player-box mt-2"><iframe src="${escapeHtml(fileUrl)}" allow="autoplay" title="我的作品"></iframe></div>` : ''}
-    ${url ? `<a class="btn btn-primary btn-sm mt-2" style="text-decoration:none" href="${escapeHtml(url)}" target="_blank" rel="noopener">▶ 開啟 Gemini 分享連結</a>` : ''}
-    ${!fileUrl && !url ? '<p class="hint mt-2">（作品存在老師平板，發表時由老師播放）</p>' : ''}
-    <details class="mt-2"><summary class="text-sea font-bold" style="cursor:pointer">看我的歌詞</summary>
-      <p class="whitespace-pre-wrap mt-2">${escapeHtml($('fullLyrics').value)}</p></details>`;
-}
-function renderUploadStatus() {
-  const st = $('uploadStatus');
-  if (currentStudent && currentStudent.songFileUrl) {
-    st.innerHTML = `✅ 已上傳：${escapeHtml(currentStudent.songFileName || '作品檔')}　<a href="${escapeHtml(safeUrl(currentStudent.songFileUrl))}" target="_blank" rel="noopener">試聽</a>`;
-  } else {
-    st.textContent = '尚未上傳作品檔';
-  }
-}
-
-function readFileAsBase64(file) {
-  return new Promise((resolve, reject) => {
-    const r = new FileReader();
-    r.onload = () => resolve(String(r.result).split(',')[1] || '');
-    r.onerror = () => reject(new Error('檔案讀取失敗'));
-    r.readAsDataURL(file);
-  });
-}
-
-async function uploadSongFile(btn) {
-  if (!currentStudent) return;
-  const file = $('songFile').files[0];
-  if (!file) { showToast('請先選擇作品檔', 'error'); return; }
-  if (!/\.(mp3|m4a|wav|aac|ogg|mp4|webm|mov)$/i.test(file.name)) { showToast('只接受音樂或影片檔（mp3、m4a、wav、mp4…）', 'error'); return; }
-  if (file.size > MAX_UPLOAD_MB * 1024 * 1024) { showToast(`檔案超過 ${MAX_UPLOAD_MB}MB，請重新下載較短的版本`, 'error'); return; }
-
-  const bar = $('uploadBar');
-  const setBar = pct => { bar.style.width = pct + '%'; };
-  $('uploadBarWrap').classList.remove('hidden');
-  setBar(3);
-  setBusy(btn, true, '上傳中…');
-  $('uploadStatus').textContent = '讀取檔案中…';
-  try {
-    const b64 = await readFileAsBase64(file);
-    const total = Math.max(1, Math.ceil(b64.length / CHUNK_SIZE));
-    const uploadId = 'u' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
-    for (let i = 0; i < total; i++) {
-      $('uploadStatus').textContent = `上傳中… ${i + 1} / ${total}`;
-      const res = await callGAS_POST({
-        action: 'uploadChunk', ptcId: currentStudent.ptcId, uploadId, index: i, total,
-        data: b64.slice(i * CHUNK_SIZE, (i + 1) * CHUNK_SIZE)
-      });
-      if (!res.success) throw new Error(res.message || '分塊上傳失敗');
-      setBar(Math.round((i + 1) / total * 85));
-    }
-    $('uploadStatus').textContent = '合併檔案中…';
-    const merged = await callGAS_POST({ action: 'mergeChunks', ptcId: currentStudent.ptcId, uploadId, total, fileName: file.name });
-    if (!merged.success) throw new Error(merged.message || '合併失敗');
-    setBar(100);
-    Object.assign(currentStudent, merged.data);
-    hideConnectionError();
-    renderUploadStatus();
-    showToast('🎉 作品上傳成功！');
-  } catch (err) {
-    $('uploadStatus').textContent = '❌ ' + err.message;
-    showToast(err.message, 'error');
-  } finally {
-    setBusy(btn, false);
-    setTimeout(() => $('uploadBarWrap').classList.add('hidden'), 1500);
-  }
-}
-
-function renderFinishSummary() {
-  $('finishSummary').innerHTML = `
-    <p class="font-bold mb-2">🎵 ${escapeHtml($('songTitle').value || '我的車城校歌')}</p>
-    <p class="text-sm whitespace-pre-wrap">${escapeHtml($('fullLyrics').value)}</p>
-    <p class="text-sm mt-3"><span class="font-bold">🥚 彩蛋：</span>${escapeHtml($('easterEgg').value)}</p>`;
-}
-
-/* =====================================================================
- * 教師主控台
- * ===================================================================== */
-function openTeacherLogin() { $('teacherPwd').value = ''; openModal('teacherLoginModal'); setTimeout(() => $('teacherPwd').focus(), 50); }
-
-function teacherLogin() {
-  const pwd = $('teacherPwd').value;
-  if (!pwd) { showToast('請輸入教師密碼', 'error'); return; }
-  const btn = $('teacherLoginBtn');
-  setBusy(btn, true, '驗證中…');
-  callGAS_JSONP({ action: 'verifyTeacher', password: pwd }, (err, res) => {
-    setBusy(btn, false);
-    if (err) { showConnectionError(); showToast(err.message, 'error'); return; }
-    if (!res.success) { showToast('密碼錯誤', 'error'); return; }
-    teacherPassword = pwd;
-    closeModal('teacherLoginModal');
-    $('loginView').classList.add('hidden');
-    $('questView').classList.add('hidden');
-    $('teacherView').classList.remove('hidden');
-    buildFocusOptions();
-    loadStudents();
-  });
-}
-
-function closeTeacher() {
-  teacherPassword = '';
-  $('teacherView').classList.add('hidden');
-  if (currentStudent) $('questView').classList.remove('hidden'); else $('loginView').classList.remove('hidden');
-}
-
-function loadStudents() {
-  $('teacherTable').innerHTML = '<p class="p-4 text-slate-500">載入中…</p>';
-  callGAS_JSONP({ action: 'getStudents', password: teacherPassword }, (err, res) => {
-    if (err) { showConnectionError(); showToast(err.message, 'error'); return; }
-    if (!res.success) { showToast(res.message || '讀取失敗', 'error'); return; }
-    hideConnectionError();
-    allStudents = res.data || [];
-    buildDateFilter();
-    renderStudents();
-  });
-}
-
-function buildDateFilter() {
-  const sel = $('dateFilter');
-  const keep = sel.value;
-  const dates = [...new Set(allStudents.map(s => s.date).filter(Boolean))].sort().reverse();
-  sel.innerHTML = '<option value="">全部日期</option>' + dates.map(d => `<option value="${escapeHtml(d)}">${escapeHtml(d)}</option>`).join('');
-  if (keep && dates.includes(keep)) sel.value = keep;
-  else if (!keep && dates.length) sel.value = dates[0];   // 預設當天／最近一場
-}
-
-function buildFocusOptions() {
-  $('focusField').innerHTML = '<option value="">全部欄位</option>' +
-    ANSWER_FIELDS.map(f => `<option value="${f.key}">${f.icon} ${f.label}</option>`).join('');
-}
-
-function setView(mode) {
-  teacherViewMode = mode;
-  document.querySelectorAll('.view-btn').forEach(b => b.classList.toggle('on', b.dataset.view === mode));
-  $('focusWrap').classList.toggle('hidden', mode !== 'cards');
-  renderStudents();
-}
-
-function filteredStudents() {
-  const d = $('dateFilter').value;
-  const q = $('searchBox').value.trim().toLowerCase();
-  return allStudents
-    .filter(s => !d || s.date === d)
-    .filter(s => !q || [s.name, s.ptcId, s.className].join(' ').toLowerCase().includes(q))
-    .sort((a, b) => (b.xp || 0) - (a.xp || 0));
-}
-
-function stepLabel(s) {
-  if (s.isCompleted) return '🏆 完賽';
-  const st = Math.min(Number(s.currentStep) || 1, TOTAL_STEPS);
-  return `第 ${st} 關・${STEP_NAMES[st - 1]}`;
-}
-function doneSteps(s) { return s.isCompleted ? TOTAL_STEPS : Math.min((Number(s.currentStep) || 1) - 1, TOTAL_STEPS); }
-
-function renderFieldValue(f, v, full) {
-  if (f.url) {
-    const u = safeUrl(v);
-    return u ? `<a href="${escapeHtml(u)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">▶ 開啟作品</a>` : '<span class="text-slate-400">—</span>';
-  }
-  if (!v) return '<span class="text-slate-400">—</span>';
-  return `<div class="whitespace-pre-wrap ${f.mono ? 'font-mono text-xs' : ''} ${full ? '' : 'clamp-4'}">${escapeHtml(v)}</div>`;
-}
-
-function renderStats(list) {
-  const done = list.filter(s => s.isCompleted).length;
-  const avg = list.length ? Math.round(list.reduce((a, s) => a + (s.xp || 0), 0) / list.length) : 0;
-  const stats = [
-    { label: '人數', val: list.length, box: 'bg-sea-50 border-sea', t1: 'text-sea' },
-    { label: '已完賽', val: done, box: 'bg-green-50 border-slate-200', t1: 'text-green-600' },
-    { label: '進行中', val: list.length - done, box: 'bg-amber-50 border-slate-200', t1: 'text-amber-600' },
-    { label: '平均 XP', val: avg, box: 'bg-rice-50 border-rice', t1: 'text-rice' }
-  ];
-  $('statsArea').innerHTML = stats.map(s => `
-    <div class="stat-box ${s.box}"><div class="text-xs text-slate-500">${s.label}</div>
-    <div class="text-2xl font-black ${s.t1}">${s.val}</div></div>`).join('');
-}
-
-function renderStudents() {
-  const list = filteredStudents();
-  renderStats(list);
-  $('teacherTable').classList.toggle('hidden', teacherViewMode !== 'table');
-  $('teacherList').classList.toggle('hidden', teacherViewMode !== 'list');
-  $('teacherCards').classList.toggle('hidden', teacherViewMode !== 'cards');
-  if (!list.length) {
-    const empty = '<p class="p-4 text-slate-500 text-center">目前沒有資料</p>';
-    $('teacherTable').innerHTML = empty; $('teacherList').innerHTML = empty; $('teacherCards').innerHTML = empty;
-    return;
-  }
-  if (teacherViewMode === 'table') renderTable(list);
-  if (teacherViewMode === 'list') renderList(list);
-  if (teacherViewMode === 'cards') renderCards(list);
-}
-
-function renderTable(list) {
-  $('teacherTable').innerHTML = `
-    <table class="data-table">
-      <thead><tr><th>姓名</th><th>帳號</th><th>班級</th><th>進度</th><th>XP</th><th>測驗</th><th>歌名</th><th>作品</th><th>更新</th></tr></thead>
-      <tbody>${list.map(s => `
-        <tr style="cursor:pointer" onclick="openDetail('${escapeHtml(s.ptcId)}')">
-          <td class="font-bold">${escapeHtml(s.name)}</td>
-          <td class="font-mono text-xs">${escapeHtml(s.ptcId)}</td>
-          <td>${escapeHtml(s.className)}</td>
-          <td>${stepLabel(s)}</td>
-          <td>${s.xp || 0}</td>
-          <td>${escapeHtml(s.quizScore || '')}</td>
-          <td class="truncate">${escapeHtml(s.songTitle)}</td>
-          <td>${s.songFileUrl ? renderFieldValue(ANSWER_FIELDS.find(f => f.key === 'songFileUrl'), s.songFileUrl) : renderFieldValue(ANSWER_FIELDS.find(f => f.key === 'songUrl'), s.songUrl)}</td>
-          <td class="text-xs text-slate-500">${escapeHtml(s.updatedAt)}</td>
-        </tr>`).join('')}</tbody>
-    </table>`;
-}
-
-function renderList(list) {
-  $('teacherList').innerHTML = list.map(s => {
-    const pct = Math.round(doneSteps(s) / TOTAL_STEPS * 100);
-    return `
-    <div class="card" style="cursor:pointer" onclick="openDetail('${escapeHtml(s.ptcId)}')">
-      <div class="flex items-center justify-between gap-3 flex-wrap mb-2">
-        <div><span class="font-bold text-lg">${escapeHtml(s.name)}</span>
-          <span class="text-xs text-slate-500 ml-auto"> ${escapeHtml(s.className)} · ${escapeHtml(s.ptcId)}</span></div>
-        <div class="text-sm">${stepLabel(s)} · <span class="font-bold">${s.xp || 0} XP</span></div>
-      </div>
-      <div class="progress mb-3"><span style="width:${pct}%"></span></div>
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 text-sm">
-        ${ANSWER_FIELDS.map(f => `<div class="field-block"><div class="text-xs text-slate-500 font-bold">${f.icon} ${f.label}</div>${renderFieldValue(f, s[f.key])}</div>`).join('')}
-      </div>
-    </div>`;
-  }).join('');
-}
-
-function renderCards(list) {
-  const focus = $('focusField').value;
-  const fields = focus ? ANSWER_FIELDS.filter(f => f.key === focus) : ANSWER_FIELDS.filter(f => ['songTitle', 'songFileUrl', 'songUrl', 'lyricAstronomy', 'lyricFoodAgri', 'lyricOcean', 'easterEgg'].includes(f.key));
-  $('teacherCards').innerHTML = list.map(s => `
-    <div class="show-card" onclick="openDetail('${escapeHtml(s.ptcId)}')">
-      <div class="flex items-center justify-between gap-2 mb-2">
-        <span class="font-bold">${escapeHtml(s.name)}</span>
-        <span class="text-xs text-slate-500">${stepLabel(s)}</span>
-      </div>
-      <div class="flex flex-col gap-2 text-sm">
-        ${fields.map(f => `<div class="field-block"><div class="text-xs text-slate-500 font-bold">${f.icon} ${f.label}</div>${renderFieldValue(f, s[f.key], !!focus)}</div>`).join('')}
-      </div>
-    </div>`).join('');
-}
-
-function openDetail(ptcId) {
-  const s = allStudents.find(x => x.ptcId === ptcId);
-  if (!s) return;
-  $('detailTitle').textContent = `${s.name}（${s.className || '未填班級'}）`;
-  $('detailBody').innerHTML = `
-    <p class="text-sm text-slate-500">${escapeHtml(s.ptcId)} · ${stepLabel(s)} · ${s.xp || 0} XP · 測驗 ${escapeHtml(s.quizScore || '—')}</p>
-    ${ANSWER_FIELDS.map(f => `<div class="field-block"><div class="text-xs text-slate-500 font-bold mb-1">${f.icon} ${f.label}</div>${renderFieldValue(f, s[f.key], true)}</div>`).join('')}`;
-  openModal('detailModal');
-}
-
-function exportCsv() {
-  const list = filteredStudents();
-  if (!list.length) { showToast('沒有可匯出的資料', 'error'); return; }
-  const cols = ['date', 'className', 'name', 'ptcId', 'currentStep', 'xp', 'isCompleted', 'quizScore', ...ANSWER_FIELDS.map(f => f.key), 'updatedAt'];
-  const esc = v => `"${String(v === undefined || v === null ? '' : v).replace(/"/g, '""')}"`;
-  const csv = '\ufeff' + [cols.join(','), ...list.map(s => cols.map(c => esc(s[c])).join(','))].join('\r\n');
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
-  a.download = `車城AI校歌_${$('dateFilter').value || '全部'}.csv`;
-  document.body.appendChild(a); a.click(); a.remove();
-}
-
-/* =====================================================================
- * 初始化
- * ===================================================================== */
-(function init() {
-  renderVersion();
-  renderStyleChips();
-  $('pblLink').href = PBL_SITE_URL;
-  $('loginPtc').value = recall('songQuest_ptc');
-  $('loginName').value = recall('songQuest_name');
-  $('loginClass').value = recall('songQuest_class');
-  if (!gasReady()) showToast('⚠️ 尚未設定 GAS 網址', 'error');
-})();
-</script>
+    <!-- 頂部導航列 -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-brand text-white rounded-full flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-school"></i>
+                </div>
+                <h1 class="text-xl font-bold text-gray-800">車城國小｜3D列印名牌闖關任務</h1>
+            </div>
+            <div class="text-sm text-gray-500 font-medium">自主學習系統 v1.4</div>
+        </div>
+        <div class="w-full bg-gray-200 h-2">
+            <div id="progressBar" class="bg-brand h-2 transition-all duration-300 w-0"></div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-4xl mx-auto w-full px-4 py-8">
+
+        <!-- 第 0 關：輸入座號 -->
+        <div id="step-0" class="step-container active bg-white p-6 md:p-10 rounded-2xl shadow-sm border border-gray-100">
+            <div class="text-center mb-8">
+                <i class="fa-solid fa-rocket text-5xl text-brand mb-4"></i>
+                <h2 class="text-2xl font-bold mb-2">準備開始你的 3D 列印旅程！</h2>
+                <p class="text-gray-600">請先輸入你的屏東縣教育雲帳號（ptc 開頭），讓系統記錄你的闖關進度，隨時都可以繼續。</p>
+            </div>
+            <div class="max-w-md mx-auto">
+                <div class="mb-4">
+                    <label class="block text-gray-700 font-bold mb-2" for="studentId">
+                        屏東縣教育雲帳號 <span class="text-red-500">*</span>
+                    </label>
+                    <input class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent text-lg"
+                        id="studentId" type="text" placeholder="請輸入 ptc 開頭的帳號，例如：ptc1234567"
+                        oninput="this.value=this.value.toLowerCase()">
+                    <p class="text-sm text-gray-500 mt-1">格式：<code class="bg-gray-100 px-1 rounded font-mono">ptc</code> 開頭的教育雲帳號</p>
+                </div>
+                <button onclick="startWithId()" class="w-full bg-brand hover:bg-brand-dark text-white font-bold py-3 px-4 rounded-lg transition duration-200 text-lg shadow-md hover:shadow-lg">
+                    開始 / 繼續闖關 <i class="fa-solid fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- 第一關 -->
+        <div id="step-1" class="step-container bg-white p-6 md:p-10 rounded-2xl shadow-sm border border-gray-100">
+            <div class="flex items-center gap-3 mb-6 border-b pb-4">
+                <span class="bg-blue-100 text-blue-700 font-bold py-1 px-3 rounded-full">第一關</span>
+                <h2 class="text-2xl font-bold">3D 列印能幹嘛？</h2>
+            </div>
+            <p class="mb-4 text-gray-700">請仔細觀看這段影片，了解 3D 列印的超能力，看完後請回答下方問題喔！</p>
+
+            <div class="max-w-3xl mx-auto mb-3">
+                <div class="yt-thumb-wrapper" onclick="openYouTube('i6NokKPnRBA')">
+                    <img src="https://img.youtube.com/vi/i6NokKPnRBA/hqdefault.jpg" alt="3D 列印影片縮圖">
+                    <div class="yt-play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    <div class="yt-label">▶ 點擊前往 YouTube 觀看影片</div>
+                </div>
+            </div>
+            <p class="text-center text-sm text-gray-500 mb-8">
+                <i class="fa-brands fa-youtube text-red-500 mr-1"></i>點擊縮圖即可在新視窗播放，看完後回到這裡作答
+            </p>
+
+            <div class="bg-blue-50 p-6 rounded-xl border border-blue-100 mb-8">
+                <h3 class="text-lg font-bold text-gray-800 mb-4"><i class="fa-solid fa-circle-question text-blue-500 mr-2"></i>隨堂測驗：根據影片，3D 列印可以做到什麼？</h3>
+                <div class="space-y-3">
+                    <label class="flex items-center gap-3 p-4 bg-white border border-gray-200 rounded-lg cursor-pointer hover:bg-blue-50 transition">
+                        <input type="radio" name="q1" value="A" class="w-5 h-5 text-brand focus:ring-brand">
+                        <span class="text-gray-700 text-lg">(A) 只能印出學校的平面的考卷</span>
+                    </label>
+                    <label class="flex items-center gap-3 p-4 bg-white border border-gray-200 rounded-lg cursor-pointer hover:bg-blue-50 transition">
+                        <input type="radio" name="q1" value="B" class="w-5 h-5 text-brand focus:ring-brand">
+                        <span class="text-gray-700 text-lg">(B) 可以印出立體的公仔、零件甚至是房子</span>
+                    </label>
+                    <label class="flex items-center gap-3 p-4 bg-white border border-gray-200 rounded-lg cursor-pointer hover:bg-blue-50 transition">
+                        <input type="radio" name="q1" value="C" class="w-5 h-5 text-brand focus:ring-brand">
+                        <span class="text-gray-700 text-lg">(C) 可以把人瞬間傳送到外太空</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center mt-6">
+                <button onclick="prevStep(1)" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-6 rounded-lg transition">上一步</button>
+                <button onclick="nextStep(1)" class="bg-brand hover:bg-brand-dark text-white font-bold py-3 px-8 rounded-lg transition shadow-md">下一關 <i class="fa-solid fa-arrow-right ml-2"></i></button>
+            </div>
+        </div>
+
+        <!-- 第二關 -->
+        <div id="step-2" class="step-container bg-white p-6 md:p-10 rounded-2xl shadow-sm border border-gray-100">
+            <div class="flex items-center gap-3 mb-6 border-b pb-4">
+                <span class="bg-indigo-100 text-indigo-700 font-bold py-1 px-3 rounded-full">第二關</span>
+                <h2 class="text-2xl font-bold">【秒懂潮科技】3D 列印的原理</h2>
+            </div>
+            <p class="mb-4 text-gray-700">這段影片會告訴你 3D 列印機是怎麼把東西「長」出來的。注意看它的動作喔！</p>
+
+            <div class="max-w-3xl mx-auto mb-3">
+                <div class="yt-thumb-wrapper" onclick="openYouTube('Ad0xdQeKnVU')">
+                    <img src="https://img.youtube.com/vi/Ad0xdQeKnVU/hqdefault.jpg" alt="3D 列印原理影片縮圖">
+                    <div class="yt-play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    <div class="yt-label">▶ 點擊前往 YouTube 觀看影片</div>
+                </div>
+            </div>
+            <p class="text-center text-sm text-gray-500 mb-8">
+                <i class="fa-brands fa-youtube text-red-500 mr-1"></i>點擊縮圖即可在新視窗播放，看完後回到這裡作答
+            </p>
+
+            <div class="bg-indigo-50 p-6 rounded-xl border border-indigo-100 mb-8">
+                <h3 class="text-lg font-bold text-gray-800 mb-4"><i class="fa-solid fa-circle-question text-indigo-500 mr-2"></i>隨堂測驗：3D 列印 (FDM) 的成型原理，最像是下列哪一種動作？</h3>
+                <div class="space-y-3">
+                    <label class="flex items-center gap-3 p-4 bg-white border border-gray-200 rounded-lg cursor-pointer hover:bg-indigo-50 transition">
+                        <input type="radio" name="q2" value="A" class="w-5 h-5 text-brand focus:ring-brand">
+                        <span class="text-gray-700 text-lg">(A) 用剪刀把紙張剪成立體形狀</span>
+                    </label>
+                    <label class="flex items-center gap-3 p-4 bg-white border border-gray-200 rounded-lg cursor-pointer hover:bg-indigo-50 transition">
+                        <input type="radio" name="q2" value="B" class="w-5 h-5 text-brand focus:ring-brand">
+                        <span class="text-gray-700 text-lg">(B) 像擠熱熔膠(或擠牙膏)一樣，一層一層堆疊起來</span>
+                    </label>
+                    <label class="flex items-center gap-3 p-4 bg-white border border-gray-200 rounded-lg cursor-pointer hover:bg-indigo-50 transition">
+                        <input type="radio" name="q2" value="C" class="w-5 h-5 text-brand focus:ring-brand">
+                        <span class="text-gray-700 text-lg">(C) 像車城洋蔥一樣直接從泥土裡長出來</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center mt-6">
+                <button onclick="prevStep(2)" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-6 rounded-lg transition">上一步</button>
+                <button onclick="nextStep(2)" class="bg-brand hover:bg-brand-dark text-white font-bold py-3 px-8 rounded-lg transition shadow-md">前往畫板 <i class="fa-solid fa-palette ml-2"></i></button>
+            </div>
+        </div>
+
+        <!-- 第三關：簽名 -->
+        <div id="step-3" class="step-container bg-white p-6 md:p-10 rounded-2xl shadow-sm border border-gray-100">
+            <div class="flex items-center gap-3 mb-6 border-b pb-4">
+                <span class="bg-purple-100 text-purple-700 font-bold py-1 px-3 rounded-full">第三關</span>
+                <h2 class="text-2xl font-bold">專屬名牌設計：手繪簽名</h2>
+            </div>
+            <p class="mb-4 text-gray-700 text-lg">利用下方的線上畫圖板，親手簽下你的名字！<br>
+               <span class="text-base text-red-500 font-bold mt-2 inline-block bg-red-50 p-2 rounded border border-red-100">
+                 ※ 建議使用黑色。畫完後點「上傳簽名至雲端」，上傳成功後才會出現下載按鈕。想重簽可隨時直接在畫板上畫，或按「重新簽名上傳」。
+               </span>
+            </p>
+
+            <div class="bg-gray-100 p-3 rounded-t-xl flex flex-wrap gap-4 items-center justify-between border border-gray-300 border-b-0">
+                <div class="flex items-center gap-4">
+                    <div class="flex items-center gap-2">
+                        <label class="text-sm font-bold text-gray-700">顏色:</label>
+                        <input type="color" id="brushColor" value="#000000" class="w-8 h-8 rounded cursor-pointer border border-gray-300">
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <label class="text-sm font-bold text-gray-700">粗細:</label>
+                        <input type="range" id="brushSize" min="20" max="30" value="20" class="w-24 accent-brand">
+                        <span id="brushSizeVal" class="text-xs text-gray-500 w-4 font-mono">20</span>
+                    </div>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="clearCanvas()" class="bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 text-sm font-bold py-2 px-4 rounded-lg transition">
+                        <i class="fa-solid fa-eraser mr-1"></i> 清除重畫
+                    </button>
+                </div>
+            </div>
+            <div id="canvasWrapper" class="border border-gray-300 rounded-b-xl mb-6 overflow-hidden bg-white cursor-crosshair shadow-inner">
+                <canvas id="signaturePad" style="display:block;background:#fff;touch-action:none;"></canvas>
+            </div>
+
+            <!-- 上傳區塊 -->
+            <div id="uploadSection" class="bg-purple-50 p-5 rounded-xl border border-purple-100 mb-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div>
+                    <h4 id="uploadTitle" class="font-bold text-gray-800 text-lg mb-1">上傳簽名檔至系統</h4>
+                    <p id="uploadHint" class="text-sm text-gray-600">系統將自動轉為 SVG 向量檔，以你的帳號命名後備份到雲端資料夾。</p>
+                </div>
+                <div class="flex gap-3 w-full sm:w-auto">
+                    <button onclick="cancelReupload()" id="cancelReuploadBtn"
+                        class="hidden flex-1 sm:flex-none bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-bold py-3 px-5 rounded-lg transition items-center justify-center">
+                        取消
+                    </button>
+                    <button onclick="uploadSignature()" id="uploadBtn"
+                        class="flex-1 sm:flex-none bg-brand hover:bg-brand-dark text-white font-bold py-3 px-6 rounded-lg transition shadow-md flex items-center justify-center">
+                        <i class="fa-solid fa-cloud-arrow-up mr-2 text-xl"></i> 上傳簽名至雲端
+                    </button>
+                </div>
+            </div>
+
+            <!-- 下載區塊（上傳成功後才顯示） -->
+            <div id="downloadSection" class="hidden bg-green-50 p-5 rounded-xl border border-green-200 mb-8">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div>
+                        <h4 class="font-bold text-green-800 text-lg mb-1"><i class="fa-solid fa-circle-check mr-2"></i>簽名已備份到雲端！</h4>
+                        <p class="text-sm text-gray-600">下載 PNG 可直接使用；下載 SVG（3D列印用）可直接匯入 Tinkercad，已自動轉換為封閉輪廓。</p>
+                    </div>
+                    <div class="flex flex-wrap gap-3 w-full sm:w-auto">
+                        <button onclick="resetForReupload()"
+                            class="flex-1 sm:flex-none bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-bold py-3 px-5 rounded-lg transition shadow-md flex items-center justify-center">
+                            <i class="fa-solid fa-rotate-right mr-2"></i> 重新簽名上傳
+                        </button>
+                        <button onclick="downloadSignaturePng()"
+                            class="flex-1 sm:flex-none bg-indigo-400 hover:bg-indigo-500 text-white font-bold py-3 px-5 rounded-lg transition shadow-md flex items-center justify-center">
+                            <i class="fa-solid fa-image mr-2"></i> PNG
+                        </button>
+                        <button onclick="downloadSignatureSvg()" id="svgBtn"
+                            class="flex-1 sm:flex-none bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-5 rounded-lg transition shadow-md flex items-center justify-center">
+                            <i class="fa-solid fa-bezier-curve mr-2"></i> SVG（3D列印用）
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-between mt-6">
+                <button onclick="prevStep(3)" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-6 rounded-lg transition">上一步</button>
+                <button onclick="nextStep(3)" class="bg-brand hover:bg-brand-dark text-white font-bold py-3 px-8 rounded-lg transition shadow-md">進入實作 <i class="fa-solid fa-cube ml-2"></i></button>
+            </div>
+        </div>
+
+        <!-- 第四關：Tinkercad -->
+        <div id="step-4" class="step-container bg-white p-6 md:p-10 rounded-2xl shadow-sm border border-gray-100">
+            <div class="flex items-center gap-3 mb-6 border-b pb-4">
+                <span class="bg-orange-100 text-orange-700 font-bold py-1 px-3 rounded-full">第四關</span>
+                <h2 class="text-2xl font-bold">Tinkercad 名牌實作</h2>
+            </div>
+
+            <div class="grid md:grid-cols-5 gap-8 mb-8">
+                <div class="md:col-span-3">
+                    <h3 class="font-bold mb-3 text-gray-800 text-lg"><i class="fa-solid fa-video text-red-500 mr-2"></i>教學影片：製作名牌</h3>
+                    <div class="yt-thumb-wrapper" onclick="openYouTube('UFpB7GAE1ZU')">
+                        <img src="https://img.youtube.com/vi/UFpB7GAE1ZU/hqdefault.jpg" alt="Tinkercad 教學縮圖">
+                        <div class="yt-play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                        <div class="yt-label">▶ 點擊前往 YouTube 觀看教學</div>
+                    </div>
+                    <p class="text-center text-sm text-gray-500 mt-2">
+                        <i class="fa-brands fa-youtube text-red-500 mr-1"></i>點擊縮圖即可在新視窗播放教學影片
+                    </p>
+                </div>
+                <div class="md:col-span-2 flex flex-col justify-center">
+                    <div class="bg-orange-50 border border-orange-200 rounded-xl p-6 h-full flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-orange-800 text-xl mb-4"><i class="fa-solid fa-clipboard-list mr-2"></i>實作任務目標</h3>
+                            <ul class="list-disc list-inside text-gray-700 space-y-3 mb-6 text-lg">
+                                <li>點擊下方按鈕登入 Tinkercad。</li>
+                                <li>名牌 <strong class="text-brand">正面</strong> 放上你的姓名。</li>
+                                <li>名牌 <strong class="text-brand">背面</strong> 打上「車城國小」。</li>
+                                <li>完成後，取得 <strong class="text-blue-600 bg-blue-50 px-1 rounded">共用連結</strong>。</li>
+                            </ul>
+                        </div>
+                        <a href="https://www.tinkercad.com/" target="_blank"
+                            class="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-4 rounded-xl transition shadow-md text-lg">
+                            <i class="fa-solid fa-arrow-up-right-from-square mr-2"></i> 前往 Tinkercad 製作
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-between mt-6">
+                <button onclick="prevStep(4)" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-6 rounded-lg transition">上一步</button>
+                <button onclick="nextStep(4)" class="bg-brand hover:bg-brand-dark text-white font-bold py-3 px-8 rounded-lg transition shadow-md">我做好了，去交作業 <i class="fa-solid fa-flag-checkered ml-2"></i></button>
+            </div>
+        </div>
+
+        <!-- 最終關 -->
+        <div id="step-5" class="step-container bg-white p-6 md:p-10 rounded-2xl shadow-sm border border-gray-100">
+            <div class="flex items-center gap-3 mb-6 border-b pb-4">
+                <span class="bg-green-100 text-green-700 font-bold py-1 px-3 rounded-full">最終關</span>
+                <h2 class="text-2xl font-bold">繳交你的 3D 名牌連結</h2>
+            </div>
+            <div class="text-center mb-8">
+                <img src="https://api.iconify.design/noto:party-popper.svg" alt="Celebrate" class="w-24 h-24 mx-auto mb-4">
+                <h3 class="text-2xl font-bold text-gray-800">太棒了！你即將完成所有任務。</h3>
+                <p class="text-gray-600 mt-2 text-lg">請將 Tinkercad 的 <strong>「共用連結」</strong> 貼在下方，老師才能看到你的作品喔！</p>
+                <div class="inline-flex items-center bg-red-50 text-red-600 px-4 py-2 rounded-lg mt-3 border border-red-100">
+                    <i class="fa-solid fa-triangle-exclamation mr-2"></i> 記得檢查 Tinkercad 權限是否已設定為公開分享！
+                </div>
+            </div>
+            <div class="max-w-2xl mx-auto bg-gray-50 p-8 rounded-2xl border border-gray-200 shadow-inner">
+                <div class="mb-6">
+                    <label class="block text-gray-800 font-bold mb-3 text-lg" for="tinkercadLink">
+                        <i class="fa-solid fa-link text-gray-500 mr-2"></i>Tinkercad 作品連結
+                    </label>
+                    <input class="w-full px-5 py-4 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brand text-lg"
+                        id="tinkercadLink" type="url" placeholder="請貼上 https://www.tinkercad.com/things/... 開頭的網址">
+                </div>
+                <button onclick="submitFinalWork()" id="submitBtn"
+                    class="w-full bg-brand hover:bg-brand-dark text-white font-bold py-4 px-4 rounded-xl transition text-xl shadow-lg flex justify-center items-center">
+                    <i class="fa-solid fa-paper-plane mr-2"></i> 送出最終作業
+                </button>
+            </div>
+            <div class="flex justify-between mt-8">
+                <button onclick="prevStep(5)" class="text-gray-500 hover:text-gray-800 font-bold py-2 px-4 transition">
+                    <i class="fa-solid fa-arrow-left mr-2"></i>返回修改
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="bg-gray-800 text-white py-6 text-center mt-auto">
+        <p class="text-sm opacity-80">車城國小資訊老師 @ Google Gemini 協作設計</p>
+        <p class="text-xs opacity-50 mt-1">3D Printing Independent Learning Platform v1.4 (Re-upload Edition)</p>
+    </footer>
+
+    <script>
+        // ══════════════════════════════════════════════════════
+        //  ★ 請將此 URL 換成你的 GAS Web App 部署網址 ★
+        //  格式：https://script.google.com/macros/s/XXXXXX/exec
+        // ══════════════════════════════════════════════════════
+        const GAS_URL = 'https://script.google.com/macros/s/AKfycbxI_yZpnxUcJxFids4I_R_hx611bjucwctCfPQsfJyWE0RaaRzKaEqg3z4RdQbs_bmL/exec';
+        // ══════════════════════════════════════════════════════
+
+        const GAS_READY = GAS_URL && !GAS_URL.includes('XXXXXX') && GAS_URL.startsWith('https://');
+
+        let currentStep = 0;
+        const totalSteps = 5;
+        let studentData = {
+            id: '', q1: '', q2: '',
+            signatureDataUrl: '',    // PNG（本地用）
+            signatureSvgString: '',  // SVG 字串（雲端上傳 + 本地下載共用）
+            signatureDriveUrl: '',
+            isSignatureUploaded: false
+        };
+
+        // ── YouTube ──────────────────────────────────────────
+        function openYouTube(id) { window.open('https://www.youtube.com/watch?v=' + id, '_blank'); }
+
+        // ── 進度條 ────────────────────────────────────────────
+        function updateProgressBar() {
+            document.getElementById('progressBar').style.width = `${(currentStep / totalSteps) * 100}%`;
+        }
+
+        function showStep(idx) {
+            document.querySelectorAll('.step-container').forEach((el, i) => el.classList.toggle('active', i === idx));
+            updateProgressBar();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ── 儲存指示器 ────────────────────────────────────────
+        let indicatorTimer = null;
+        function showIndicator(state, text) {
+            const el = document.getElementById('saveIndicator');
+            const tx = document.getElementById('saveIndicatorText');
+            el.className = state;
+            tx.textContent = text;
+            clearTimeout(indicatorTimer);
+            if (state !== 'saving') {
+                indicatorTimer = setTimeout(() => el.className = 'hidden', 3000);
+            }
+        }
+
+        // ══════════════════════════════════════════════════════
+        //  GAS 通訊：車城標準智慧路由（⚠ 不可修改）
+        //  讀取（loadProgress）→ JSONP（doGet）
+        //  寫入（saveProgress / upload / submit）→ Raw POST（doPost）
+        // ══════════════════════════════════════════════════════
+
+        let _jsonpCount = 0;
+
+        function gasGet(params, timeoutMs = 10000) {
+            return new Promise((resolve, reject) => {
+                if (!GAS_READY) { resolve({ ok: false, message: 'GAS_URL 未設定' }); return; }
+
+                const cbName = `_gasCb${++_jsonpCount}`;
+                const qs = Object.entries({ ...params, callback: cbName })
+                    .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&');
+
+                let done = false;
+                const timer = setTimeout(() => {
+                    if (done) return;
+                    done = true; cleanup();
+                    reject(new Error('連線逾時，請確認網路後重試'));
+                }, timeoutMs);
+
+                window[cbName] = (data) => {
+                    if (done) return;
+                    done = true; cleanup();
+                    resolve(data);
+                };
+
+                function cleanup() {
+                    clearTimeout(timer);
+                    delete window[cbName];
+                    if (script && script.parentNode) script.parentNode.removeChild(script);
+                }
+
+                const script = document.createElement('script');
+                script.src = GAS_URL + '?' + qs;
+                script.onerror = () => {
+                    if (done) return;
+                    done = true; cleanup();
+                    reject(new Error('⚠ 系統暫時無法連線，請確認網路後重新整理頁面。'));
+                };
+                document.head.appendChild(script);
+            });
+        }
+
+        async function gasPost(payload) {
+            if (!GAS_READY) return { ok: false, message: 'GAS_URL 未設定' };
+            const res = await fetch(GAS_URL, {
+                method:   'POST',
+                headers:  { 'Content-Type': 'text/plain' }, // ⚠️ 必須用 text/plain 才不觸發 Preflight
+                body:     JSON.stringify(payload),
+                redirect: 'follow'
+            });
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            return await res.json();
+        }
+
+        async function gasCall(payload) {
+            if (!GAS_READY) return { ok: true, found: false };
+            const action = payload.action;
+
+            if (action === 'loadProgress') {
+                return await gasGet({ action: 'loadProgress', studentId: payload.studentId });
+            }
+
+            try {
+                return await gasPost(payload);
+            } catch (e) {
+                console.warn('[GAS POST]', action, e.message);
+                return { ok: true };
+            }
+        }
+
+        // ── 儲存進度（fire-and-forget） ───────────────────────
+        function saveProgress() {
+            if (!studentData.id) return;
+            showIndicator('saving', '儲存中…');
+            gasCall({
+                action:        'saveProgress',
+                studentId:     studentData.id,
+                currentStep:   currentStep,
+                q1:            document.querySelector('input[name="q1"]:checked')?.value || studentData.q1 || '',
+                q2:            document.querySelector('input[name="q2"]:checked')?.value || studentData.q2 || '',
+                tinkercadLink: document.getElementById('tinkercadLink')?.value || ''
+            }).then(() => showIndicator('saved', '✓ 進度已儲存'))
+              .catch(() => showIndicator('error', '⚠ 儲存失敗，請確認網路'));
+        }
+
+        // ── 啟動流程 ──────────────────────────────────────────
+        async function startWithId() {
+            const id = document.getElementById('studentId').value.trim().toLowerCase();
+            if (!id) {
+                Swal.fire({ icon: 'warning', title: '請輸入帳號', text: '請輸入你的屏東縣教育雲帳號！', confirmButtonColor: '#16a34a' });
+                return;
+            }
+            if (!id.startsWith('ptc')) {
+                Swal.fire({ icon: 'error', title: '帳號格式錯誤', text: '請輸入 ptc 開頭的屏東縣教育雲帳號，例如：ptc1234567', confirmButtonColor: '#16a34a' });
+                return;
+            }
+            studentData.id = id;
+
+            if (!GAS_READY) {
+                currentStep = 1;
+                showStep(currentStep);
+                return;
+            }
+
+            showIndicator('saving', '查詢雲端進度…');
+            let saved = null;
+            try {
+                const res = await gasCall({ action: 'loadProgress', studentId: id });
+                if (res && res.ok && res.found) saved = res.data;
+            } catch (e) {
+                console.warn('loadProgress 失敗:', e.message);
+            }
+
+            if (saved && saved.currentStep > 0) {
+                if (saved.q1) { const r = document.querySelector(`input[name="q1"][value="${saved.q1}"]`); if(r) r.checked = true; studentData.q1 = saved.q1; }
+                if (saved.q2) { const r = document.querySelector(`input[name="q2"][value="${saved.q2}"]`); if(r) r.checked = true; studentData.q2 = saved.q2; }
+                if (saved.tinkercadLink) document.getElementById('tinkercadLink').value = saved.tinkercadLink;
+                if (saved.isSignatureUploaded) {
+                    studentData.isSignatureUploaded = true;
+                    studentData.signatureDriveUrl   = saved.signatureDriveUrl || '';
+                    showDownloadSection();
+                }
+
+                showIndicator('saved', '✓ 找到雲端進度');
+                const result = await Swal.fire({
+                    icon: 'info', title: '找到你的進度！',
+                    html: `上次闖到 <b>第 ${saved.currentStep} 關</b>，要從上次繼續嗎？`,
+                    showCancelButton: true, confirmButtonColor: '#16a34a',
+                    confirmButtonText: '繼續闖關', cancelButtonText: '重新開始'
+                });
+                if (result.isConfirmed) {
+                    currentStep = saved.currentStep;
+                } else {
+                    currentStep = 1;
+                    document.querySelectorAll('input[type=radio]').forEach(r => r.checked = false);
+                    document.getElementById('tinkercadLink').value = '';
+                    studentData = { id, q1:'', q2:'', signatureDataUrl:'', signatureSvgString:'', signatureDriveUrl:'', isSignatureUploaded: false };
+                    showUploadSection();
+                }
+            } else {
+                showIndicator('saved', '✓ 建立新紀錄');
+                currentStep = 1;
+            }
+
+            showStep(currentStep);
+            if (currentStep === 3) setTimeout(initCanvas, 100);
+        }
+
+        // ── 下一步 / 上一步 ───────────────────────────────────
+        function nextStep(step) {
+            if (step === 1) {
+                const ans = document.querySelector('input[name="q1"]:checked');
+                if (!ans) { Swal.fire({ icon: 'warning', title: '還沒回答問題喔', text: '請看完影片後，選擇一個答案！', confirmButtonColor: '#16a34a' }); return; }
+                studentData.q1 = ans.value;
+                if (ans.value !== 'B') { Swal.fire({ icon: 'info', title: '小提示', text: '再想想看，影片中有印出扳手甚至是房子的模型喔！', confirmButtonColor: '#16a34a' }); return; }
+            }
+            if (step === 2) {
+                const ans = document.querySelector('input[name="q2"]:checked');
+                if (!ans) { Swal.fire({ icon: 'warning', title: '還沒回答問題喔', text: '請看完影片後，選擇一個答案！', confirmButtonColor: '#16a34a' }); return; }
+                studentData.q2 = ans.value;
+                if (ans.value !== 'B') { Swal.fire({ icon: 'info', title: '小提示', text: 'FDM 技術就像擠熱熔膠一樣，是一層一層疊加上去的喔！', confirmButtonColor: '#16a34a' }); return; }
+            }
+            if (step === 3 && !studentData.isSignatureUploaded) {
+                Swal.fire({
+                    title: '還沒上傳簽名喔！', text: '確定要跳過嗎？',
+                    icon: 'question', showCancelButton: true,
+                    confirmButtonColor: '#16a34a', confirmButtonText: '確定前往', cancelButtonText: '留在這關畫畫'
+                }).then(r => {
+                    if (r.isConfirmed) { currentStep = step + 1; showStep(currentStep); saveProgress(); }
+                });
+                return;
+            }
+            if (currentStep < totalSteps) {
+                currentStep = step + 1;
+                showStep(currentStep);
+                saveProgress();
+                if (currentStep === 3) setTimeout(initCanvas, 100);
+            }
+        }
+
+        function prevStep(step) {
+            if (currentStep > 0) {
+                currentStep = step - 1; showStep(currentStep); saveProgress();
+                if (currentStep === 3) setTimeout(initCanvas, 100);
+            }
+        }
+
+        // ── 畫布 ──────────────────────────────────────────────
+        const canvas = document.getElementById('signaturePad');
+        const ctx    = canvas.getContext('2d');
+        const CANVAS_H = 300;
+
+        let isDrawing  = false;
+        let points     = [];
+        let allStrokes = [];
+        let curStroke  = { segs: [], color: '#000000', lineWidth: 20 };
+
+        function initCanvas() {
+            const w = document.getElementById('canvasWrapper').getBoundingClientRect().width;
+            canvas.width  = Math.round(w);
+            canvas.height = CANVAS_H;
+            canvas.style.width  = Math.round(w) + 'px';
+            canvas.style.height = CANVAS_H + 'px';
+            ctx.fillStyle = '#fff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.lineJoin = 'round';
+            ctx.lineCap  = 'round';
+            allStrokes = [];
+            updateBrush();
+            if (studentData.isSignatureUploaded && studentData.signatureDataUrl) {
+                const img = new Image();
+                img.onload = () => ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                img.src = studentData.signatureDataUrl;
+            }
+        }
+
+        function updateBrush() {
+            ctx.strokeStyle = document.getElementById('brushColor').value;
+            ctx.lineWidth   = Number(document.getElementById('brushSize').value);
+        }
+        document.getElementById('brushColor').addEventListener('change', updateBrush);
+        document.getElementById('brushSize').addEventListener('input', e => {
+            document.getElementById('brushSizeVal').textContent = e.target.value;
+            updateBrush();
+        });
+
+        function getCanvasPos(clientX, clientY) {
+            const r = canvas.getBoundingClientRect();
+            return {
+                x: (clientX - r.left) * (canvas.width  / r.width),
+                y: (clientY - r.top)  * (canvas.height / r.height)
+            };
+        }
+
+        function r2(n) { return Math.round(n * 100) / 100; }
+
+        function addPoint(x, y) {
+            if (points.length > 0) {
+                const last = points[points.length - 1];
+                const dx = x - last.x, dy = y - last.y;
+                if (dx * dx + dy * dy < 9) return;
+            }
+            points.push({ x, y });
+            if (points.length < 3) return;
+            const p = points, len = p.length;
+            const p0 = p[Math.max(0, len - 4)];
+            const p1 = p[len - 3] || p0;
+            const p2 = p[len - 2];
+            const p3 = p[len - 1];
+            const cp1x = p1.x + (p2.x - p0.x) / 6, cp1y = p1.y + (p2.y - p0.y) / 6;
+            const cp2x = p2.x - (p3.x - p1.x) / 6, cp2y = p2.y - (p3.y - p1.y) / 6;
+            ctx.beginPath(); ctx.moveTo(p1.x, p1.y);
+            ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, p2.x, p2.y);
+            ctx.stroke();
+            if (curStroke.segs.length === 0) curStroke.segs.push(`M ${r2(p1.x)} ${r2(p1.y)}`);
+            curStroke.segs.push(`C ${r2(cp1x)} ${r2(cp1y)} ${r2(cp2x)} ${r2(cp2y)} ${r2(p2.x)} ${r2(p2.y)}`);
+        }
+
+        function startDraw(x, y) {
+            // v1.4：只要畫板內容變動，舊的 PNG/SVG 快取就作廢；
+            //       若目前顯示「已備份」區塊，自動切回上傳區塊讓學生重新上傳
+            invalidateSignatureCache();
+            if (!document.getElementById('downloadSection').classList.contains('hidden')) {
+                showUploadSection();
+            }
+            isDrawing = true; points = [{ x, y }];
+            curStroke = { segs: [], color: ctx.strokeStyle, lineWidth: ctx.lineWidth };
+            ctx.beginPath(); ctx.moveTo(x, y);
+        }
+        function moveDraw(x, y) { if (!isDrawing) return; addPoint(x, y); }
+        function endDraw() {
+            if (!isDrawing) return;
+            isDrawing = false;
+            if (points.length >= 2) {
+                const a = points[points.length - 2], b = points[points.length - 1];
+                ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+                if (curStroke.segs.length === 0) curStroke.segs.push(`M ${r2(a.x)} ${r2(a.y)}`);
+                curStroke.segs.push(`L ${r2(b.x)} ${r2(b.y)}`);
+            }
+            if (curStroke.segs.length > 1) allStrokes.push(curStroke);
+            points = []; curStroke = { segs: [], color: ctx.strokeStyle, lineWidth: ctx.lineWidth };
+        }
+
+        canvas.addEventListener('mousedown', e => { const p = getCanvasPos(e.clientX, e.clientY); startDraw(p.x, p.y); });
+        canvas.addEventListener('mousemove', e => { const p = getCanvasPos(e.clientX, e.clientY); moveDraw(p.x, p.y); });
+        canvas.addEventListener('mouseup', endDraw);
+        canvas.addEventListener('mouseleave', endDraw);
+        canvas.addEventListener('touchstart', e => { e.preventDefault(); const t = e.touches[0]; const p = getCanvasPos(t.clientX, t.clientY); startDraw(p.x, p.y); }, { passive: false });
+        canvas.addEventListener('touchmove', e => { e.preventDefault(); const t = e.touches[0]; const p = getCanvasPos(t.clientX, t.clientY); moveDraw(p.x, p.y); }, { passive: false });
+        canvas.addEventListener('touchend', endDraw);
+        canvas.addEventListener('touchcancel', endDraw);
+
+        function clearCanvas() {
+            ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+            allStrokes = []; points = []; curStroke = { segs: [], color: ctx.strokeStyle, lineWidth: ctx.lineWidth };
+            updateBrush();
+        }
+
+        // ══════════════════════════════════════════════════════
+        //  v1.4 新增：簽名狀態管理（上傳區 ⇄ 下載區切換）
+        // ══════════════════════════════════════════════════════
+        const UPLOAD_BTN_HTML = '<i class="fa-solid fa-cloud-arrow-up mr-2 text-xl"></i> 上傳簽名至雲端';
+        const SVG_BTN_HTML    = '<i class="fa-solid fa-bezier-curve mr-2"></i> SVG（3D列印用）';
+        let isUploading = false;
+
+        // 畫板是否有筆跡：全畫面每 2px 掃一次（取代舊版隨機抽 200 點，細簽名常被誤判空白）
+        function hasInk() {
+            const w = canvas.width, h = canvas.height;
+            if (!w || !h) return false;
+            const d = ctx.getImageData(0, 0, w, h).data;
+            let dark = 0;
+            for (let y = 0; y < h; y += 2) {
+                for (let x = 0; x < w; x += 2) {
+                    const p = (y * w + x) * 4;
+                    if (d[p] < 200 || d[p + 1] < 200 || d[p + 2] < 200) {
+                        if (++dark >= 5) return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        function invalidateSignatureCache() {
+            studentData.signatureDataUrl   = '';
+            studentData.signatureSvgString = '';
+        }
+
+        function resetUploadBtn(html) {
+            const btn = document.getElementById('uploadBtn');
+            btn.innerHTML = html || UPLOAD_BTN_HTML;
+            btn.disabled  = false;
+        }
+
+        function showUploadSection() {
+            const reupload = studentData.isSignatureUploaded;
+            document.getElementById('uploadSection').classList.remove('hidden');
+            document.getElementById('downloadSection').classList.add('hidden');
+            document.getElementById('uploadTitle').textContent = reupload ? '重新上傳簽名檔' : '上傳簽名檔至系統';
+            document.getElementById('uploadHint').textContent  = reupload
+                ? '簽完新的簽名後按「上傳簽名至雲端」，雲端紀錄會更新為新的簽名（舊檔仍保留在老師的資料夾）。'
+                : '系統將自動轉為 SVG 向量檔，以你的帳號命名後備份到雲端資料夾。';
+            document.getElementById('cancelReuploadBtn').classList.toggle('hidden', !reupload);
+            if (!isUploading) resetUploadBtn();
+        }
+
+        function showDownloadSection() {
+            document.getElementById('uploadSection').classList.add('hidden');
+            document.getElementById('downloadSection').classList.remove('hidden');
+            document.getElementById('cancelReuploadBtn').classList.add('hidden');
+            resetUploadBtn();
+        }
+
+        // 「重新簽名上傳」按鈕
+        async function resetForReupload() {
+            const r = await Swal.fire({
+                icon: 'question', title: '要重新簽名嗎？',
+                html: '畫板會清空，請重新簽名後再按「上傳簽名至雲端」。<br>（已上傳的舊檔不會被刪除）',
+                showCancelButton: true, confirmButtonColor: '#16a34a',
+                confirmButtonText: '重新簽名', cancelButtonText: '先不要'
+            });
+            if (!r.isConfirmed) return;
+            clearCanvas();
+            invalidateSignatureCache();
+            showUploadSection();
+        }
+
+        // 「取消」：回到已備份狀態（雲端檔案仍在）
+        function cancelReupload() {
+            if (isUploading) return;
+            showDownloadSection();
+        }
+
+        // ══════════════════════════════════════════════════════
+        //  ★ 核心：canvas → SVG 轉換（穩定版 v1.3，未變動）
+        // ══════════════════════════════════════════════════════
+        async function canvasToSvgString() {
+            // 確保 PNG dataUrl 已存在
+            if (!studentData.signatureDataUrl) {
+                studentData.signatureDataUrl = canvas.toDataURL('image/png');
+            }
+
+            const img = await new Promise((res, rej) => {
+                const i = new Image();
+                i.onload  = () => res(i);
+                i.onerror = () => rej(new Error('圖片載入失敗'));
+                i.src = studentData.signatureDataUrl;
+            });
+
+            // 1) 畫到離屏 canvas（白底）
+            const srcW = img.width  || canvas.width;
+            const srcH = img.height || canvas.height;
+            const off  = document.createElement('canvas');
+            off.width  = srcW;
+            off.height = srcH;
+            const octx = off.getContext('2d');
+            octx.fillStyle = '#ffffff';
+            octx.fillRect(0, 0, srcW, srcH);
+            octx.drawImage(img, 0, 0, srcW, srcH);
+
+            // 2) 二值化
+            const TH = 200;
+            const id = octx.getImageData(0, 0, srcW, srcH);
+            const d  = id.data;
+            let minX = srcW, minY = srcH, maxX = -1, maxY = -1, darkCount = 0;
+            for (let y = 0; y < srcH; y++) {
+                for (let x = 0; x < srcW; x++) {
+                    const p   = (y * srcW + x) * 4;
+                    const lum = 0.299 * d[p] + 0.587 * d[p + 1] + 0.114 * d[p + 2];
+                    const isDark = (d[p + 3] > 10) && (lum < TH);
+                    if (isDark) {
+                        d[p] = 0; d[p + 1] = 0; d[p + 2] = 0; d[p + 3] = 255;
+                        darkCount++;
+                        if (x < minX) minX = x;
+                        if (x > maxX) maxX = x;
+                        if (y < minY) minY = y;
+                        if (y > maxY) maxY = y;
+                    } else {
+                        d[p] = 255; d[p + 1] = 255; d[p + 2] = 255; d[p + 3] = 255;
+                    }
+                }
+            }
+            if (darkCount < 20 || maxX < 0) {
+                throw new Error('找不到筆跡，請先在畫板上簽名（建議黑色），再試一次。');
+            }
+
+            // 3) 裁切到邊界框
+            octx.putImageData(id, 0, 0);
+            const pad = 10;
+            const cx  = Math.max(0, minX - pad);
+            const cy  = Math.max(0, minY - pad);
+            const cw  = Math.min(srcW, maxX + pad) - cx;
+            const ch  = Math.min(srcH, maxY + pad) - cy;
+
+            const crop = document.createElement('canvas');
+            crop.width  = cw;
+            crop.height = ch;
+            const cctx = crop.getContext('2d');
+            cctx.drawImage(off, cx, cy, cw, ch, 0, 0, cw, ch);
+            const cropData = cctx.getImageData(0, 0, cw, ch);
+
+            // 4) ImageTracer：固定黑白調色盤
+            const options = {
+                ltres: 1, qtres: 1, pathomit: 1,
+                pal: [ { r: 255, g: 255, b: 255, a: 255 },
+                       { r: 0,   g: 0,   b: 0,   a: 255 } ],
+                colorsampling: 0, numberofcolors: 2,
+                mincolorratio: 0, colorquantcycles: 1,
+                blurradius: 0, blurdelta: 20,
+                strokewidth: 0, linefilter: false,
+                scale: 1, roundcoords: 1,
+                viewbox: true, desc: false, lcpr: 0, qcpr: 0
+            };
+            const svgRaw = ImageTracer.imagedataToSVG(cropData, options);
+
+            // 5) 只保留深色封閉輪廓
+            const svgDoc = new DOMParser().parseFromString(svgRaw, 'image/svg+xml');
+            const svgEl  = svgDoc.querySelector('svg');
+            if (!svgEl) throw new Error('SVG 解析失敗，請重試。');
+
+            const fillLum = (fill) => {
+                if (!fill || fill === 'none') return 255;
+                const m = fill.match(/rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/i);
+                if (m) return 0.299 * +m[1] + 0.587 * +m[2] + 0.114 * +m[3];
+                if (fill[0] === '#') {
+                    let h = fill.slice(1);
+                    if (h.length === 3) h = h.split('').map(c => c + c).join('');
+                    return 0.299 * parseInt(h.slice(0, 2), 16)
+                         + 0.587 * parseInt(h.slice(2, 4), 16)
+                         + 0.114 * parseInt(h.slice(4, 6), 16);
+                }
+                if (fill === 'black') return 0;
+                return 255;
+            };
+
+            let kept = 0;
+            svgEl.querySelectorAll('path').forEach(path => {
+                if (fillLum(path.getAttribute('fill')) < 128) {
+                    path.setAttribute('fill', '#000000');
+                    path.setAttribute('stroke', 'none');
+                    kept++;
+                } else {
+                    path.parentNode.removeChild(path);
+                }
+            });
+            if (kept === 0) {
+                throw new Error('找不到文字輪廓，請確認簽名是深色（黑色/深藍等）再試一次。');
+            }
+
+            // 6) 設定實體尺寸（mm）
+            const targetW = 80;
+            const targetH = Math.max(8, Math.round((ch / cw) * targetW));
+            svgEl.setAttribute('width',  targetW + 'mm');
+            svgEl.setAttribute('height', targetH + 'mm');
+            svgEl.setAttribute('viewBox', `0 0 ${cw} ${ch}`);
+            if (!svgEl.getAttribute('xmlns')) {
+                svgEl.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+            }
+
+            return '<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n'
+                 + new XMLSerializer().serializeToString(svgEl);
+        }
+
+        // 沒有本機簽名（例如換電腦、重新整理後）→ 開啟雲端備份檔
+        function openDriveBackup() {
+            if (studentData.signatureDriveUrl) {
+                Swal.fire({
+                    icon: 'info', title: '這台電腦沒有你的簽名',
+                    html: '你的簽名已備份在雲端，可以：<br>① 按「開啟雲端檔」下載上次的 SVG<br>② 或按「重新簽名上傳」重簽一次',
+                    showCancelButton: true, confirmButtonColor: '#16a34a',
+                    confirmButtonText: '開啟雲端檔', cancelButtonText: '關閉'
+                }).then(r => { if (r.isConfirmed) window.open(studentData.signatureDriveUrl, '_blank'); });
+            } else {
+                Swal.fire({ icon: 'warning', title: '還沒有簽名喔', text: '請按「重新簽名上傳」，在畫板上簽名並上傳後再下載。', confirmButtonColor: '#16a34a' });
+            }
+        }
+
+        // ── PNG 下載 ─────────────────────────────────────────
+        function downloadSignaturePng() {
+            if (!studentData.signatureDataUrl && hasInk()) {
+                studentData.signatureDataUrl = canvas.toDataURL('image/png');
+            }
+            if (!studentData.signatureDataUrl) { openDriveBackup(); return; }
+            const a = document.createElement('a');
+            a.download = `${studentData.id}_簽名檔.png`;
+            a.href = studentData.signatureDataUrl;
+            a.click();
+        }
+
+        // ── SVG 下載 ─────────────────────────────────────────
+        async function downloadSignatureSvg() {
+            const btn = document.getElementById('svgBtn');
+            let svgString = studentData.signatureSvgString;
+
+            if (!svgString) {
+                if (!studentData.signatureDataUrl && hasInk()) {
+                    studentData.signatureDataUrl = canvas.toDataURL('image/png');
+                }
+                if (!studentData.signatureDataUrl) { openDriveBackup(); return; }
+
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> 轉換中…';
+                btn.disabled = true;
+                try {
+                    svgString = await canvasToSvgString();
+                    studentData.signatureSvgString = svgString;
+                } catch (err) {
+                    Swal.fire({ icon: 'error', title: 'SVG 轉換失敗', text: err.message, confirmButtonColor: '#16a34a' });
+                    btn.innerHTML = SVG_BTN_HTML;
+                    btn.disabled = false;
+                    return;
+                }
+            }
+
+            const blob = new Blob([svgString], { type: 'image/svg+xml' });
+            const url  = URL.createObjectURL(blob);
+            const a    = document.createElement('a');
+            a.download = `${studentData.id}_簽名_3D列印用.svg`;
+            a.href = url;
+            a.click();
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+            btn.innerHTML = SVG_BTN_HTML;
+            btn.disabled = false;
+
+            Swal.fire({
+                icon: 'success',
+                title: 'SVG 下載完成！',
+                html: '已過濾白色背景，只保留文字輪廓。<br><br>' +
+                      '① Tinkercad 點「匯入」→ 選擇此 SVG<br>' +
+                      '② 厚度設 <b>2mm</b> → 按「匯入」<br>' +
+                      '③ 放到名牌底板上即完成！',
+                confirmButtonColor: '#16a34a',
+                confirmButtonText: '了解，去 Tinkercad！'
+            });
+        }
+
+        // ══════════════════════════════════════════════════════
+        //  v1.4：上傳用的自動重試包裝（不動 gasPost 本體）
+        //  只有「網路/HTTP 例外」才重試；GAS 回 ok:false 直接報錯
+        // ══════════════════════════════════════════════════════
+        const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+        async function postWithRetry(payload, btn, label, tries = 3) {
+            let lastErr;
+            for (let a = 1; a <= tries; a++) {
+                let res;
+                try {
+                    res = await gasPost(payload);
+                } catch (e) {
+                    lastErr = e;
+                    if (a < tries) {
+                        btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i> ${label}（網路不穩，第 ${a + 1} 次嘗試）`;
+                        await sleep(1200 * a);
+                        continue;
+                    }
+                    throw new Error('網路連線不穩定，已重試 ' + tries + ' 次仍失敗，請稍後再按一次上傳。');
+                }
+                if (res && res.ok === false) throw new Error(res.message || '伺服器回應失敗');
+                return res;
+            }
+            throw lastErr;
+        }
+
+        // ══════════════════════════════════════════════════════
+        //  ★ 上傳簽名：轉 SVG → 分塊 Raw POST → GAS 合併存 Drive
+        // ══════════════════════════════════════════════════════
+        async function uploadSignature() {
+            if (isUploading) return;
+
+            if (!hasInk()) {
+                Swal.fire({ icon: 'warning', title: '畫布是空白的', text: '請先在畫布上簽名再上傳！', confirmButtonColor: '#16a34a' });
+                return;
+            }
+
+            isUploading = true;
+            const btn = document.getElementById('uploadBtn');
+            btn.disabled = true;
+            document.getElementById('cancelReuploadBtn').classList.add('hidden');
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> 轉換 SVG 中…';
+
+            // 每次上傳都以「畫板目前的內容」為準，不沿用舊快取
+            invalidateSignatureCache();
+            studentData.signatureDataUrl = canvas.toDataURL('image/png');
+
+            try {
+                // ── Step 1：canvas → SVG 字串 ──
+                let svgString;
+                try {
+                    svgString = await canvasToSvgString();
+                    studentData.signatureSvgString = svgString;
+                } catch (err) {
+                    throw new Error('SVG 轉換失敗：' + err.message);
+                }
+
+                // ── Step 2：GAS 未設定 → 本地模式 ──
+                if (!GAS_READY) {
+                    studentData.isSignatureUploaded = true;
+                    showDownloadSection();
+                    Swal.fire({ icon: 'info', title: '本地模式', text: 'GAS_URL 未設定，簽名 SVG 僅儲存在本機，可直接下載使用。', confirmButtonColor: '#16a34a' });
+                    return;
+                }
+
+                // ── Step 3：分塊上傳（每塊失敗自動重試）──
+                const svgBase64 = btoa(unescape(encodeURIComponent(svgString)));
+                const CHUNK_SIZE = 20000;
+                const total = Math.ceil(svgBase64.length / CHUNK_SIZE);
+                const uid   = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+
+                for (let i = 0; i < total; i++) {
+                    const label = `上傳中 ${i + 1}/${total}`;
+                    btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i> ${label}…`;
+                    await postWithRetry({
+                        action: 'uploadChunk', studentId: studentData.id,
+                        uid, index: i, total,
+                        chunk: svgBase64.slice(i * CHUNK_SIZE, (i + 1) * CHUNK_SIZE),
+                        fileExt: 'svg'
+                    }, btn, label);
+                }
+
+                // ── Step 4：通知 GAS 合併 ──
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> 合併儲存中…';
+                const res = await postWithRetry({
+                    action: 'mergeChunks', studentId: studentData.id,
+                    uid, total, fileExt: 'svg', mimeType: 'image/svg+xml'
+                }, btn, '合併儲存中', 2);
+
+                if (!res || !res.ok) throw new Error((res && res.message) || '合併失敗，請重試');
+
+                studentData.isSignatureUploaded = true;
+                studentData.signatureDriveUrl   = res.fileUrl || '';
+                saveProgress();
+                showDownloadSection();
+                Swal.fire({
+                    icon: 'success', title: '上傳成功！',
+                    text: '簽名 SVG 已備份到雲端，可直接下載匯入 Tinkercad。',
+                    confirmButtonColor: '#16a34a'
+                });
+            } catch (err) {
+                resetUploadBtn('<i class="fa-solid fa-rotate-right mr-2 text-xl"></i> 重新上傳');
+                if (studentData.isSignatureUploaded) {
+                    document.getElementById('cancelReuploadBtn').classList.remove('hidden');
+                }
+                Swal.fire({ icon: 'error', title: '上傳失敗', text: err.message || '請確認網路並重試', confirmButtonColor: '#16a34a' });
+            } finally {
+                isUploading = false;
+            }
+        }
+
+        // ── 最終繳交 ──────────────────────────────────────────
+        async function submitFinalWork() {
+            const link = document.getElementById('tinkercadLink').value.trim();
+            if (!link) { Swal.fire({ icon: 'error', title: '等等！', text: '請貼上你的 Tinkercad 共用連結喔！', confirmButtonColor: '#16a34a' }); return; }
+            if (!link.includes('tinkercad.com')) { Swal.fire({ icon: 'warning', title: '網址好像怪怪的', text: '請確認貼上的是 Tinkercad 的網址。', confirmButtonColor: '#16a34a' }); return; }
+
+            const btn = document.getElementById('submitBtn');
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> 作業傳送中...';
+            btn.disabled = true;
+
+            try {
+                const res = await gasCall({
+                    action:        'submitWork',
+                    studentId:     studentData.id,
+                    tinkercadLink: link,
+                    q1:            studentData.q1,
+                    q2:            studentData.q2
+                });
+                if (res && res.ok) {
+                    btn.innerHTML = '<i class="fa-solid fa-check mr-2"></i> 繳交完成！';
+                    Swal.fire({ icon: 'success', title: '任務大成功！', text: '恭喜你完成了 3D 列印名牌的所有關卡，老師已經收到你的作品囉！', confirmButtonText: '太棒了', confirmButtonColor: '#16a34a' });
+                } else {
+                    throw new Error((res && res.message) || '繳交失敗');
+                }
+            } catch (err) {
+                btn.innerHTML = '<i class="fa-solid fa-paper-plane mr-2"></i> 送出最終作業';
+                btn.disabled = false;
+                Swal.fire({ icon: 'error', title: '繳交失敗', text: err.message || '請確認網路並重試', confirmButtonColor: '#16a34a' });
+            }
+        }
+
+        // ── 初始化 ────────────────────────────────────────────
+        window.onload = () => {
+            if (!GAS_READY) document.getElementById('gasBanner').classList.remove('hidden');
+            updateProgressBar();
+            window.addEventListener('resize', () => {
+                if (currentStep === 3) {
+                    const tempCanvas = document.createElement('canvas');
+                    tempCanvas.width = canvas.width; tempCanvas.height = canvas.height;
+                    tempCanvas.getContext('2d').drawImage(canvas, 0, 0);
+                    const w = document.getElementById('canvasWrapper').getBoundingClientRect().width;
+                    canvas.width = Math.round(w); canvas.height = CANVAS_H;
+                    canvas.style.width = Math.round(w) + 'px'; canvas.style.height = CANVAS_H + 'px';
+                    ctx.drawImage(tempCanvas, 0, 0, canvas.width, canvas.height);
+                    ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+                    updateBrush();
+                }
+            });
+        };
+    </script>
 </body>
 </html>
